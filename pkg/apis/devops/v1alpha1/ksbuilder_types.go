@@ -1,4 +1,3 @@
-
 /*
 Copyright 2018 The Kubesphere Authors.
 
@@ -18,7 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"log"
+	"github.com/golang/glog"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apiserver/pkg/endpoints/request"
@@ -27,6 +26,16 @@ import (
 	"k8s.io/apimachinery/pkg/util/validation/field"
 
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops"
+	"github.com/magicsong/s2irun/pkg/api"
+)
+
+type RunState string
+
+const (
+	NotRunning RunState = "Not Running Yet"
+	Successful          = "Successful"
+	Failed              = "Failed"
+	Unknown             = "Unknown"
 )
 
 // +genclient
@@ -45,16 +54,20 @@ type KsBuilder struct {
 
 // KsBuilderSpec defines the desired state of KsBuilder
 type KsBuilderSpec struct {
+	Config api.Config `json:"config,omitempty"`
 }
 
 // KsBuilderStatus defines the observed state of KsBuilder
 type KsBuilderStatus struct {
+	RunCount     int      `json:"runCount,omitempty"`
+	LastRunState RunState `json:"lastRunState,omitempty"`
+	LastRunName  string   `json:"lastRunName,omitempty"`
 }
 
 // Validate checks that an instance of KsBuilder is well formed
 func (KsBuilderStrategy) Validate(ctx request.Context, obj runtime.Object) field.ErrorList {
 	o := obj.(*devops.KsBuilder)
-	log.Printf("Validating fields for KsBuilder %s\n", o.Name)
+	glog.V(2).Infof("Validating fields for KsBuilder %s\n", o.Name)
 	errors := field.ErrorList{}
 	// perform validation here and add to errors using field.Invalid
 	return errors
@@ -64,5 +77,5 @@ func (KsBuilderStrategy) Validate(ctx request.Context, obj runtime.Object) field
 func (KsBuilderSchemeFns) DefaultingFunction(o interface{}) {
 	obj := o.(*KsBuilder)
 	// set default field values here
-	log.Printf("Defaulting fields for KsBuilder %s\n", obj.Name)
+	obj.Status.LastRunState = NotRunning
 }

@@ -1,4 +1,3 @@
-
 /*
 Copyright 2018 The Kubesphere Authors.
 
@@ -18,13 +17,14 @@ limitations under the License.
 package ksbuilder
 
 import (
-	"log"
-
+	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/builders"
+	batchv1 "k8s.io/api/batch/v1"
+	joblister "k8s.io/client-go/listers/batch/v1"
 
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1"
-	"github.com/magicsong/s2iapiserver/pkg/controller/sharedinformers"
 	listers "github.com/magicsong/s2iapiserver/pkg/client/listers_generated/devops/v1alpha1"
+	"github.com/magicsong/s2iapiserver/pkg/controller/sharedinformers"
 )
 
 // +controller:group=devops,version=v1alpha1,kind=KsBuilder,resource=ksbuilders
@@ -32,7 +32,23 @@ type KsBuilderControllerImpl struct {
 	builders.DefaultControllerFns
 
 	// lister indexes properties about KsBuilder
-	lister listers.KsBuilderLister
+	lister    listers.KsBuilderLister
+	jobLister joblister.JobLister
+}
+
+func (c *KsBuilderControllerImpl) jobToKsBuilder(i interface{}) (string, error) {
+	d := i.(*batchv1.Job)
+	glog.V(2).Infof("Reconcile job <%s> belong to KsBuilder", d.Name)
+	if len(d.OwnerReferences) == 1 && d.OwnerReferences[0].Kind == "KsBuilder" {
+		return d.Namespace + "/" + d.OwnerReferences[0].Name, nil
+	} else {
+		// Not owned
+		return "", nil
+	}
+}
+
+func (c *KsBuilderControllerImpl) reconcileKey(key string) error {
+	return nil
 }
 
 // Init initializes the controller and is called by the generated code
@@ -40,12 +56,21 @@ type KsBuilderControllerImpl struct {
 func (c *KsBuilderControllerImpl) Init(arguments sharedinformers.ControllerInitArguments) {
 	// Use the lister for indexing ksbuilders labels
 	c.lister = arguments.GetSharedInformers().Factory.Devops().V1alpha1().KsBuilders().Lister()
+	jobSi := arguments.GetSharedInformers().KubernetesFactory().Batch().V1().Jobs()
+	arguments.GetSharedInformers().Watch("KsBuilderJob", jobSi, c.jobToKsBuilder, c.reconcileKey)
+
 }
 
 // Reconcile handles enqueued messages
 func (c *KsBuilderControllerImpl) Reconcile(u *v1alpha1.KsBuilder) error {
 	// Implement controller logic here
-	log.Printf("Running reconcile KsBuilder for %s\n", u.Name)
+	glog.V(2).Infof("Running reconcile KsBuilder for %s", u.Name)
+	instance, err := c.Get(u.Namespace, u.Name)
+	if err != nil {
+		glog.Errorf("Get KsBuilder %s failed,error %v:", u.Namespace+"/"+u.Name, err)
+		return err
+	}
+
 	return nil
 }
 

@@ -1,0 +1,7 @@
+note: KsBuilderRun Example
+sample: |
+  apiVersion: devops.kubesphere.io/v1alpha1
+  kind: KsBuilderRun
+  metadata:
+    name: ksbuilderrun-example
+  spec:

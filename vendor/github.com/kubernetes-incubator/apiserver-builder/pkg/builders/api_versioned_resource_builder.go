@@ -111,8 +111,8 @@ type StorageWrapper struct {
 	registry.Store
 }
 
-func (s StorageWrapper) Create(ctx request.Context, obj runtime.Object, createValidation rest.ValidateObjectFunc, includeUninitialized bool) (runtime.Object, error) {
-	return s.Store.Create(ctx, obj, createValidation, includeUninitialized)
+func (s StorageWrapper) Create(ctx request.Context, obj runtime.Object, includeUninitialized bool) (runtime.Object, error) {
+	return s.Store.Create(ctx, obj, false)
 }
 
 func (b *versionedResourceBuilder) Build(
@@ -121,6 +121,7 @@ func (b *versionedResourceBuilder) Build(
 
 	// Set a default strategy
 	store := &StorageWrapper{registry.Store{
+		Copier:                   Scheme,
 		NewFunc:                  b.Unversioned.New,     // Use the unversioned type
 		NewListFunc:              b.Unversioned.NewList, // Use the unversioned type
 		DefaultQualifiedResource: b.getGroupResource(group),

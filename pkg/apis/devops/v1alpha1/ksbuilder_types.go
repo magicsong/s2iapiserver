@@ -64,12 +64,7 @@ type KsBuilderStatus struct {
 }
 
 func ValidateConfig(config *api.Config) field.ErrorList {
-	errs := field.ErrorList{}
-	if config == nil {
-		errs = append(errs, field.Required(field.NewPath("config", "spec"), "Config must not be empty"))
-		return errs
-	}
-	return errs
+	return ValidateConfig(config)
 }
 
 // Validate checks that an instance of KsBuilder is well formed

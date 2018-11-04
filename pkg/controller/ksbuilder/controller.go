@@ -19,11 +19,13 @@ package ksbuilder
 import (
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/builders"
-	batchv1 "k8s.io/api/batch/v1"
-	joblister "k8s.io/client-go/listers/batch/v1"
+	listers "github.com/magicsong/s2iapiserver/pkg/client/listers_generated/devops/v1alpha1"
+	"k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/apimachinery/pkg/selection"
 
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1"
-	listers "github.com/magicsong/s2iapiserver/pkg/client/listers_generated/devops/v1alpha1"
 	"github.com/magicsong/s2iapiserver/pkg/controller/sharedinformers"
 )
 
@@ -32,13 +34,13 @@ type KsBuilderControllerImpl struct {
 	builders.DefaultControllerFns
 
 	// lister indexes properties about KsBuilder
-	lister    listers.KsBuilderLister
-	jobLister joblister.JobLister
+	lister             listers.KsBuilderLister
+	ksBuilderRunLister listers.ksBuilderRunLister
 }
 
-func (c *KsBuilderControllerImpl) jobToKsBuilder(i interface{}) (string, error) {
-	d := i.(*batchv1.Job)
-	glog.V(2).Infof("Reconcile job <%s> belong to KsBuilder", d.Name)
+func (c *KsBuilderControllerImpl) ksRunToKsBuilder(i interface{}) (string, error) {
+	d := i.(*v1alpha1.KsBuilderRun)
+	glog.V(2).Infof("Reconcile runs <%s> belong to KsBuilder", d.Name)
 	if len(d.OwnerReferences) == 1 && d.OwnerReferences[0].Kind == "KsBuilder" {
 		return d.Namespace + "/" + d.OwnerReferences[0].Name, nil
 	} else {
@@ -56,9 +58,9 @@ func (c *KsBuilderControllerImpl) reconcileKey(key string) error {
 func (c *KsBuilderControllerImpl) Init(arguments sharedinformers.ControllerInitArguments) {
 	// Use the lister for indexing ksbuilders labels
 	c.lister = arguments.GetSharedInformers().Factory.Devops().V1alpha1().KsBuilders().Lister()
-	jobSi := arguments.GetSharedInformers().KubernetesFactory().Batch().V1().Jobs()
-	arguments.GetSharedInformers().Watch("KsBuilderJob", jobSi, c.jobToKsBuilder, c.reconcileKey)
-
+	runSi := arguments.GetSharedInformers().Factory.Devops().V1alpha1().KsBuilderRuns()
+	c.ksBuilderRunLister = runSi.Lister()
+	arguments.GetSharedInformers().Watch("KsBuilderRun", runSi, c.ksRunToKsBuilder, c.reconcileKey)
 }
 
 // Reconcile handles enqueued messages
@@ -70,7 +72,26 @@ func (c *KsBuilderControllerImpl) Reconcile(u *v1alpha1.KsBuilder) error {
 		glog.Errorf("Get KsBuilder %s failed,error %v:", u.Namespace+"/"+u.Name, err)
 		return err
 	}
-
+	r, _ := labels.NewRequirement("KsBuilderName", selection.Equals, []string{u.Name})
+	sel := labels.NewSelector()
+	sel.Add(r)
+	runs, err := c.ksBuilderRunLister.KsBuilderRuns(instance.Namespace).List(sel)
+	if err != nil {
+		if errors.IsNotFound(err) {
+			return nil
+		}
+		glog.Errorf("Errors when searching ksBuilderRuns, error:%v", err)
+		return err
+	}
+	lastTime := new(metav1.Time)
+	for _, item := range runs {
+		instance.Status.RunCount++
+		if item.Status.StartTime.After(lastTime.Time) {
+			*lastTime = *(item.Status.StartTime)
+			instance.Status.LastRunState = item.Status.RunState
+			instance.Status.LastRunName = item.Name
+		}
+	}
 	return nil
 }
 

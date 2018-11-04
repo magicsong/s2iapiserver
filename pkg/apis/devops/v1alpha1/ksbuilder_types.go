@@ -18,7 +18,6 @@ package v1alpha1
 
 import (
 	"github.com/golang/glog"
-
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apiserver/pkg/endpoints/request"
 
@@ -62,6 +61,15 @@ type KsBuilderStatus struct {
 	RunCount     int      `json:"runCount,omitempty"`
 	LastRunState RunState `json:"lastRunState,omitempty"`
 	LastRunName  string   `json:"lastRunName,omitempty"`
+}
+
+func ValidateConfig(config *api.Config) field.ErrorList {
+	errs := field.ErrorList{}
+	if config == nil {
+		errs = append(errs, field.Required(field.NewPath("config", "spec"), "Config must not be empty"))
+		return errs
+	}
+	return errs
 }
 
 // Validate checks that an instance of KsBuilder is well formed

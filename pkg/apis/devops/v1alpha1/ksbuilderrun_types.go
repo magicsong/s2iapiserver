@@ -17,7 +17,8 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"log"
+	"github.com/golang/glog"
+	"github.com/magicsong/s2irun/pkg/api"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apiserver/pkg/endpoints/request"
@@ -44,6 +45,9 @@ type KsBuilderRun struct {
 
 // KsBuilderRunSpec defines the desired state of KsBuilderRun
 type KsBuilderRunSpec struct {
+	KsBuilderName string      `json:"ksBuilderName,omitempty"`
+	BackOffLimit  int32       `json:"backOffLimit,omitempty"`
+	NewConfig     *api.Config `json:"newConfig,omitempty"`
 }
 
 // KsBuilderRunStatus defines the observed state of KsBuilderRun
@@ -61,15 +65,15 @@ type KsBuilderRunStatus struct {
 // Validate checks that an instance of KsBuilderRun is well formed
 func (KsBuilderRunStrategy) Validate(ctx request.Context, obj runtime.Object) field.ErrorList {
 	o := obj.(*devops.KsBuilderRun)
-	log.Printf("Validating fields for KsBuilderRun %s\n", o.Name)
-	errors := field.ErrorList{}
+	glog.V(2).Infof("Validating fields for KsBuilderRun %s\n", o.Name)
+	errs := field.ErrorList{}
 	// perform validation here and add to errors using field.Invalid
-	return errors
+	return errs
 }
 
 // DefaultingFunction sets default KsBuilderRun field values
 func (KsBuilderRunSchemeFns) DefaultingFunction(o interface{}) {
 	obj := o.(*KsBuilderRun)
 	// set default field values here
-	log.Printf("Defaulting fields for KsBuilderRun %s\n", obj.Name)
+	glog.V(2).Infof("Defaulting fields for KsBuilderRun %s\n", obj.Name)
 }

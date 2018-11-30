@@ -23,10 +23,8 @@ import (
 
 // Interface provides access to all the informers in this group version.
 type Interface interface {
-	// KsBuilders returns a KsBuilderInformer.
-	KsBuilders() KsBuilderInformer
-	// KsBuilderRuns returns a KsBuilderRunInformer.
-	KsBuilderRuns() KsBuilderRunInformer
+	// S2iBuilders returns a S2iBuilderInformer.
+	S2iBuilders() S2iBuilderInformer
 }
 
 type version struct {
@@ -40,12 +38,7 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 	return &version{factory: f, namespace: namespace, tweakListOptions: tweakListOptions}
 }
 
-// KsBuilders returns a KsBuilderInformer.
-func (v *version) KsBuilders() KsBuilderInformer {
-	return &ksBuilderInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
-}
-
-// KsBuilderRuns returns a KsBuilderRunInformer.
-func (v *version) KsBuilderRuns() KsBuilderRunInformer {
-	return &ksBuilderRunInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+// S2iBuilders returns a S2iBuilderInformer.
+func (v *version) S2iBuilders() S2iBuilderInformer {
+	return &s2iBuilderInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

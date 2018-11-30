@@ -21,8 +21,7 @@ import (
 
 type DevopsInterface interface {
 	RESTClient() rest.Interface
-	KsBuildersGetter
-	KsBuilderRunsGetter
+	S2iBuildersGetter
 }
 
 // DevopsClient is used to interact with features provided by the devops.kubesphere.io group.
@@ -30,12 +29,8 @@ type DevopsClient struct {
 	restClient rest.Interface
 }
 
-func (c *DevopsClient) KsBuilders(namespace string) KsBuilderInterface {
-	return newKsBuilders(c, namespace)
-}
-
-func (c *DevopsClient) KsBuilderRuns(namespace string) KsBuilderRunInterface {
-	return newKsBuilderRuns(c, namespace)
+func (c *DevopsClient) S2iBuilders(namespace string) S2iBuilderInterface {
+	return newS2iBuilders(c, namespace)
 }
 
 // NewForConfig creates a new DevopsClient for the given config.

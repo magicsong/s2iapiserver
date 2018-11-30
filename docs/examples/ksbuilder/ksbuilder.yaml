@@ -1,7 +1,0 @@
-note: KsBuilder Example
-sample: |
-  apiVersion: devops.kubesphere.io/v1alpha1
-  kind: KsBuilder
-  metadata:
-    name: ksbuilder-example
-  spec:

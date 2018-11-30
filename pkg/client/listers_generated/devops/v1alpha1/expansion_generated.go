@@ -17,18 +17,10 @@ limitations under the License.
 
 package v1alpha1
 
-// KsBuilderListerExpansion allows custom methods to be added to
-// KsBuilderLister.
-type KsBuilderListerExpansion interface{}
+// S2iBuilderListerExpansion allows custom methods to be added to
+// S2iBuilderLister.
+type S2iBuilderListerExpansion interface{}
 
-// KsBuilderNamespaceListerExpansion allows custom methods to be added to
-// KsBuilderNamespaceLister.
-type KsBuilderNamespaceListerExpansion interface{}
-
-// KsBuilderRunListerExpansion allows custom methods to be added to
-// KsBuilderRunLister.
-type KsBuilderRunListerExpansion interface{}
-
-// KsBuilderRunNamespaceListerExpansion allows custom methods to be added to
-// KsBuilderRunNamespaceLister.
-type KsBuilderRunNamespaceListerExpansion interface{}
+// S2iBuilderNamespaceListerExpansion allows custom methods to be added to
+// S2iBuilderNamespaceLister.
+type S2iBuilderNamespaceListerExpansion interface{}

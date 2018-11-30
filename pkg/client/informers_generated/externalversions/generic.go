@@ -51,10 +51,8 @@ func (f *genericInformer) Lister() cache.GenericLister {
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
 	// Group=devops.kubesphere.io, Version=v1alpha1
-	case v1alpha1.SchemeGroupVersion.WithResource("ksbuilders"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Devops().V1alpha1().KsBuilders().Informer()}, nil
-	case v1alpha1.SchemeGroupVersion.WithResource("ksbuilderruns"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Devops().V1alpha1().KsBuilderRuns().Informer()}, nil
+	case v1alpha1.SchemeGroupVersion.WithResource("s2ibuilders"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Devops().V1alpha1().S2iBuilders().Informer()}, nil
 
 	}
 

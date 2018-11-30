@@ -24,12 +24,8 @@ type FakeDevops struct {
 	*testing.Fake
 }
 
-func (c *FakeDevops) KsBuilders(namespace string) internalversion.KsBuilderInterface {
-	return &FakeKsBuilders{c, namespace}
-}
-
-func (c *FakeDevops) KsBuilderRuns(namespace string) internalversion.KsBuilderRunInterface {
-	return &FakeKsBuilderRuns{c, namespace}
+func (c *FakeDevops) S2iBuilders(namespace string) internalversion.S2iBuilderInterface {
+	return &FakeS2iBuilders{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate

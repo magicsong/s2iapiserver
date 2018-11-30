@@ -14,6 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */package internalversion
 
-type KsBuilderExpansion interface{}
-
-type KsBuilderRunExpansion interface{}
+type S2iBuilderExpansion interface{}

@@ -29,10 +29,10 @@ import (
 
 func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenAPIDefinition {
 	return map[string]common.OpenAPIDefinition{
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilder": {
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilder": {
 			Schema: spec.Schema{
 				SchemaProps: spec.SchemaProps{
-					Description: "KsBuilder",
+					Description: "S2iBuilder",
 					Properties: map[string]spec.Schema{
 						"kind": {
 							SchemaProps: spec.SchemaProps{
@@ -55,21 +55,21 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 						},
 						"spec": {
 							SchemaProps: spec.SchemaProps{
-								Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderSpec"),
+								Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderSpec"),
 							},
 						},
 						"status": {
 							SchemaProps: spec.SchemaProps{
-								Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderStatus"),
+								Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderStatus"),
 							},
 						},
 					},
 				},
 			},
 			Dependencies: []string{
-				"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderSpec", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+				"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderSpec", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
 		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderList": {
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderList": {
 			Schema: spec.Schema{
 				SchemaProps: spec.SchemaProps{
 					Properties: map[string]spec.Schema{
@@ -98,7 +98,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 								Items: &spec.SchemaOrArray{
 									Schema: &spec.Schema{
 										SchemaProps: spec.SchemaProps{
-											Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilder"),
+											Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilder"),
 										},
 									},
 								},
@@ -109,94 +109,12 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 				},
 			},
 			Dependencies: []string{
-				"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilder", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
+				"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilder", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
 		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRun": {
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderSchemeFns": {
 			Schema: spec.Schema{
 				SchemaProps: spec.SchemaProps{
-					Description: "KsBuilderRun",
-					Properties: map[string]spec.Schema{
-						"kind": {
-							SchemaProps: spec.SchemaProps{
-								Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
-								Type:        []string{"string"},
-								Format:      "",
-							},
-						},
-						"apiVersion": {
-							SchemaProps: spec.SchemaProps{
-								Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
-								Type:        []string{"string"},
-								Format:      "",
-							},
-						},
-						"metadata": {
-							SchemaProps: spec.SchemaProps{
-								Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
-							},
-						},
-						"spec": {
-							SchemaProps: spec.SchemaProps{
-								Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRunSpec"),
-							},
-						},
-						"status": {
-							SchemaProps: spec.SchemaProps{
-								Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRunStatus"),
-							},
-						},
-					},
-				},
-			},
-			Dependencies: []string{
-				"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRunSpec", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRunStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
-		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRunList": {
-			Schema: spec.Schema{
-				SchemaProps: spec.SchemaProps{
-					Properties: map[string]spec.Schema{
-						"kind": {
-							SchemaProps: spec.SchemaProps{
-								Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
-								Type:        []string{"string"},
-								Format:      "",
-							},
-						},
-						"apiVersion": {
-							SchemaProps: spec.SchemaProps{
-								Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
-								Type:        []string{"string"},
-								Format:      "",
-							},
-						},
-						"metadata": {
-							SchemaProps: spec.SchemaProps{
-								Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
-							},
-						},
-						"items": {
-							SchemaProps: spec.SchemaProps{
-								Type: []string{"array"},
-								Items: &spec.SchemaOrArray{
-									Schema: &spec.Schema{
-										SchemaProps: spec.SchemaProps{
-											Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRun"),
-										},
-									},
-								},
-							},
-						},
-					},
-					Required: []string{"items"},
-				},
-			},
-			Dependencies: []string{
-				"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRun", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
-		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRunSchemeFns": {
-			Schema: spec.Schema{
-				SchemaProps: spec.SchemaProps{
-					Description: "KsBuilderRun Functions and Structs",
+					Description: "S2iBuilder Functions and Structs",
 					Properties: map[string]spec.Schema{
 						"DefaultSchemeFns": {
 							SchemaProps: spec.SchemaProps{
@@ -210,44 +128,32 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 			Dependencies: []string{
 				"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultSchemeFns"},
 		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRunSpec": {
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderSpec": {
 			Schema: spec.Schema{
 				SchemaProps: spec.SchemaProps{
-					Description: "KsBuilderRunSpec defines the desired state of KsBuilderRun",
+					Description: "S2iBuilderSpec defines the desired state of S2iBuilder",
+					Properties: map[string]spec.Schema{
+						"hello": {
+							SchemaProps: spec.SchemaProps{
+								Type:   []string{"string"},
+								Format: "",
+							},
+						},
+					},
+				},
+			},
+			Dependencies: []string{},
+		},
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderStatus": {
+			Schema: spec.Schema{
+				SchemaProps: spec.SchemaProps{
+					Description: "S2iBuilderStatus defines the observed state of S2iBuilder",
 					Properties:  map[string]spec.Schema{},
 				},
 			},
 			Dependencies: []string{},
 		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRunStatus": {
-			Schema: spec.Schema{
-				SchemaProps: spec.SchemaProps{
-					Description: "KsBuilderRunStatus defines the observed state of KsBuilderRun",
-					Properties: map[string]spec.Schema{
-						"startTime": {
-							SchemaProps: spec.SchemaProps{
-								Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
-							},
-						},
-						"completionTime": {
-							SchemaProps: spec.SchemaProps{
-								Description: "Represents time when the job was completed. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.",
-								Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
-							},
-						},
-						"runState": {
-							SchemaProps: spec.SchemaProps{
-								Type:   []string{"string"},
-								Format: "",
-							},
-						},
-					},
-				},
-			},
-			Dependencies: []string{
-				"k8s.io/apimachinery/pkg/apis/meta/v1.Time"},
-		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRunStatusStrategy": {
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderStatusStrategy": {
 			Schema: spec.Schema{
 				SchemaProps: spec.SchemaProps{
 					Properties: map[string]spec.Schema{
@@ -263,100 +169,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 			Dependencies: []string{
 				"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStatusStorageStrategy"},
 		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderRunStrategy": {
-			Schema: spec.Schema{
-				SchemaProps: spec.SchemaProps{
-					Properties: map[string]spec.Schema{
-						"DefaultStorageStrategy": {
-							SchemaProps: spec.SchemaProps{
-								Ref: ref("github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStorageStrategy"),
-							},
-						},
-					},
-					Required: []string{"DefaultStorageStrategy"},
-				},
-			},
-			Dependencies: []string{
-				"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStorageStrategy"},
-		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderSchemeFns": {
-			Schema: spec.Schema{
-				SchemaProps: spec.SchemaProps{
-					Description: "KsBuilder Functions and Structs",
-					Properties: map[string]spec.Schema{
-						"DefaultSchemeFns": {
-							SchemaProps: spec.SchemaProps{
-								Ref: ref("github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultSchemeFns"),
-							},
-						},
-					},
-					Required: []string{"DefaultSchemeFns"},
-				},
-			},
-			Dependencies: []string{
-				"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultSchemeFns"},
-		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderSpec": {
-			Schema: spec.Schema{
-				SchemaProps: spec.SchemaProps{
-					Description: "KsBuilderSpec defines the desired state of KsBuilder",
-					Properties: map[string]spec.Schema{
-						"config": {
-							SchemaProps: spec.SchemaProps{
-								Ref: ref("github.com/magicsong/s2irun/pkg/api.Config"),
-							},
-						},
-					},
-				},
-			},
-			Dependencies: []string{
-				"github.com/magicsong/s2irun/pkg/api.Config"},
-		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderStatus": {
-			Schema: spec.Schema{
-				SchemaProps: spec.SchemaProps{
-					Description: "KsBuilderStatus defines the observed state of KsBuilder",
-					Properties: map[string]spec.Schema{
-						"runCount": {
-							SchemaProps: spec.SchemaProps{
-								Type:   []string{"integer"},
-								Format: "int32",
-							},
-						},
-						"lastRunState": {
-							SchemaProps: spec.SchemaProps{
-								Type:   []string{"string"},
-								Format: "",
-							},
-						},
-						"lastRunName": {
-							SchemaProps: spec.SchemaProps{
-								Type:   []string{"string"},
-								Format: "",
-							},
-						},
-					},
-				},
-			},
-			Dependencies: []string{},
-		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderStatusStrategy": {
-			Schema: spec.Schema{
-				SchemaProps: spec.SchemaProps{
-					Properties: map[string]spec.Schema{
-						"DefaultStatusStorageStrategy": {
-							SchemaProps: spec.SchemaProps{
-								Ref: ref("github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStatusStorageStrategy"),
-							},
-						},
-					},
-					Required: []string{"DefaultStatusStorageStrategy"},
-				},
-			},
-			Dependencies: []string{
-				"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStatusStorageStrategy"},
-		},
-		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.KsBuilderStrategy": {
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderStrategy": {
 			Schema: spec.Schema{
 				SchemaProps: spec.SchemaProps{
 					Properties: map[string]spec.Schema{

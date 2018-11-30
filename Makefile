@@ -4,9 +4,9 @@ IMG ?= controller:latest
 generate:
 	apiserver-boot build generated
 
-manager:
-	apiserver-boot build executables
+manager:generate
+	CGO_ENABLED=0 go build -o bin/controller-manager cmd/controller-manager/main.go
 
-debug: 
-	apiserver-boot run local
+debug-local: manager 
+	bin/controller-manager --kubeconfig=kubeconfig -v 2 -logtostderr
 

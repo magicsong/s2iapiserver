@@ -1,0 +1,6 @@
+apiVersion: devops.kubesphere.io/v1alpha1
+kind: S2iBuilder
+metadata:
+  name: s2ibuilder-example
+spec:
+  hello: World

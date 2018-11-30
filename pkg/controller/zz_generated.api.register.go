@@ -20,8 +20,7 @@ package controller
 
 import (
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/controller"
-	"github.com/magicsong/s2iapiserver/pkg/controller/ksbuilder"
-	"github.com/magicsong/s2iapiserver/pkg/controller/ksbuilderrun"
+	"github.com/magicsong/s2iapiserver/pkg/controller/s2ibuilder"
 	"github.com/magicsong/s2iapiserver/pkg/controller/sharedinformers"
 	"k8s.io/client-go/rest"
 )
@@ -30,7 +29,6 @@ func GetAllControllers(config *rest.Config) ([]controller.Controller, chan struc
 	shutdown := make(chan struct{})
 	si := sharedinformers.NewSharedInformers(config, shutdown)
 	return []controller.Controller{
-		ksbuilder.NewKsBuilderController(config, si),
-		ksbuilderrun.NewKsBuilderRunController(config, si),
+		s2ibuilder.NewS2iBuilderController(config, si),
 	}, shutdown
 }

@@ -23,8 +23,7 @@ import (
 
 type DevopsV1alpha1Interface interface {
 	RESTClient() rest.Interface
-	KsBuildersGetter
-	KsBuilderRunsGetter
+	S2iBuildersGetter
 }
 
 // DevopsV1alpha1Client is used to interact with features provided by the devops.kubesphere.io group.
@@ -32,12 +31,8 @@ type DevopsV1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *DevopsV1alpha1Client) KsBuilders(namespace string) KsBuilderInterface {
-	return newKsBuilders(c, namespace)
-}
-
-func (c *DevopsV1alpha1Client) KsBuilderRuns(namespace string) KsBuilderRunInterface {
-	return newKsBuilderRuns(c, namespace)
+func (c *DevopsV1alpha1Client) S2iBuilders(namespace string) S2iBuilderInterface {
+	return newS2iBuilders(c, namespace)
 }
 
 // NewForConfig creates a new DevopsV1alpha1Client for the given config.

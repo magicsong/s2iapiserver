@@ -7,6 +7,6 @@ generate:
 manager:generate
 	CGO_ENABLED=0 go build -o bin/controller-manager cmd/controller-manager/main.go
 
-debug-local: manager 
-	bin/controller-manager --kubeconfig=kubeconfig -v 2 -logtostderr
+debug: manager
+
 

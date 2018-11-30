@@ -2,3 +2,4 @@ vendor
 default.etcd
 apiserver.local.config
 kubeconfig
+bin/*

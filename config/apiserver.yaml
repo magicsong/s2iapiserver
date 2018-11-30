@@ -10,7 +10,6 @@ spec:
   version: v1alpha1
   group: devops.kubesphere.io
   groupPriorityMinimum: 2000
-  priority: 200
   service:
     name: s2iapiserver
     namespace: default

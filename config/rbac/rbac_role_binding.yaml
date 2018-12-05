@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: null
+  name: s2iapiserver-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: s2iapiserver-role
+subjects:
+- kind: ServiceAccount
+  name: s2i-service-account
+  namespace: devops
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: s2i-service-account
+  namespace: devops 

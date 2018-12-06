@@ -20,15 +20,10 @@ package install
 
 import (
 	"github.com/magicsong/s2iapiserver/pkg/apis"
-	"k8s.io/apimachinery/pkg/apimachinery/announced"
-	"k8s.io/apimachinery/pkg/apimachinery/registered"
 	"k8s.io/apimachinery/pkg/runtime"
+	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 )
 
-func Install(
-	groupFactoryRegistry announced.APIGroupFactoryRegistry,
-	registry *registered.APIRegistrationManager,
-	scheme *runtime.Scheme) {
-
-	apis.GetDevopsAPIBuilder().Install(groupFactoryRegistry, registry, scheme)
+func Install(scheme *runtime.Scheme) {
+	utilruntime.Must(apis.GetDevopsAPIBuilder().AddToScheme(scheme))
 }

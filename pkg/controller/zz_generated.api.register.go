@@ -21,6 +21,7 @@ package controller
 import (
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/controller"
 	"github.com/magicsong/s2iapiserver/pkg/controller/s2ibuilder"
+	"github.com/magicsong/s2iapiserver/pkg/controller/s2irun"
 	"github.com/magicsong/s2iapiserver/pkg/controller/sharedinformers"
 	"k8s.io/client-go/rest"
 )
@@ -30,5 +31,6 @@ func GetAllControllers(config *rest.Config) ([]controller.Controller, chan struc
 	si := sharedinformers.NewSharedInformers(config, shutdown)
 	return []controller.Controller{
 		s2ibuilder.NewS2iBuilderController(config, si),
+		s2irun.NewS2iRunController(config, si),
 	}, shutdown
 }

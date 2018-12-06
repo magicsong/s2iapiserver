@@ -14,68 +14,50 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package s2ibuilder
+package s2irun
 
 import (
-	"github.com/golang/glog"
+	"log"
+
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/builders"
+
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1"
 	listers "github.com/magicsong/s2iapiserver/pkg/client/listers_generated/devops/v1alpha1"
 	"github.com/magicsong/s2iapiserver/pkg/controller/sharedinformers"
-	"k8s.io/apimachinery/pkg/api/errors"
-	"k8s.io/apimachinery/pkg/labels"
-	"k8s.io/apimachinery/pkg/selection"
 )
 
-// +controller:group=devops,version=v1alpha1,kind=S2iBuilder,resource=s2ibuilders
-type S2iBuilderControllerImpl struct {
+// +controller:group=devops,version=v1alpha1,kind=S2iRun,resource=s2iruns
+type S2iRunControllerImpl struct {
 	builders.DefaultControllerFns
 
-	// lister indexes properties about S2iBuilder
+	// lister indexes properties about S2iRun
 	builderLister listers.S2iBuilderLister
 	runLister     listers.S2iRunLister
 }
 
 // Init initializes the controller and is called by the generated code
 // Register watches for additional resource types here.
-func (c *S2iBuilderControllerImpl) Init(arguments sharedinformers.ControllerInitArguments) {
-	// Use the lister for indexing s2ibuilders labels
+func (c *S2iRunControllerImpl) Init(arguments sharedinformers.ControllerInitArguments) {
+	// Use the lister for indexing s2iruns labels
 	c.builderLister = arguments.GetSharedInformers().Factory.Devops().V1alpha1().S2iBuilders().Lister()
 	c.runLister = arguments.GetSharedInformers().Factory.Devops().V1alpha1().S2iRuns().Lister()
 }
 
 // Reconcile handles enqueued messages
-func (c *S2iBuilderControllerImpl) Reconcile(u *v1alpha1.S2iBuilder) error {
+func (c *S2iRunControllerImpl) Reconcile(u *v1alpha1.S2iRun) error {
 	// Implement controller logic here
-	glog.V(2).Infof("Running reconcile S2iBuilder for %s\n", u.Name)
+	glog.V(2).Infof("Running reconcile S2iRun for %s\n", u.Name)
 	instance, err := c.Get(u.Namespace, u.Name)
 	if err != nil {
 		if errors.IsNotFound(err) {
 			return nil
 		}
 		return err
-	}
-
-	selector := labels.NewSelector()
-	r, _ := labels.NewRequirement("builder", selection.Equals, []string{u.Name})
-	selector.Add(r)
-	runs, err := c.runLister.List().S2iRuns(u.Namespace).List(selector)
-	if err != nil {
-		glog.Errorf("cannot get s2irunners of s2ibuilder-<%s>,error is %s", u.Name, err.Error())
-		return err
-	}
-	instance.Status.RunCount = len(runList.Items)
-	last := new(metav1.Time)
-	for _, item := range runs {
-		if item.Status.StartTime.After(last.Time) {
-			*last = *(item.Status.StartTime)
-			instance.Status.LastRunState = item.Status.RunState
-			instance.Status.LastRunName = item.Name
-		}
-	}
+	}	
+	instance.Labels["builder"]=instance.Spec.BuilderName
 	return nil
 }
 
-func (c *S2iBuilderControllerImpl) Get(namespace, name string) (*v1alpha1.S2iBuilder, error) {
-	return c.builderLister.S2iBuilders(namespace).Get(name)
+func (c *S2iRunControllerImpl) Get(namespace, name string) (*v1alpha1.S2iRun, error) {
+	return c.runLister.S2iRuns(namespace).Get(name)
 }

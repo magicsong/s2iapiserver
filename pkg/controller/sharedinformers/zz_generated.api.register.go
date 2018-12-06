@@ -19,12 +19,13 @@ limitations under the License.
 package sharedinformers
 
 import (
+	"time"
+
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/controller"
 	"github.com/magicsong/s2iapiserver/pkg/client/clientset_generated/clientset"
 	"github.com/magicsong/s2iapiserver/pkg/client/informers_generated/externalversions"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/cache"
-	"time"
 )
 
 // SharedInformers wraps all informers used by controllers so that
@@ -52,6 +53,7 @@ func NewSharedInformers(config *rest.Config, shutdown <-chan struct{}) *SharedIn
 // startInformers starts all of the informers
 func (si *SharedInformers) startInformers(shutdown <-chan struct{}) {
 	go si.Factory.Devops().V1alpha1().S2iBuilders().Informer().Run(shutdown)
+	go si.Factory.Devops().V1alpha1().S2iRuns().Informer().Run(shutdown)
 }
 
 // ControllerInitArguments are arguments provided to the Init function for a new controller.

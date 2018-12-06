@@ -1,0 +1,7 @@
+note: S2iRun Example
+sample: |
+  apiVersion: devops.kubesphere.io/v1alpha1
+  kind: S2iRun
+  metadata:
+    name: s2irun-example
+  spec:

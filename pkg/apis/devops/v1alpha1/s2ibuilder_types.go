@@ -20,6 +20,8 @@ import (
 	"context"
 	"log"
 
+	"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi"
+
 	"k8s.io/apimachinery/pkg/runtime"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -44,7 +46,7 @@ type S2iBuilder struct {
 
 // S2iBuilderSpec defines the desired state of S2iBuilder
 type S2iBuilderSpec struct {
-	Config string `json:"config,omitempty"`
+	Config s2iapi.Config `json:"config,omitempty"`
 }
 
 const (
@@ -56,9 +58,9 @@ const (
 
 // S2iBuilderStatus defines the observed state of S2iBuilder
 type S2iBuilderStatus struct {
-	RunCount     int    `json:"runCount,omitempty"`
-	LastRunState string `json:"lastRunState,omitempty"`
-	LastRunName  string `json:"lastRunName,omitempty"`
+	RunCount     int     `json:"runCount,omitempty"`
+	LastRunState string  `json:"lastRunState,omitempty"`
+	LastRunName  *string `json:"lastRunName,omitempty"`
 }
 
 // Validate checks that an instance of S2iBuilder is well formed

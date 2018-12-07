@@ -25,7 +25,6 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
-	"k8s.io/apimachinery/pkg/selection"
 )
 
 // +controller:group=devops,version=v1alpha1,kind=S2iBuilder,resource=s2ibuilders
@@ -56,22 +55,20 @@ func (c *S2iBuilderControllerImpl) Reconcile(u *v1alpha1.S2iBuilder) error {
 		}
 		return err
 	}
-
-	selector := labels.NewSelector()
-	r, _ := labels.NewRequirement("builder", selection.Equals, []string{u.Name})
-	selector.Add(*r)
-	runs, err := c.runLister.S2iRuns(u.Namespace).List(selector)
+	runs, err := c.runLister.S2iRuns(u.Namespace).List(labels.Everything())
 	if err != nil {
 		glog.Errorf("cannot get s2irunners of s2ibuilder-<%s>,error is %s", u.Name, err.Error())
 		return err
 	}
-	instance.Status.RunCount = len(runs)
 	last := new(metav1.Time)
 	for _, item := range runs {
-		if item.Status.StartTime.After(last.Time) {
-			*last = *(item.Status.StartTime)
-			instance.Status.LastRunState = item.Status.RunState
-			instance.Status.LastRunName = item.Name
+		if item.Spec.BuilderName == u.Name {
+			instance.Status.RunCount++
+			if item.Status.StartTime != nil && item.Status.StartTime.After(last.Time) {
+				last = item.Status.StartTime
+				instance.Status.LastRunState = item.Status.RunState
+				instance.Status.LastRunName = &(item.Name)
+			}
 		}
 	}
 	return nil

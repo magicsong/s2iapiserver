@@ -4,13 +4,13 @@ IMG ?= controller:latest
 generate:
 	apiserver-boot build generated
 
-manager:generate
+build-binary:
 	CGO_ENABLED=0 go build -o bin/apiserver cmd/apiserver/main.go
 	CGO_ENABLED=0 go build -o bin/controller-manager cmd/controller-manager/main.go
 
 .PHONY: build
 build: 
 	apiserver-boot build executables --generate=false
-debug: manager
-	apiserver-boot run local --run=apiserver --run=controller-manager --etcd "http://192.168.98.8:2379" --generate=false --build=false
+debug: build-binary
+	apiserver-boot run local --run=apiserver --run=controller-manager --etcd "http://192.168.98.8:2379" --generate=false --build=false --controller-args="-logtostderr=true" --controller-args="-v=3"  --apiserver-args="--loglevel=3"
 

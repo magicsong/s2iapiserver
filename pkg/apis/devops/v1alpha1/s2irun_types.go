@@ -18,14 +18,12 @@ package v1alpha1
 
 import (
 	"context"
-	"log"
 
-	"k8s.io/apimachinery/pkg/runtime"
-
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/util/validation/field"
-
+	"github.com/golang/glog"
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/util/validation/field"
 )
 
 // +genclient
@@ -59,7 +57,7 @@ type S2iRunStatus struct {
 // Validate checks that an instance of S2iRun is well formed
 func (S2iRunStrategy) Validate(ctx context.Context, obj runtime.Object) field.ErrorList {
 	o := obj.(*devops.S2iRun)
-	log.Printf("Validating fields for S2iRun %s\n", o.Name)
+	glog.V(4).Infof("Validating fields for S2iRun %s\n", o.Name)
 	errors := field.ErrorList{}
 	// perform validation here and add to errors using field.Invalid
 	return errors
@@ -69,5 +67,5 @@ func (S2iRunStrategy) Validate(ctx context.Context, obj runtime.Object) field.Er
 func (S2iRunSchemeFns) DefaultingFunction(o interface{}) {
 	obj := o.(*S2iRun)
 	// set default field values here
-	log.Printf("Defaulting fields for S2iRun %s\n", obj.Name)
+	glog.V(4).Infof("Defaulting fields for S2iRun %s\n", obj.Name)
 }

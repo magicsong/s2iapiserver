@@ -235,7 +235,7 @@ func Convert_devops_S2iBuilderSpec_To_v1alpha1_S2iBuilderSpec(in *devops.S2iBuil
 func autoConvert_v1alpha1_S2iBuilderStatus_To_devops_S2iBuilderStatus(in *S2iBuilderStatus, out *devops.S2iBuilderStatus, s conversion.Scope) error {
 	out.RunCount = in.RunCount
 	out.LastRunState = in.LastRunState
-	out.LastRunName = in.LastRunName
+	out.LastRunName = (*string)(unsafe.Pointer(in.LastRunName))
 	return nil
 }
 
@@ -247,7 +247,7 @@ func Convert_v1alpha1_S2iBuilderStatus_To_devops_S2iBuilderStatus(in *S2iBuilder
 func autoConvert_devops_S2iBuilderStatus_To_v1alpha1_S2iBuilderStatus(in *devops.S2iBuilderStatus, out *S2iBuilderStatus, s conversion.Scope) error {
 	out.RunCount = in.RunCount
 	out.LastRunState = in.LastRunState
-	out.LastRunName = in.LastRunName
+	out.LastRunName = (*string)(unsafe.Pointer(in.LastRunName))
 	return nil
 }
 

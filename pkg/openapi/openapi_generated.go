@@ -45,6 +45,15 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iRunStatus":             schema_pkg_apis_devops_v1alpha1_S2iRunStatus(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iRunStatusStrategy":     schema_pkg_apis_devops_v1alpha1_S2iRunStatusStrategy(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iRunStrategy":           schema_pkg_apis_devops_v1alpha1_S2iRunStrategy(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.AuthConfig":        schema_apis_devops_v1alpha1_s2iapi_AuthConfig(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.CGroupLimits":      schema_apis_devops_v1alpha1_s2iapi_CGroupLimits(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.Config":            schema_apis_devops_v1alpha1_s2iapi_Config(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.ContainerConfig":   schema_apis_devops_v1alpha1_s2iapi_ContainerConfig(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.DockerConfig":      schema_apis_devops_v1alpha1_s2iapi_DockerConfig(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.EnvironmentSpec":   schema_apis_devops_v1alpha1_s2iapi_EnvironmentSpec(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.Image":             schema_apis_devops_v1alpha1_s2iapi_Image(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.ProxyConfig":       schema_apis_devops_v1alpha1_s2iapi_ProxyConfig(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.VolumeSpec":        schema_apis_devops_v1alpha1_s2iapi_VolumeSpec(ref),
 		"k8s.io/api/admissionregistration/v1alpha1.Initializer":                               schema_k8sio_api_admissionregistration_v1alpha1_Initializer(ref),
 		"k8s.io/api/admissionregistration/v1alpha1.InitializerConfiguration":                  schema_k8sio_api_admissionregistration_v1alpha1_InitializerConfiguration(ref),
 		"k8s.io/api/admissionregistration/v1alpha1.InitializerConfigurationList":              schema_k8sio_api_admissionregistration_v1alpha1_InitializerConfigurationList(ref),
@@ -765,14 +774,14 @@ func schema_pkg_apis_devops_v1alpha1_S2iBuilderSpec(ref common.ReferenceCallback
 				Properties: map[string]spec.Schema{
 					"config": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.Config"),
 						},
 					},
 				},
 			},
 		},
-		Dependencies: []string{},
+		Dependencies: []string{
+			"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.Config"},
 	}
 }
 
@@ -1049,6 +1058,737 @@ func schema_pkg_apis_devops_v1alpha1_S2iRunStrategy(ref common.ReferenceCallback
 		},
 		Dependencies: []string{
 			"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStorageStrategy"},
+	}
+}
+
+func schema_apis_devops_v1alpha1_s2iapi_AuthConfig(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "AuthConfig is our abstraction of the Registry authorization information for whatever docker client we happen to be based on",
+				Properties: map[string]spec.Schema{
+					"username": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"password": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"email": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"server_address": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"username", "password"},
+			},
+		},
+		Dependencies: []string{},
+	}
+}
+
+func schema_apis_devops_v1alpha1_s2iapi_CGroupLimits(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "CGroupLimits holds limits used to constrain container resources.",
+				Properties: map[string]spec.Schema{
+					"MemoryLimitBytes": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"CPUShares": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"CPUPeriod": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"CPUQuota": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"MemorySwap": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int64",
+						},
+					},
+					"Parent": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"MemoryLimitBytes", "CPUShares", "CPUPeriod", "CPUQuota", "MemorySwap", "Parent"},
+			},
+		},
+		Dependencies: []string{},
+	}
+}
+
+func schema_apis_devops_v1alpha1_s2iapi_Config(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "Config contains essential fields for performing build.",
+				Properties: map[string]spec.Schema{
+					"displayName": {
+						SchemaProps: spec.SchemaProps{
+							Description: "DisplayName is a result image display-name label. This defaults to the output image name.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"description": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Description is a result image description label. The default is no description.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"builderImage": {
+						SchemaProps: spec.SchemaProps{
+							Description: "BuilderImage describes which image is used for building the result images.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"builderImageVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "BuilderImageVersion provides optional version information about the builder image.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"builderBaseImageVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "BuilderBaseImageVersion provides optional version information about the builder base image.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"runtimeImage": {
+						SchemaProps: spec.SchemaProps{
+							Description: "RuntimeImage specifies the image that will be a base for resulting image and will be used for running an application. By default, BuilderImage is used for building and running, but the latter may be overridden.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"runtimeImagePullPolicy": {
+						SchemaProps: spec.SchemaProps{
+							Description: "RuntimeImagePullPolicy specifies when to pull a runtime image.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"runtimeAuthentication": {
+						SchemaProps: spec.SchemaProps{
+							Description: "RuntimeAuthentication holds the authentication information for pulling the runtime Docker images from private repositories.",
+							Ref:         ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.AuthConfig"),
+						},
+					},
+					"runtimeArtifacts": {
+						SchemaProps: spec.SchemaProps{
+							Description: "RuntimeArtifacts specifies a list of source/destination pairs that will be copied from builder to a runtime image. Source can be a file or directory. Destination must be a directory. Regardless whether it is an absolute or relative path, it will be placed into image's WORKDIR. Destination also can be empty or equals to \".\", in this case it just refers to a root of WORKDIR. In case it's empty, S2I will try to get this list from io.openshift.s2i.assemble-input-files label on a RuntimeImage.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.VolumeSpec"),
+									},
+								},
+							},
+						},
+					},
+					"dockerConfig": {
+						SchemaProps: spec.SchemaProps{
+							Description: "DockerConfig describes how to access host docker daemon.",
+							Ref:         ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.DockerConfig"),
+						},
+					},
+					"pullAuthentication": {
+						SchemaProps: spec.SchemaProps{
+							Description: "PullAuthentication holds the authentication information for pulling the Docker images from private repositories",
+							Ref:         ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.AuthConfig"),
+						},
+					},
+					"pushAuthentication": {
+						SchemaProps: spec.SchemaProps{
+							Description: "PullAuthentication holds the authentication information for pulling the Docker images from private repositories",
+							Ref:         ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.AuthConfig"),
+						},
+					},
+					"incrementalAuthentication": {
+						SchemaProps: spec.SchemaProps{
+							Description: "IncrementalAuthentication holds the authentication information for pulling the previous image from private repositories",
+							Ref:         ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.AuthConfig"),
+						},
+					},
+					"dockerNetworkMode": {
+						SchemaProps: spec.SchemaProps{
+							Description: "DockerNetworkMode is used to set the docker network setting to --net=container:<id> when the builder is invoked from a container.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"preserveWorkingDir": {
+						SchemaProps: spec.SchemaProps{
+							Description: "PreserveWorkingDir describes if working directory should be left after processing.",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"ignoreSubmodules": {
+						SchemaProps: spec.SchemaProps{
+							Description: "IgnoreSubmodules determines whether we will attempt to pull in submodules (via --recursive or submodule init)",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"tag": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Tag is a result image tag name.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"builderPullPolicy": {
+						SchemaProps: spec.SchemaProps{
+							Description: "BuilderPullPolicy specifies when to pull the builder image",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"previousImagePullPolicy": {
+						SchemaProps: spec.SchemaProps{
+							Description: "PreviousImagePullPolicy specifies when to pull the previously build image when doing incremental build",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"incremental": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Incremental describes whether to try to perform incremental build.",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"incrementalFromTag": {
+						SchemaProps: spec.SchemaProps{
+							Description: "IncrementalFromTag sets an alternative image tag to look for existing artifacts. Tag is used by default if this is not set.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"removePreviousImage": {
+						SchemaProps: spec.SchemaProps{
+							Description: "RemovePreviousImage describes if previous image should be removed after successful build. This applies only to incremental builds.",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"environment": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Environment is a map of environment variables to be passed to the image.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.EnvironmentSpec"),
+									},
+								},
+							},
+						},
+					},
+					"labelNamespace": {
+						SchemaProps: spec.SchemaProps{
+							Description: "LabelNamespace provides the namespace under which the labels will be generated.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"callbackUrl": {
+						SchemaProps: spec.SchemaProps{
+							Description: "CallbackURL is a URL which is called upon successful build to inform about that fact.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"scriptsUrl": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ScriptsURL is a URL describing where to fetch the S2I scripts from during build process. This url can be a reference within the builder image if the scheme is specified as image://",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"destination": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Destination specifies a location where the untar operation will place its artifacts.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"workingDir": {
+						SchemaProps: spec.SchemaProps{
+							Description: "WorkingDir describes temporary directory used for downloading sources, scripts and tar operations.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"workingSourceDir": {
+						SchemaProps: spec.SchemaProps{
+							Description: "WorkingSourceDir describes the subdirectory off of WorkingDir set up during the repo download that is later used as the root for ignore processing",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"layeredBuild": {
+						SchemaProps: spec.SchemaProps{
+							Description: "LayeredBuild describes if this is build which layered scripts and sources on top of BuilderImage.",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"quiet": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Operate quietly. Progress and assemble script output are not reported, only fatal errors. (default: false).",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"forceCopy": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ForceCopy results in only the file SCM plugin being used (i.e. no `git clone`); allows for empty directories to be included in resulting image (since git does not support that). (default: false).",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"contextDir": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Specify a relative directory inside the application repository that should be used as a root directory for the application.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"assembleUser": {
+						SchemaProps: spec.SchemaProps{
+							Description: "AssembleUser specifies the user to run the assemble script in container",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"runImage": {
+						SchemaProps: spec.SchemaProps{
+							Description: "RunImage will trigger a \"docker run ...\" invocation of the produced image so the user can see if it operates as he would expect",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"usage": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Usage allows for properly shortcircuiting s2i logic when `s2i usage` is invoked",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"injections": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Injections specifies a list source/destination folders that are injected to the container that runs assemble. All files we inject will be truncated after the assemble script finishes.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.VolumeSpec"),
+									},
+								},
+							},
+						},
+					},
+					"cgroupLimits": {
+						SchemaProps: spec.SchemaProps{
+							Description: "CGroupLimits describes the cgroups limits that will be applied to any containers run by s2i.",
+							Ref:         ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.CGroupLimits"),
+						},
+					},
+					"dropCapabilities": {
+						SchemaProps: spec.SchemaProps{
+							Description: "DropCapabilities contains a list of capabilities to drop when executing containers",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"scriptDownloadProxyConfig": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ScriptDownloadProxyConfig optionally specifies the http and https proxy to use when downloading scripts",
+							Ref:         ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.ProxyConfig"),
+						},
+					},
+					"excludeRegExp": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ExcludeRegExp contains a string representation of the regular expression desired for deciding which files to exclude from the tar stream",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"blockOnBuild": {
+						SchemaProps: spec.SchemaProps{
+							Description: "BlockOnBuild prevents s2i from performing a docker build operation if one is necessary to execute ONBUILD commands, or to layer source code into the container for images that don't have a tar binary available, if the image contains ONBUILD commands that would be executed.",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"hasOnBuild": {
+						SchemaProps: spec.SchemaProps{
+							Description: "HasOnBuild will be set to true if the builder image contains ONBUILD instructions",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"buildVolumes": {
+						SchemaProps: spec.SchemaProps{
+							Description: "BuildVolumes specifies a list of volumes to mount to container running the build.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"labels": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Labels specify labels and their values to be applied to the resulting image. Label keys must have non-zero length. The labels defined here override generated labels in case they have the same name.",
+							Type:        []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"securityOpt": {
+						SchemaProps: spec.SchemaProps{
+							Description: "SecurityOpt are passed as options to the docker containers launched by s2i.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"keepSymlinks": {
+						SchemaProps: spec.SchemaProps{
+							Description: "KeepSymlinks indicates to copy symlinks as symlinks. Default behavior is to follow symlinks and copy files by content.",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"asDockerfile": {
+						SchemaProps: spec.SchemaProps{
+							Description: "AsDockerfile indicates the path where the Dockerfile should be written instead of building a new image.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"imageWorkDir": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ImageWorkDir is the default working directory for the builder image.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"imageScriptsUrl": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ImageScriptsURL is the default location to find the assemble/run scripts for a builder image. This url can be a reference within the builder image if the scheme is specified as image://",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"addHost": {
+						SchemaProps: spec.SchemaProps{
+							Description: "AddHost Add a line to /etc/hosts for test purpose or private use in LAN. Its format is host:IP,muliple hosts can be added  by using multiple --add-host",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"export": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Export Push the result image to specify image registry in tag",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"sourceUrl": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.AuthConfig", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.CGroupLimits", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.DockerConfig", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.EnvironmentSpec", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.ProxyConfig", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.VolumeSpec"},
+	}
+}
+
+func schema_apis_devops_v1alpha1_s2iapi_ContainerConfig(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "ContainerConfig is the abstraction of the docker client provider (formerly go-dockerclient, now either engine-api or kube docker client) container.Config type that is leveraged by s2i or origin",
+				Properties: map[string]spec.Schema{
+					"Labels": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+					"Env": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"string"},
+										Format: "",
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"Labels", "Env"},
+			},
+		},
+		Dependencies: []string{},
+	}
+}
+
+func schema_apis_devops_v1alpha1_s2iapi_DockerConfig(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "DockerConfig contains the configuration for a Docker connection.",
+				Properties: map[string]spec.Schema{
+					"Endpoint": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Endpoint is the docker network endpoint or socket",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"CertFile": {
+						SchemaProps: spec.SchemaProps{
+							Description: "CertFile is the certificate file path for a TLS connection",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"KeyFile": {
+						SchemaProps: spec.SchemaProps{
+							Description: "KeyFile is the key file path for a TLS connection",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"CAFile": {
+						SchemaProps: spec.SchemaProps{
+							Description: "CAFile is the certificate authority file path for a TLS connection",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"UseTLS": {
+						SchemaProps: spec.SchemaProps{
+							Description: "UseTLS indicates if TLS must be used",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"TLSVerify": {
+						SchemaProps: spec.SchemaProps{
+							Description: "TLSVerify indicates if TLS peer must be verified",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+				},
+				Required: []string{"Endpoint", "CertFile", "KeyFile", "CAFile", "UseTLS", "TLSVerify"},
+			},
+		},
+		Dependencies: []string{},
+	}
+}
+
+func schema_apis_devops_v1alpha1_s2iapi_EnvironmentSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "EnvironmentSpec specifies a single environment variable.",
+				Properties: map[string]spec.Schema{
+					"Name": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"Value": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+				Required: []string{"Name", "Value"},
+			},
+		},
+		Dependencies: []string{},
+	}
+}
+
+func schema_apis_devops_v1alpha1_s2iapi_Image(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "Image is the abstraction of the docker client provider (formerly go-dockerclient, now either engine-api or kube docker client) Image type that is leveraged by s2i or origin",
+				Properties: map[string]spec.Schema{
+					"ID": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"ContainerConfig": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.ContainerConfig"),
+						},
+					},
+					"Config": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.ContainerConfig"),
+						},
+					},
+				},
+				Required: []string{"ID", "ContainerConfig", "Config"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi.ContainerConfig"},
+	}
+}
+
+func schema_apis_devops_v1alpha1_s2iapi_ProxyConfig(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "ProxyConfig holds proxy configuration.",
+				Properties: map[string]spec.Schema{
+					"HTTPProxy": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("net/url.URL"),
+						},
+					},
+					"HTTPSProxy": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("net/url.URL"),
+						},
+					},
+				},
+				Required: []string{"HTTPProxy", "HTTPSProxy"},
+			},
+		},
+		Dependencies: []string{
+			"net/url.URL"},
+	}
+}
+
+func schema_apis_devops_v1alpha1_s2iapi_VolumeSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "VolumeSpec represents a single volume mount point.",
+				Properties: map[string]spec.Schema{
+					"Source": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Source is a reference to the volume source.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"Destination": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Destination is the path to mount the volume to - absolute or relative.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"Keep": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Keep indicates if the mounted data should be kept in the final image.",
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+				},
+				Required: []string{"Source", "Destination", "Keep"},
+			},
+		},
+		Dependencies: []string{},
 	}
 }
 

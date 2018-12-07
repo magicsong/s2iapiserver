@@ -23,6 +23,7 @@ import (
 	"fmt"
 
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/builders"
+	v1alpha1s2iapi "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi"
 	"k8s.io/apimachinery/pkg/apis/meta/internalversion"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -107,7 +108,7 @@ type S2iRun struct {
 type S2iBuilderStatus struct {
 	RunCount     int
 	LastRunState string
-	LastRunName  string
+	LastRunName  *string
 }
 
 type S2iRunStatus struct {
@@ -123,7 +124,7 @@ type S2iRunSpec struct {
 }
 
 type S2iBuilderSpec struct {
-	Config string
+	Config v1alpha1s2iapi.Config
 }
 
 //

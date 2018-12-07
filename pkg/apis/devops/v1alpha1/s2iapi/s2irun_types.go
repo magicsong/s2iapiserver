@@ -34,6 +34,7 @@ const (
 )
 
 // Config contains essential fields for performing build.
+//+k8s:openapi-gen=true
 type Config struct {
 	// DisplayName is a result image display-name label. This defaults to the
 	// output image name.

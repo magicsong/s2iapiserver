@@ -23,6 +23,7 @@ import (
 	listers "github.com/magicsong/s2iapiserver/pkg/client/listers_generated/devops/v1alpha1"
 	"github.com/magicsong/s2iapiserver/pkg/controller/sharedinformers"
 	"k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/selection"
 )
@@ -58,13 +59,13 @@ func (c *S2iBuilderControllerImpl) Reconcile(u *v1alpha1.S2iBuilder) error {
 
 	selector := labels.NewSelector()
 	r, _ := labels.NewRequirement("builder", selection.Equals, []string{u.Name})
-	selector.Add(r)
-	runs, err := c.runLister.List().S2iRuns(u.Namespace).List(selector)
+	selector.Add(*r)
+	runs, err := c.runLister.S2iRuns(u.Namespace).List(selector)
 	if err != nil {
 		glog.Errorf("cannot get s2irunners of s2ibuilder-<%s>,error is %s", u.Name, err.Error())
 		return err
 	}
-	instance.Status.RunCount = len(runList.Items)
+	instance.Status.RunCount = len(runs)
 	last := new(metav1.Time)
 	for _, item := range runs {
 		if item.Status.StartTime.After(last.Time) {

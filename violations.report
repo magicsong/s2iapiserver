@@ -16,6 +16,7 @@ API rule violation: names_match,k8s.io/api/core/v1,ISCSIPersistentVolumeSource,S
 API rule violation: names_match,k8s.io/api/core/v1,ISCSIVolumeSource,DiscoveryCHAPAuth
 API rule violation: names_match,k8s.io/api/core/v1,ISCSIVolumeSource,SessionCHAPAuth
 API rule violation: names_match,k8s.io/api/core/v1,NodeResources,Capacity
+API rule violation: names_match,k8s.io/api/core/v1,NodeSpec,DoNotUse_ExternalID
 API rule violation: names_match,k8s.io/api/core/v1,PersistentVolumeSource,CephFS
 API rule violation: names_match,k8s.io/api/core/v1,PersistentVolumeSource,StorageOS
 API rule violation: names_match,k8s.io/api/core/v1,PodSpec,DeprecatedServiceAccount
@@ -27,8 +28,6 @@ API rule violation: names_match,k8s.io/api/core/v1,RBDVolumeSource,CephMonitors
 API rule violation: names_match,k8s.io/api/core/v1,RBDVolumeSource,RBDImage
 API rule violation: names_match,k8s.io/api/core/v1,RBDVolumeSource,RBDPool
 API rule violation: names_match,k8s.io/api/core/v1,RBDVolumeSource,RadosUser
-API rule violation: names_match,k8s.io/api/core/v1,Sysctl,Name
-API rule violation: names_match,k8s.io/api/core/v1,Sysctl,Value
 API rule violation: names_match,k8s.io/api/core/v1,VolumeSource,CephFS
 API rule violation: names_match,k8s.io/api/core/v1,VolumeSource,StorageOS
 API rule violation: names_match,k8s.io/api/extensions/v1beta1,CustomMetricCurrentStatus,CurrentValue

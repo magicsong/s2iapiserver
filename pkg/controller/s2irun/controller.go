@@ -17,9 +17,9 @@ limitations under the License.
 package s2irun
 
 import (
-	"log"
-
+	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/builders"
+	"k8s.io/apimachinery/pkg/api/errors"
 
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1"
 	listers "github.com/magicsong/s2iapiserver/pkg/client/listers_generated/devops/v1alpha1"
@@ -53,8 +53,8 @@ func (c *S2iRunControllerImpl) Reconcile(u *v1alpha1.S2iRun) error {
 			return nil
 		}
 		return err
-	}	
-	instance.Labels["builder"]=instance.Spec.BuilderName
+	}
+	instance.Labels["builder"] = instance.Spec.BuilderName
 	return nil
 }
 

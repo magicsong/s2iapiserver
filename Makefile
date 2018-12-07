@@ -5,7 +5,10 @@ generate:
 	apiserver-boot build generated
 
 manager:generate
+	CGO_ENABLED=0 go build -o bin/apiserver cmd/apiserver/main.go
 	CGO_ENABLED=0 go build -o bin/controller-manager cmd/controller-manager/main.go
+
+.PHONY: build
 build: 
 	apiserver-boot build executables --generate=false
 debug: manager

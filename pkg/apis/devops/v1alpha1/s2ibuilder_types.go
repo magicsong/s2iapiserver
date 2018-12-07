@@ -17,10 +17,10 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"context"
 	"log"
 
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apiserver/pkg/endpoints/request"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/validation/field"
@@ -62,7 +62,7 @@ type S2iBuilderStatus struct {
 }
 
 // Validate checks that an instance of S2iBuilder is well formed
-func (S2iBuilderStrategy) Validate(ctx request.Context, obj runtime.Object) field.ErrorList {
+func (S2iBuilderStrategy) Validate(ctx context.Context, obj runtime.Object) field.ErrorList {
 	o := obj.(*devops.S2iBuilder)
 	log.Printf("Validating fields for S2iBuilder %s\n", o.Name)
 	errors := field.ErrorList{}

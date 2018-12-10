@@ -59,12 +59,6 @@
   version = "v1.2.0"
 
 [[projects]]
-  name = "github.com/asaskevich/govalidator"
-  packages = ["."]
-  revision = "521b25f4b05fd26bec69d9dedeb8f9c9a83939a8"
-  version = "v8"
-
-[[projects]]
   name = "github.com/beorn7/perks"
   packages = ["quantile"]
   revision = "3ac7bf7a47d159a033b107610db8a1b6575507a4"
@@ -236,12 +230,6 @@
   revision = "944e07253867aacae43c04b2e6a239005443f33a"
 
 [[projects]]
-  name = "github.com/fsnotify/fsnotify"
-  packages = ["."]
-  revision = "c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9"
-  version = "v1.4.7"
-
-[[projects]]
   name = "github.com/ghodss/yaml"
   packages = ["."]
   revision = "73d445a93680fa1a78ae23a5839bad48f32ba1ee"
@@ -250,12 +238,6 @@
   name = "github.com/go-openapi/analysis"
   packages = ["."]
   revision = "b44dc874b601d9e4e2f6e19140e794ba24bead3b"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/go-openapi/errors"
-  packages = ["."]
-  revision = "7bcb96a367bac6b76e6e42fa84155bb5581dcff8"
 
 [[projects]]
   name = "github.com/go-openapi/jsonpointer"
@@ -273,29 +255,14 @@
   revision = "18441dfa706d924a39a030ee2c3b1d8d81917b38"
 
 [[projects]]
-  name = "github.com/go-openapi/runtime"
-  packages = ["."]
-  revision = "11e322eeecc1032d5a0a96c566ed53f2b5c26e22"
-
-[[projects]]
   name = "github.com/go-openapi/spec"
   packages = ["."]
   revision = "6aced65f8501fe1217321abf0749d354824ba2ff"
 
 [[projects]]
-  name = "github.com/go-openapi/strfmt"
-  packages = ["."]
-  revision = "d65c7fdb29eca313476e529628176fe17e58c488"
-
-[[projects]]
   name = "github.com/go-openapi/swag"
   packages = ["."]
   revision = "1d0bd113de87027671077d3c71eb3ac5d7dbba72"
-
-[[projects]]
-  name = "github.com/go-openapi/validate"
-  packages = ["."]
-  revision = "deaf2c9013bc1a7f4c774662259a506ba874d80f"
 
 [[projects]]
   name = "github.com/gogo/protobuf"
@@ -394,22 +361,6 @@
   revision = "a0d98a5f288019575c6d1f4bb1573fef2d1fcdc4"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/hashicorp/hcl"
-  packages = [
-    ".",
-    "hcl/ast",
-    "hcl/parser",
-    "hcl/scanner",
-    "hcl/strconv",
-    "hcl/token",
-    "json/parser",
-    "json/scanner",
-    "json/token"
-  ]
-  revision = "23c074d0eceb2b8a5bfdbb271ab780cde70f05a8"
-
-[[projects]]
   name = "github.com/imdario/mergo"
   packages = ["."]
   revision = "9316a62528ac99aaecb4e47eadd6dc8aa6533d58"
@@ -439,10 +390,33 @@
   version = "v1.0.1"
 
 [[projects]]
-  name = "github.com/magiconair/properties"
-  packages = ["."]
-  revision = "d419a98cdbed11a922bf76f257b7c4be79b50e73"
-  version = "v1.7.4"
+  branch = "master"
+  name = "github.com/kubernetes-incubator/apiserver-builder"
+  packages = [
+    "pkg/apiserver",
+    "pkg/builders",
+    "pkg/cmd/server",
+    "pkg/controller",
+    "pkg/test",
+    "pkg/validators"
+  ]
+  revision = "f4a68adc0b77d65c5652701137847d20a5879d00"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/magicsong/s2irun"
+  packages = [
+    "pkg/api",
+    "pkg/api/constants",
+    "pkg/errors",
+    "pkg/scm/git",
+    "pkg/utils/cmd",
+    "pkg/utils/cygpath",
+    "pkg/utils/fs",
+    "pkg/utils/glog",
+    "pkg/utils/user"
+  ]
+  revision = "9d2226575114ee9cf278ccd22e97572034116a39"
 
 [[projects]]
   name = "github.com/mailru/easyjson"
@@ -454,21 +428,9 @@
   revision = "d5b7844b561a7bc640052f1b935f7b800330d7e0"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/markbates/inflect"
-  packages = ["."]
-  revision = "a12c3aec81a6a938bf584a4bac567afed9256586"
-
-[[projects]]
   name = "github.com/matttproud/golang_protobuf_extensions"
   packages = ["pbutil"]
   revision = "fc2b8d3a73c4867e51861bbdd5ae3c1f0869dd6a"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/mitchellh/mapstructure"
-  packages = ["."]
-  revision = "b4575eea38cca1123ec2dc90c26529b5c5acfcff"
 
 [[projects]]
   name = "github.com/modern-go/concurrent"
@@ -532,12 +494,6 @@
   revision = "ca53cad383cad2479bbba7f7a1a05797ec1386e4"
 
 [[projects]]
-  name = "github.com/pelletier/go-toml"
-  packages = ["."]
-  revision = "acdc4509485b587f5e675510c4f2c63e90ff68a8"
-  version = "v1.1.0"
-
-[[projects]]
   branch = "master"
   name = "github.com/petar/GoLLRB"
   packages = ["llrb"]
@@ -548,11 +504,6 @@
   packages = ["."]
   revision = "5f041e8faa004a95c88a202771f4cc3e991971e6"
   version = "v2.0.1"
-
-[[projects]]
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  revision = "a22138067af1c4942683050411a841ade67fe1eb"
 
 [[projects]]
   name = "github.com/prometheus/client_golang"
@@ -582,40 +533,14 @@
   revision = "65c1f6f8f0fc1e2185eb9863a3bc751496404259"
 
 [[projects]]
-  name = "github.com/spf13/afero"
-  packages = [
-    ".",
-    "mem"
-  ]
-  revision = "bb8f1927f2a9d3ab41c9340aa034f6b803f4359c"
-  version = "v1.0.2"
-
-[[projects]]
-  name = "github.com/spf13/cast"
-  packages = ["."]
-  revision = "acbeb36b902d72a7a4c18e8f3241075e7ab763e4"
-  version = "v1.1.0"
-
-[[projects]]
   name = "github.com/spf13/cobra"
   packages = ["."]
   revision = "f62e98d28ab7ad31d707ba837a966378465c7b57"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/spf13/jwalterweatherman"
-  packages = ["."]
-  revision = "7c0cea34c8ece3fbeb2b27ab9b59511d360fb394"
-
-[[projects]]
   name = "github.com/spf13/pflag"
   packages = ["."]
   revision = "9ff6c6923cfffbcd502984b8e0c80539a94968b7"
-
-[[projects]]
-  name = "github.com/spf13/viper"
-  packages = ["."]
-  revision = "7fb2782df3d83e0036cc89f461ed0422628776f4"
 
 [[projects]]
   name = "github.com/ugorji/go"
@@ -830,13 +755,6 @@
   revision = "475331a8afff5587f47d0470a93f79c60c573c03"
 
 [[projects]]
-  branch = "release-1.12"
-  name = "k8s.io/apiextensions-apiserver"
-  packages = ["pkg/apis/apiextensions"]
-  revision = "ca1024863b48cf0701229109df75ac5f0bb4907e"
-
-[[projects]]
-  branch = "release-1.12"
   name = "k8s.io/apimachinery"
   packages = [
     "pkg/api/equality",
@@ -889,10 +807,10 @@
     "third_party/forked/golang/json",
     "third_party/forked/golang/reflect"
   ]
-  revision = "f71dbbc36e126f5a371b85f6cca96bc8c57db2b6"
+  revision = "eddba98df674a16931d2d4ba75edc3a389bf633a"
+  version = "kubernetes-1.12.3"
 
 [[projects]]
-  branch = "release-1.12"
   name = "k8s.io/apiserver"
   packages = [
     "pkg/admission",
@@ -989,7 +907,8 @@
     "plugin/pkg/authenticator/token/webhook",
     "plugin/pkg/authorizer/webhook"
   ]
-  revision = "f1efbe52ad282d7d18ca4e5580b35c08e3bf521f"
+  revision = "92fdef3a232a23afb9644f6151119b5961b9feab"
+  version = "kubernetes-1.12.3"
 
 [[projects]]
   branch = "release-9.0"
@@ -1168,6 +1087,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b37f8e8633bca3d54952d5a2e6196a12f2433f5a2b0d58d41378f2d0d88effe2"
+  inputs-digest = "a8ebda64571ffbe3f6cd2974ee40468e0586cbbc5e8fba03d3a6bdd533fa4b2b"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -19,6 +19,8 @@ package v1alpha1
 import (
 	"context"
 
+	"github.com/magicsong/s2iapiserver/pkg/apis/devops/constants"
+
 	"github.com/golang/glog"
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -49,9 +51,9 @@ type S2iRunSpec struct {
 
 // S2iRunStatus defines the observed state of S2iRun
 type S2iRunStatus struct {
-	StartTime      *metav1.Time `json:"startTime,omitempty" protobuf:"bytes,2,opt,name=startTime"`
-	CompletionTime *metav1.Time `json:"completionTime,omitempty" protobuf:"bytes,3,opt,name=completionTime"`
-	RunState       string       `json:"runState,omitempty"`
+	StartTime      *metav1.Time           `json:"startTime,omitempty" protobuf:"bytes,2,opt,name=startTime"`
+	CompletionTime *metav1.Time           `json:"completionTime,omitempty" protobuf:"bytes,3,opt,name=completionTime"`
+	RunState       constants.RunningState `json:"runState,omitempty"`
 }
 
 // Validate checks that an instance of S2iRun is well formed

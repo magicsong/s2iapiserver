@@ -23,7 +23,7 @@ import (
 	"fmt"
 
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/builders"
-	v1alpha1s2iapi "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi"
+	devopsconstants "github.com/magicsong/s2iapiserver/pkg/apis/devops/constants"
 	"k8s.io/apimachinery/pkg/apis/meta/internalversion"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -107,14 +107,14 @@ type S2iRun struct {
 
 type S2iBuilderStatus struct {
 	RunCount     int
-	LastRunState string
+	LastRunState devopsconstants.RunningState
 	LastRunName  *string
 }
 
 type S2iRunStatus struct {
 	StartTime      *metav1.Time
 	CompletionTime *metav1.Time
-	RunState       string
+	RunState       devopsconstants.RunningState
 }
 
 type S2iRunSpec struct {
@@ -124,7 +124,104 @@ type S2iRunSpec struct {
 }
 
 type S2iBuilderSpec struct {
-	Config v1alpha1s2iapi.Config
+	Config *Config
+}
+
+type Config struct {
+	DisplayName               string
+	Description               string
+	BuilderImage              string
+	BuilderImageVersion       string
+	BuilderBaseImageVersion   string
+	RuntimeImage              string
+	RuntimeImagePullPolicy    devopsconstants.PullPolicy
+	RuntimeAuthentication     AuthConfig
+	RuntimeArtifacts          []VolumeSpec
+	DockerConfig              *DockerConfig
+	PullAuthentication        AuthConfig
+	PushAuthentication        AuthConfig
+	IncrementalAuthentication AuthConfig
+	DockerNetworkMode         devopsconstants.DockerNetworkMode
+	PreserveWorkingDir        bool
+	IgnoreSubmodules          bool
+	Tag                       string
+	BuilderPullPolicy         devopsconstants.PullPolicy
+	PreviousImagePullPolicy   devopsconstants.PullPolicy
+	Incremental               bool
+	IncrementalFromTag        string
+	RemovePreviousImage       bool
+	Environment               []EnvironmentSpec
+	LabelNamespace            string
+	CallbackURL               string
+	ScriptsURL                string
+	Destination               string
+	WorkingDir                string
+	WorkingSourceDir          string
+	LayeredBuild              bool
+	Quiet                     bool
+	ForceCopy                 bool
+	ContextDir                string
+	AssembleUser              string
+	RunImage                  bool
+	Usage                     bool
+	Injections                []VolumeSpec
+	CGroupLimits              *CGroupLimits
+	DropCapabilities          []string
+	ScriptDownloadProxyConfig *ProxyConfig
+	ExcludeRegExp             string
+	BlockOnBuild              bool
+	HasOnBuild                bool
+	BuildVolumes              []string
+	Labels                    map[string]string
+	SecurityOpt               []string
+	KeepSymlinks              bool
+	AsDockerfile              string
+	ImageWorkDir              string
+	ImageScriptsURL           string
+	AddHost                   []string
+	Export                    bool
+	SourceURL                 string
+}
+
+type AuthConfig struct {
+	Username      string
+	Password      string
+	Email         string
+	ServerAddress string
+}
+
+type ProxyConfig struct {
+	HTTPProxy  string
+	HTTPSProxy string
+}
+
+type CGroupLimits struct {
+	MemoryLimitBytes int64
+	CPUShares        int64
+	CPUPeriod        int64
+	CPUQuota         int64
+	MemorySwap       int64
+	Parent           string
+}
+
+type VolumeSpec struct {
+	Source      string
+	Destination string
+	Keep        bool
+}
+
+type EnvironmentSpec struct {
+	Name  string
+	Value string
+}
+
+type DockerConfig struct {
+	Endpoint  string
+	CertFile  string
+	KeyFile   string
+	CAFile    string
+	UseTLS    bool
+	TLSVerify bool
 }
 
 //

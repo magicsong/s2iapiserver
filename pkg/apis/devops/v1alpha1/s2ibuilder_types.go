@@ -20,14 +20,11 @@ import (
 	"context"
 	"log"
 
-	"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1/s2iapi"
-
-	"k8s.io/apimachinery/pkg/runtime"
-
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/util/validation/field"
-
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops"
+	"github.com/magicsong/s2iapiserver/pkg/apis/devops/constants"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/util/validation/field"
 )
 
 // +genclient
@@ -46,21 +43,14 @@ type S2iBuilder struct {
 
 // S2iBuilderSpec defines the desired state of S2iBuilder
 type S2iBuilderSpec struct {
-	Config s2iapi.Config `json:"config,omitempty"`
+	Config *Config `json:"config,omitempty"`
 }
-
-const (
-	NotRunning string = "Not Running Yet"
-	Successful        = "Successful"
-	Failed            = "Failed"
-	Unknown           = "Unknown"
-)
 
 // S2iBuilderStatus defines the observed state of S2iBuilder
 type S2iBuilderStatus struct {
-	RunCount     int     `json:"runCount,omitempty"`
-	LastRunState string  `json:"lastRunState,omitempty"`
-	LastRunName  *string `json:"lastRunName,omitempty"`
+	RunCount     int                    `json:"runCount,omitempty"`
+	LastRunState constants.RunningState `json:"lastRunState,omitempty"`
+	LastRunName  *string                `json:"lastRunName,omitempty"`
 }
 
 // Validate checks that an instance of S2iBuilder is well formed
@@ -75,5 +65,5 @@ func (S2iBuilderStrategy) Validate(ctx context.Context, obj runtime.Object) fiel
 // DefaultingFunction sets default S2iBuilder field values
 func (S2iBuilderSchemeFns) DefaultingFunction(o interface{}) {
 	obj := o.(*S2iBuilder)
-	obj.Status.LastRunState = NotRunning
+	obj.Status.LastRunState = constants.NotRunning
 }

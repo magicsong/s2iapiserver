@@ -23,6 +23,7 @@ import (
 	unsafe "unsafe"
 
 	devops "github.com/magicsong/s2iapiserver/pkg/apis/devops"
+	constants "github.com/magicsong/s2iapiserver/pkg/apis/devops/constants"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	conversion "k8s.io/apimachinery/pkg/conversion"
 	runtime "k8s.io/apimachinery/pkg/runtime"
@@ -35,6 +36,66 @@ func init() {
 // RegisterConversions adds conversion functions to the given scheme.
 // Public to allow building arbitrary schemes.
 func RegisterConversions(s *runtime.Scheme) error {
+	if err := s.AddGeneratedConversionFunc((*AuthConfig)(nil), (*devops.AuthConfig)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1alpha1_AuthConfig_To_devops_AuthConfig(a.(*AuthConfig), b.(*devops.AuthConfig), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*devops.AuthConfig)(nil), (*AuthConfig)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_devops_AuthConfig_To_v1alpha1_AuthConfig(a.(*devops.AuthConfig), b.(*AuthConfig), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*CGroupLimits)(nil), (*devops.CGroupLimits)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1alpha1_CGroupLimits_To_devops_CGroupLimits(a.(*CGroupLimits), b.(*devops.CGroupLimits), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*devops.CGroupLimits)(nil), (*CGroupLimits)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_devops_CGroupLimits_To_v1alpha1_CGroupLimits(a.(*devops.CGroupLimits), b.(*CGroupLimits), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*Config)(nil), (*devops.Config)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1alpha1_Config_To_devops_Config(a.(*Config), b.(*devops.Config), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*devops.Config)(nil), (*Config)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_devops_Config_To_v1alpha1_Config(a.(*devops.Config), b.(*Config), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*DockerConfig)(nil), (*devops.DockerConfig)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1alpha1_DockerConfig_To_devops_DockerConfig(a.(*DockerConfig), b.(*devops.DockerConfig), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*devops.DockerConfig)(nil), (*DockerConfig)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_devops_DockerConfig_To_v1alpha1_DockerConfig(a.(*devops.DockerConfig), b.(*DockerConfig), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*EnvironmentSpec)(nil), (*devops.EnvironmentSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1alpha1_EnvironmentSpec_To_devops_EnvironmentSpec(a.(*EnvironmentSpec), b.(*devops.EnvironmentSpec), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*devops.EnvironmentSpec)(nil), (*EnvironmentSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_devops_EnvironmentSpec_To_v1alpha1_EnvironmentSpec(a.(*devops.EnvironmentSpec), b.(*EnvironmentSpec), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*ProxyConfig)(nil), (*devops.ProxyConfig)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1alpha1_ProxyConfig_To_devops_ProxyConfig(a.(*ProxyConfig), b.(*devops.ProxyConfig), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*devops.ProxyConfig)(nil), (*ProxyConfig)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_devops_ProxyConfig_To_v1alpha1_ProxyConfig(a.(*devops.ProxyConfig), b.(*ProxyConfig), scope)
+	}); err != nil {
+		return err
+	}
 	if err := s.AddGeneratedConversionFunc((*S2iBuilder)(nil), (*devops.S2iBuilder)(nil), func(a, b interface{}, scope conversion.Scope) error {
 		return Convert_v1alpha1_S2iBuilder_To_devops_S2iBuilder(a.(*S2iBuilder), b.(*devops.S2iBuilder), scope)
 	}); err != nil {
@@ -155,7 +216,287 @@ func RegisterConversions(s *runtime.Scheme) error {
 	}); err != nil {
 		return err
 	}
+	if err := s.AddGeneratedConversionFunc((*VolumeSpec)(nil), (*devops.VolumeSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_v1alpha1_VolumeSpec_To_devops_VolumeSpec(a.(*VolumeSpec), b.(*devops.VolumeSpec), scope)
+	}); err != nil {
+		return err
+	}
+	if err := s.AddGeneratedConversionFunc((*devops.VolumeSpec)(nil), (*VolumeSpec)(nil), func(a, b interface{}, scope conversion.Scope) error {
+		return Convert_devops_VolumeSpec_To_v1alpha1_VolumeSpec(a.(*devops.VolumeSpec), b.(*VolumeSpec), scope)
+	}); err != nil {
+		return err
+	}
 	return nil
+}
+
+func autoConvert_v1alpha1_AuthConfig_To_devops_AuthConfig(in *AuthConfig, out *devops.AuthConfig, s conversion.Scope) error {
+	out.Username = in.Username
+	out.Password = in.Password
+	out.Email = in.Email
+	out.ServerAddress = in.ServerAddress
+	return nil
+}
+
+// Convert_v1alpha1_AuthConfig_To_devops_AuthConfig is an autogenerated conversion function.
+func Convert_v1alpha1_AuthConfig_To_devops_AuthConfig(in *AuthConfig, out *devops.AuthConfig, s conversion.Scope) error {
+	return autoConvert_v1alpha1_AuthConfig_To_devops_AuthConfig(in, out, s)
+}
+
+func autoConvert_devops_AuthConfig_To_v1alpha1_AuthConfig(in *devops.AuthConfig, out *AuthConfig, s conversion.Scope) error {
+	out.Username = in.Username
+	out.Password = in.Password
+	out.Email = in.Email
+	out.ServerAddress = in.ServerAddress
+	return nil
+}
+
+// Convert_devops_AuthConfig_To_v1alpha1_AuthConfig is an autogenerated conversion function.
+func Convert_devops_AuthConfig_To_v1alpha1_AuthConfig(in *devops.AuthConfig, out *AuthConfig, s conversion.Scope) error {
+	return autoConvert_devops_AuthConfig_To_v1alpha1_AuthConfig(in, out, s)
+}
+
+func autoConvert_v1alpha1_CGroupLimits_To_devops_CGroupLimits(in *CGroupLimits, out *devops.CGroupLimits, s conversion.Scope) error {
+	out.MemoryLimitBytes = in.MemoryLimitBytes
+	out.CPUShares = in.CPUShares
+	out.CPUPeriod = in.CPUPeriod
+	out.CPUQuota = in.CPUQuota
+	out.MemorySwap = in.MemorySwap
+	out.Parent = in.Parent
+	return nil
+}
+
+// Convert_v1alpha1_CGroupLimits_To_devops_CGroupLimits is an autogenerated conversion function.
+func Convert_v1alpha1_CGroupLimits_To_devops_CGroupLimits(in *CGroupLimits, out *devops.CGroupLimits, s conversion.Scope) error {
+	return autoConvert_v1alpha1_CGroupLimits_To_devops_CGroupLimits(in, out, s)
+}
+
+func autoConvert_devops_CGroupLimits_To_v1alpha1_CGroupLimits(in *devops.CGroupLimits, out *CGroupLimits, s conversion.Scope) error {
+	out.MemoryLimitBytes = in.MemoryLimitBytes
+	out.CPUShares = in.CPUShares
+	out.CPUPeriod = in.CPUPeriod
+	out.CPUQuota = in.CPUQuota
+	out.MemorySwap = in.MemorySwap
+	out.Parent = in.Parent
+	return nil
+}
+
+// Convert_devops_CGroupLimits_To_v1alpha1_CGroupLimits is an autogenerated conversion function.
+func Convert_devops_CGroupLimits_To_v1alpha1_CGroupLimits(in *devops.CGroupLimits, out *CGroupLimits, s conversion.Scope) error {
+	return autoConvert_devops_CGroupLimits_To_v1alpha1_CGroupLimits(in, out, s)
+}
+
+func autoConvert_v1alpha1_Config_To_devops_Config(in *Config, out *devops.Config, s conversion.Scope) error {
+	out.DisplayName = in.DisplayName
+	out.Description = in.Description
+	out.BuilderImage = in.BuilderImage
+	out.BuilderImageVersion = in.BuilderImageVersion
+	out.BuilderBaseImageVersion = in.BuilderBaseImageVersion
+	out.RuntimeImage = in.RuntimeImage
+	out.RuntimeImagePullPolicy = constants.PullPolicy(in.RuntimeImagePullPolicy)
+	if err := Convert_v1alpha1_AuthConfig_To_devops_AuthConfig(&in.RuntimeAuthentication, &out.RuntimeAuthentication, s); err != nil {
+		return err
+	}
+	out.RuntimeArtifacts = *(*[]devops.VolumeSpec)(unsafe.Pointer(&in.RuntimeArtifacts))
+	out.DockerConfig = (*devops.DockerConfig)(unsafe.Pointer(in.DockerConfig))
+	if err := Convert_v1alpha1_AuthConfig_To_devops_AuthConfig(&in.PullAuthentication, &out.PullAuthentication, s); err != nil {
+		return err
+	}
+	if err := Convert_v1alpha1_AuthConfig_To_devops_AuthConfig(&in.PushAuthentication, &out.PushAuthentication, s); err != nil {
+		return err
+	}
+	if err := Convert_v1alpha1_AuthConfig_To_devops_AuthConfig(&in.IncrementalAuthentication, &out.IncrementalAuthentication, s); err != nil {
+		return err
+	}
+	out.DockerNetworkMode = constants.DockerNetworkMode(in.DockerNetworkMode)
+	out.PreserveWorkingDir = in.PreserveWorkingDir
+	out.IgnoreSubmodules = in.IgnoreSubmodules
+	out.Tag = in.Tag
+	out.BuilderPullPolicy = constants.PullPolicy(in.BuilderPullPolicy)
+	out.PreviousImagePullPolicy = constants.PullPolicy(in.PreviousImagePullPolicy)
+	out.Incremental = in.Incremental
+	out.IncrementalFromTag = in.IncrementalFromTag
+	out.RemovePreviousImage = in.RemovePreviousImage
+	out.Environment = *(*[]devops.EnvironmentSpec)(unsafe.Pointer(&in.Environment))
+	out.LabelNamespace = in.LabelNamespace
+	out.CallbackURL = in.CallbackURL
+	out.ScriptsURL = in.ScriptsURL
+	out.Destination = in.Destination
+	out.WorkingDir = in.WorkingDir
+	out.WorkingSourceDir = in.WorkingSourceDir
+	out.LayeredBuild = in.LayeredBuild
+	out.Quiet = in.Quiet
+	out.ForceCopy = in.ForceCopy
+	out.ContextDir = in.ContextDir
+	out.AssembleUser = in.AssembleUser
+	out.RunImage = in.RunImage
+	out.Usage = in.Usage
+	out.Injections = *(*[]devops.VolumeSpec)(unsafe.Pointer(&in.Injections))
+	out.CGroupLimits = (*devops.CGroupLimits)(unsafe.Pointer(in.CGroupLimits))
+	out.DropCapabilities = *(*[]string)(unsafe.Pointer(&in.DropCapabilities))
+	out.ScriptDownloadProxyConfig = (*devops.ProxyConfig)(unsafe.Pointer(in.ScriptDownloadProxyConfig))
+	out.ExcludeRegExp = in.ExcludeRegExp
+	out.BlockOnBuild = in.BlockOnBuild
+	out.HasOnBuild = in.HasOnBuild
+	out.BuildVolumes = *(*[]string)(unsafe.Pointer(&in.BuildVolumes))
+	out.Labels = *(*map[string]string)(unsafe.Pointer(&in.Labels))
+	out.SecurityOpt = *(*[]string)(unsafe.Pointer(&in.SecurityOpt))
+	out.KeepSymlinks = in.KeepSymlinks
+	out.AsDockerfile = in.AsDockerfile
+	out.ImageWorkDir = in.ImageWorkDir
+	out.ImageScriptsURL = in.ImageScriptsURL
+	out.AddHost = *(*[]string)(unsafe.Pointer(&in.AddHost))
+	out.Export = in.Export
+	out.SourceURL = in.SourceURL
+	return nil
+}
+
+// Convert_v1alpha1_Config_To_devops_Config is an autogenerated conversion function.
+func Convert_v1alpha1_Config_To_devops_Config(in *Config, out *devops.Config, s conversion.Scope) error {
+	return autoConvert_v1alpha1_Config_To_devops_Config(in, out, s)
+}
+
+func autoConvert_devops_Config_To_v1alpha1_Config(in *devops.Config, out *Config, s conversion.Scope) error {
+	out.DisplayName = in.DisplayName
+	out.Description = in.Description
+	out.BuilderImage = in.BuilderImage
+	out.BuilderImageVersion = in.BuilderImageVersion
+	out.BuilderBaseImageVersion = in.BuilderBaseImageVersion
+	out.RuntimeImage = in.RuntimeImage
+	out.RuntimeImagePullPolicy = constants.PullPolicy(in.RuntimeImagePullPolicy)
+	if err := Convert_devops_AuthConfig_To_v1alpha1_AuthConfig(&in.RuntimeAuthentication, &out.RuntimeAuthentication, s); err != nil {
+		return err
+	}
+	out.RuntimeArtifacts = *(*[]VolumeSpec)(unsafe.Pointer(&in.RuntimeArtifacts))
+	out.DockerConfig = (*DockerConfig)(unsafe.Pointer(in.DockerConfig))
+	if err := Convert_devops_AuthConfig_To_v1alpha1_AuthConfig(&in.PullAuthentication, &out.PullAuthentication, s); err != nil {
+		return err
+	}
+	if err := Convert_devops_AuthConfig_To_v1alpha1_AuthConfig(&in.PushAuthentication, &out.PushAuthentication, s); err != nil {
+		return err
+	}
+	if err := Convert_devops_AuthConfig_To_v1alpha1_AuthConfig(&in.IncrementalAuthentication, &out.IncrementalAuthentication, s); err != nil {
+		return err
+	}
+	out.DockerNetworkMode = constants.DockerNetworkMode(in.DockerNetworkMode)
+	out.PreserveWorkingDir = in.PreserveWorkingDir
+	out.IgnoreSubmodules = in.IgnoreSubmodules
+	out.Tag = in.Tag
+	out.BuilderPullPolicy = constants.PullPolicy(in.BuilderPullPolicy)
+	out.PreviousImagePullPolicy = constants.PullPolicy(in.PreviousImagePullPolicy)
+	out.Incremental = in.Incremental
+	out.IncrementalFromTag = in.IncrementalFromTag
+	out.RemovePreviousImage = in.RemovePreviousImage
+	out.Environment = *(*[]EnvironmentSpec)(unsafe.Pointer(&in.Environment))
+	out.LabelNamespace = in.LabelNamespace
+	out.CallbackURL = in.CallbackURL
+	out.ScriptsURL = in.ScriptsURL
+	out.Destination = in.Destination
+	out.WorkingDir = in.WorkingDir
+	out.WorkingSourceDir = in.WorkingSourceDir
+	out.LayeredBuild = in.LayeredBuild
+	out.Quiet = in.Quiet
+	out.ForceCopy = in.ForceCopy
+	out.ContextDir = in.ContextDir
+	out.AssembleUser = in.AssembleUser
+	out.RunImage = in.RunImage
+	out.Usage = in.Usage
+	out.Injections = *(*[]VolumeSpec)(unsafe.Pointer(&in.Injections))
+	out.CGroupLimits = (*CGroupLimits)(unsafe.Pointer(in.CGroupLimits))
+	out.DropCapabilities = *(*[]string)(unsafe.Pointer(&in.DropCapabilities))
+	out.ScriptDownloadProxyConfig = (*ProxyConfig)(unsafe.Pointer(in.ScriptDownloadProxyConfig))
+	out.ExcludeRegExp = in.ExcludeRegExp
+	out.BlockOnBuild = in.BlockOnBuild
+	out.HasOnBuild = in.HasOnBuild
+	out.BuildVolumes = *(*[]string)(unsafe.Pointer(&in.BuildVolumes))
+	out.Labels = *(*map[string]string)(unsafe.Pointer(&in.Labels))
+	out.SecurityOpt = *(*[]string)(unsafe.Pointer(&in.SecurityOpt))
+	out.KeepSymlinks = in.KeepSymlinks
+	out.AsDockerfile = in.AsDockerfile
+	out.ImageWorkDir = in.ImageWorkDir
+	out.ImageScriptsURL = in.ImageScriptsURL
+	out.AddHost = *(*[]string)(unsafe.Pointer(&in.AddHost))
+	out.Export = in.Export
+	out.SourceURL = in.SourceURL
+	return nil
+}
+
+// Convert_devops_Config_To_v1alpha1_Config is an autogenerated conversion function.
+func Convert_devops_Config_To_v1alpha1_Config(in *devops.Config, out *Config, s conversion.Scope) error {
+	return autoConvert_devops_Config_To_v1alpha1_Config(in, out, s)
+}
+
+func autoConvert_v1alpha1_DockerConfig_To_devops_DockerConfig(in *DockerConfig, out *devops.DockerConfig, s conversion.Scope) error {
+	out.Endpoint = in.Endpoint
+	out.CertFile = in.CertFile
+	out.KeyFile = in.KeyFile
+	out.CAFile = in.CAFile
+	out.UseTLS = in.UseTLS
+	out.TLSVerify = in.TLSVerify
+	return nil
+}
+
+// Convert_v1alpha1_DockerConfig_To_devops_DockerConfig is an autogenerated conversion function.
+func Convert_v1alpha1_DockerConfig_To_devops_DockerConfig(in *DockerConfig, out *devops.DockerConfig, s conversion.Scope) error {
+	return autoConvert_v1alpha1_DockerConfig_To_devops_DockerConfig(in, out, s)
+}
+
+func autoConvert_devops_DockerConfig_To_v1alpha1_DockerConfig(in *devops.DockerConfig, out *DockerConfig, s conversion.Scope) error {
+	out.Endpoint = in.Endpoint
+	out.CertFile = in.CertFile
+	out.KeyFile = in.KeyFile
+	out.CAFile = in.CAFile
+	out.UseTLS = in.UseTLS
+	out.TLSVerify = in.TLSVerify
+	return nil
+}
+
+// Convert_devops_DockerConfig_To_v1alpha1_DockerConfig is an autogenerated conversion function.
+func Convert_devops_DockerConfig_To_v1alpha1_DockerConfig(in *devops.DockerConfig, out *DockerConfig, s conversion.Scope) error {
+	return autoConvert_devops_DockerConfig_To_v1alpha1_DockerConfig(in, out, s)
+}
+
+func autoConvert_v1alpha1_EnvironmentSpec_To_devops_EnvironmentSpec(in *EnvironmentSpec, out *devops.EnvironmentSpec, s conversion.Scope) error {
+	out.Name = in.Name
+	out.Value = in.Value
+	return nil
+}
+
+// Convert_v1alpha1_EnvironmentSpec_To_devops_EnvironmentSpec is an autogenerated conversion function.
+func Convert_v1alpha1_EnvironmentSpec_To_devops_EnvironmentSpec(in *EnvironmentSpec, out *devops.EnvironmentSpec, s conversion.Scope) error {
+	return autoConvert_v1alpha1_EnvironmentSpec_To_devops_EnvironmentSpec(in, out, s)
+}
+
+func autoConvert_devops_EnvironmentSpec_To_v1alpha1_EnvironmentSpec(in *devops.EnvironmentSpec, out *EnvironmentSpec, s conversion.Scope) error {
+	out.Name = in.Name
+	out.Value = in.Value
+	return nil
+}
+
+// Convert_devops_EnvironmentSpec_To_v1alpha1_EnvironmentSpec is an autogenerated conversion function.
+func Convert_devops_EnvironmentSpec_To_v1alpha1_EnvironmentSpec(in *devops.EnvironmentSpec, out *EnvironmentSpec, s conversion.Scope) error {
+	return autoConvert_devops_EnvironmentSpec_To_v1alpha1_EnvironmentSpec(in, out, s)
+}
+
+func autoConvert_v1alpha1_ProxyConfig_To_devops_ProxyConfig(in *ProxyConfig, out *devops.ProxyConfig, s conversion.Scope) error {
+	out.HTTPProxy = in.HTTPProxy
+	out.HTTPSProxy = in.HTTPSProxy
+	return nil
+}
+
+// Convert_v1alpha1_ProxyConfig_To_devops_ProxyConfig is an autogenerated conversion function.
+func Convert_v1alpha1_ProxyConfig_To_devops_ProxyConfig(in *ProxyConfig, out *devops.ProxyConfig, s conversion.Scope) error {
+	return autoConvert_v1alpha1_ProxyConfig_To_devops_ProxyConfig(in, out, s)
+}
+
+func autoConvert_devops_ProxyConfig_To_v1alpha1_ProxyConfig(in *devops.ProxyConfig, out *ProxyConfig, s conversion.Scope) error {
+	out.HTTPProxy = in.HTTPProxy
+	out.HTTPSProxy = in.HTTPSProxy
+	return nil
+}
+
+// Convert_devops_ProxyConfig_To_v1alpha1_ProxyConfig is an autogenerated conversion function.
+func Convert_devops_ProxyConfig_To_v1alpha1_ProxyConfig(in *devops.ProxyConfig, out *ProxyConfig, s conversion.Scope) error {
+	return autoConvert_devops_ProxyConfig_To_v1alpha1_ProxyConfig(in, out, s)
 }
 
 func autoConvert_v1alpha1_S2iBuilder_To_devops_S2iBuilder(in *S2iBuilder, out *devops.S2iBuilder, s conversion.Scope) error {
@@ -213,7 +554,7 @@ func Convert_devops_S2iBuilderList_To_v1alpha1_S2iBuilderList(in *devops.S2iBuil
 }
 
 func autoConvert_v1alpha1_S2iBuilderSpec_To_devops_S2iBuilderSpec(in *S2iBuilderSpec, out *devops.S2iBuilderSpec, s conversion.Scope) error {
-	out.Config = in.Config
+	out.Config = (*devops.Config)(unsafe.Pointer(in.Config))
 	return nil
 }
 
@@ -223,7 +564,7 @@ func Convert_v1alpha1_S2iBuilderSpec_To_devops_S2iBuilderSpec(in *S2iBuilderSpec
 }
 
 func autoConvert_devops_S2iBuilderSpec_To_v1alpha1_S2iBuilderSpec(in *devops.S2iBuilderSpec, out *S2iBuilderSpec, s conversion.Scope) error {
-	out.Config = in.Config
+	out.Config = (*Config)(unsafe.Pointer(in.Config))
 	return nil
 }
 
@@ -234,7 +575,7 @@ func Convert_devops_S2iBuilderSpec_To_v1alpha1_S2iBuilderSpec(in *devops.S2iBuil
 
 func autoConvert_v1alpha1_S2iBuilderStatus_To_devops_S2iBuilderStatus(in *S2iBuilderStatus, out *devops.S2iBuilderStatus, s conversion.Scope) error {
 	out.RunCount = in.RunCount
-	out.LastRunState = in.LastRunState
+	out.LastRunState = constants.RunningState(in.LastRunState)
 	out.LastRunName = (*string)(unsafe.Pointer(in.LastRunName))
 	return nil
 }
@@ -246,7 +587,7 @@ func Convert_v1alpha1_S2iBuilderStatus_To_devops_S2iBuilderStatus(in *S2iBuilder
 
 func autoConvert_devops_S2iBuilderStatus_To_v1alpha1_S2iBuilderStatus(in *devops.S2iBuilderStatus, out *S2iBuilderStatus, s conversion.Scope) error {
 	out.RunCount = in.RunCount
-	out.LastRunState = in.LastRunState
+	out.LastRunState = constants.RunningState(in.LastRunState)
 	out.LastRunName = (*string)(unsafe.Pointer(in.LastRunName))
 	return nil
 }
@@ -377,7 +718,7 @@ func Convert_devops_S2iRunSpec_To_v1alpha1_S2iRunSpec(in *devops.S2iRunSpec, out
 func autoConvert_v1alpha1_S2iRunStatus_To_devops_S2iRunStatus(in *S2iRunStatus, out *devops.S2iRunStatus, s conversion.Scope) error {
 	out.StartTime = (*v1.Time)(unsafe.Pointer(in.StartTime))
 	out.CompletionTime = (*v1.Time)(unsafe.Pointer(in.CompletionTime))
-	out.RunState = in.RunState
+	out.RunState = constants.RunningState(in.RunState)
 	return nil
 }
 
@@ -389,7 +730,7 @@ func Convert_v1alpha1_S2iRunStatus_To_devops_S2iRunStatus(in *S2iRunStatus, out 
 func autoConvert_devops_S2iRunStatus_To_v1alpha1_S2iRunStatus(in *devops.S2iRunStatus, out *S2iRunStatus, s conversion.Scope) error {
 	out.StartTime = (*v1.Time)(unsafe.Pointer(in.StartTime))
 	out.CompletionTime = (*v1.Time)(unsafe.Pointer(in.CompletionTime))
-	out.RunState = in.RunState
+	out.RunState = constants.RunningState(in.RunState)
 	return nil
 }
 
@@ -436,4 +777,28 @@ func autoConvert_devops_S2iRunStrategy_To_v1alpha1_S2iRunStrategy(in *devops.S2i
 // Convert_devops_S2iRunStrategy_To_v1alpha1_S2iRunStrategy is an autogenerated conversion function.
 func Convert_devops_S2iRunStrategy_To_v1alpha1_S2iRunStrategy(in *devops.S2iRunStrategy, out *S2iRunStrategy, s conversion.Scope) error {
 	return autoConvert_devops_S2iRunStrategy_To_v1alpha1_S2iRunStrategy(in, out, s)
+}
+
+func autoConvert_v1alpha1_VolumeSpec_To_devops_VolumeSpec(in *VolumeSpec, out *devops.VolumeSpec, s conversion.Scope) error {
+	out.Source = in.Source
+	out.Destination = in.Destination
+	out.Keep = in.Keep
+	return nil
+}
+
+// Convert_v1alpha1_VolumeSpec_To_devops_VolumeSpec is an autogenerated conversion function.
+func Convert_v1alpha1_VolumeSpec_To_devops_VolumeSpec(in *VolumeSpec, out *devops.VolumeSpec, s conversion.Scope) error {
+	return autoConvert_v1alpha1_VolumeSpec_To_devops_VolumeSpec(in, out, s)
+}
+
+func autoConvert_devops_VolumeSpec_To_v1alpha1_VolumeSpec(in *devops.VolumeSpec, out *VolumeSpec, s conversion.Scope) error {
+	out.Source = in.Source
+	out.Destination = in.Destination
+	out.Keep = in.Keep
+	return nil
+}
+
+// Convert_devops_VolumeSpec_To_v1alpha1_VolumeSpec is an autogenerated conversion function.
+func Convert_devops_VolumeSpec_To_v1alpha1_VolumeSpec(in *devops.VolumeSpec, out *VolumeSpec, s conversion.Scope) error {
+	return autoConvert_devops_VolumeSpec_To_v1alpha1_VolumeSpec(in, out, s)
 }

@@ -3,5 +3,4 @@ kind: S2iBuilder
 metadata:
   name: s2ibuilder-example
 spec:
-  config:
-    displayName: "Hello World"
+  description: HelloWorld

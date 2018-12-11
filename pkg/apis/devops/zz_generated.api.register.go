@@ -124,10 +124,6 @@ type S2iRunSpec struct {
 }
 
 type S2iBuilderSpec struct {
-	Config *Config
-}
-
-type Config struct {
 	DisplayName               string
 	Description               string
 	BuilderImage              string

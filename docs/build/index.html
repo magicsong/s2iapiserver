@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+<META charset="UTF-8">
+<TITLE>Kubernetes Resource Reference Docs</TITLE>
+<LINK rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+<LINK rel="stylesheet" href="css/bootstrap.min.css">
+<LINK rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+<LINK rel="stylesheet" href="css/stylesheet.css" type="text/css">
+</HEAD>
+<BODY>
+<DIV id="sidebar-wrapper" class="side-nav side-bar-nav">
+<UL>
+ <LI class="nav-level-1 strong-nav"><A href="#-strong-api-overview-strong-" class="nav-item"><STRONG>Overview</STRONG></A></LI>
+</UL>
+<UL>
+ <LI class="nav-level-1 strong-nav"><A href="#-strong-devops-strong-" class="nav-item"><STRONG>DEVOPS</STRONG></A></LI>
+</UL>
+<UL>
+ <LI class="nav-level-1"><A href="#s2ibuilder-v1alpha1-devops-kubesphere-io" class="nav-item">S2iBuilder v1alpha1 devops.kubesphere.io</A></LI>
+</UL>
+<UL>
+ <LI class="nav-level-1"><A href="#s2irun-v1alpha1-devops-kubesphere-io" class="nav-item">S2iRun v1alpha1 devops.kubesphere.io</A></LI>
+</UL>
+<UL>
+ <LI class="nav-level-1 strong-nav"><A href="#-strong-definitions-strong-" class="nav-item"><STRONG>DEFINITIONS</STRONG></A></LI>
+</UL>
+ <UL id="-strong-definitions-strong--nav" style="display: none;">
+  <UL>
+   <LI class="nav-level-2"><A href="#apigroup-v1-meta" class="nav-item">APIGroup v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#apiresource-v1-meta" class="nav-item">APIResource v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#authconfig-v1alpha1-devops-kubesphere-io" class="nav-item">AuthConfig v1alpha1 devops.kubesphere.io</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#cgrouplimits-v1alpha1-devops-kubesphere-io" class="nav-item">CGroupLimits v1alpha1 devops.kubesphere.io</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#config-v1alpha1-devops-kubesphere-io" class="nav-item">Config v1alpha1 devops.kubesphere.io</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#deleteoptions-v1-meta" class="nav-item">DeleteOptions v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#dockerconfig-v1alpha1-devops-kubesphere-io" class="nav-item">DockerConfig v1alpha1 devops.kubesphere.io</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#environmentspec-v1alpha1-devops-kubesphere-io" class="nav-item">EnvironmentSpec v1alpha1 devops.kubesphere.io</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#groupversionfordiscovery-v1-meta" class="nav-item">GroupVersionForDiscovery v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#initializer-v1-meta" class="nav-item">Initializer v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#initializers-v1-meta" class="nav-item">Initializers v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#listmeta-v1-meta" class="nav-item">ListMeta v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#objectmeta-v1-meta" class="nav-item">ObjectMeta v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#ownerreference-v1-meta" class="nav-item">OwnerReference v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#patch-v1-meta" class="nav-item">Patch v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#preconditions-v1-meta" class="nav-item">Preconditions v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#proxyconfig-v1alpha1-devops-kubesphere-io" class="nav-item">ProxyConfig v1alpha1 devops.kubesphere.io</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#serveraddressbyclientcidr-v1-meta" class="nav-item">ServerAddressByClientCIDR v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#status-v1-meta" class="nav-item">Status v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#statuscause-v1-meta" class="nav-item">StatusCause v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#statusdetails-v1-meta" class="nav-item">StatusDetails v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#time-v1-meta" class="nav-item">Time v1 meta</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#volumespec-v1alpha1-devops-kubesphere-io" class="nav-item">VolumeSpec v1alpha1 devops.kubesphere.io</A></LI>
+ </UL>
+  <UL>
+   <LI class="nav-level-2"><A href="#watchevent-v1-meta" class="nav-item">WatchEvent v1 meta</A></LI>
+ </UL>
+ </UL>
+</UL>
+<UL>
+ <LI class="nav-level-1 strong-nav"><A href="#-strong-old-api-versions-strong-" class="nav-item"><STRONG>OLD API VERSIONS</STRONG></A></LI>
+</UL>
+<BR/><DIV class="copyright"><a href="https://github.com/kubernetes/kubernetes">Copyright 2016 The Kubernetes Authors.</a></DIV></DIV>
+<DIV id="wrapper">
+<DIV id="page-content-wrapper" class="body-content container-fluid">
+<H1 id="-strong-overview-strong-"><STRONG>Overview</STRONG></H1>
+<H1 id="-strong-devops-strong-"><STRONG>Devops</STRONG></H1>
+<H1 id="s2ibuilder-v1alpha1-devops-kubesphere-io">S2iBuilder v1alpha1 devops.kubesphere.io</H1>
+<BUTTON class="btn btn-info" type="button" data-toggle="collapse"
+  data-target="#example-s2ibuilder-v1alpha1-devops-kubesphere-io" aria-controls="example-s2ibuilder-v1alpha1-devops-kubesphere-io"
+  aria-expanded="false">example example</BUTTON>
+<DIV class="collapse" id="example-s2ibuilder-v1alpha1-devops-kubesphere-io">
+  <DIV class="panel panel-default">
+<DIV class="panel-heading">S2iBuilder Example</DIV>
+  <DIV class="panel-body">
+<PRE class="example"><CODE class="lang-yaml">
+apiVersion: devops.kubesphere.io/v1alpha1
+kind: S2iBuilder
+metadata:
+  name: s2ibuilder-example
+spec:
+
+</CODE></PRE></DIV></DIV></DIV>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>devops.kubesphere.io</CODE></TD><TD><CODE>v1alpha1</CODE></TD><TD><CODE>S2iBuilder</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#s2ibuilderlist-v1alpha1-devops-kubesphere-io">S2iBuilderList [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>apiVersion</CODE><BR /><I>string</I></TD><TD>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources</TD></TR>
+<TR><TD><CODE>kind</CODE><BR /><I>string</I></TD><TD>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds</TD></TR>
+<TR><TD><CODE>metadata</CODE><BR /><I><a href="#objectmeta-v1-meta">ObjectMeta</a></I></TD><TD></TD></TR>
+<TR><TD><CODE>spec</CODE><BR /><I><a href="#s2ibuilderspec-v1alpha1-devops-kubesphere-io">S2iBuilderSpec</a></I></TD><TD></TD></TR>
+<TR><TD><CODE>status</CODE><BR /><I><a href="#s2ibuilderstatus-v1alpha1-devops-kubesphere-io">S2iBuilderStatus</a></I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H3 id="s2ibuilderspec-v1alpha1-devops-kubesphere-io">S2iBuilderSpec v1alpha1 devops</H3>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#s2ibuilder-v1alpha1-devops-kubesphere-io">S2iBuilder [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>config</CODE><BR /><I><a href="#config-v1alpha1-devops-kubesphere-io">Config</a></I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H3 id="s2ibuilderstatus-v1alpha1-devops-kubesphere-io">S2iBuilderStatus v1alpha1 devops</H3>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#s2ibuilder-v1alpha1-devops-kubesphere-io">S2iBuilder [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>lastRunName</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>lastRunState</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>runCount</CODE><BR /><I>integer</I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H3 id="s2ibuilderlist-v1alpha1-devops-kubesphere-io">S2iBuilderList v1alpha1 devops</H3>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>apiVersion</CODE><BR /><I>string</I></TD><TD>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources</TD></TR>
+<TR><TD><CODE>items</CODE><BR /><I><a href="#s2ibuilder-v1alpha1-devops-kubesphere-io">S2iBuilder</a> array</I></TD><TD></TD></TR>
+<TR><TD><CODE>kind</CODE><BR /><I>string</I></TD><TD>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds</TD></TR>
+<TR><TD><CODE>metadata</CODE><BR /><I><a href="#listmeta-v1-meta">ListMeta</a></I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H1 id="s2irun-v1alpha1-devops-kubesphere-io">S2iRun v1alpha1 devops.kubesphere.io</H1>
+<BUTTON class="btn btn-info" type="button" data-toggle="collapse"
+  data-target="#example-s2irun-v1alpha1-devops-kubesphere-io" aria-controls="example-s2irun-v1alpha1-devops-kubesphere-io"
+  aria-expanded="false">example example</BUTTON>
+<DIV class="collapse" id="example-s2irun-v1alpha1-devops-kubesphere-io">
+  <DIV class="panel panel-default">
+<DIV class="panel-heading">S2iRun Example</DIV>
+  <DIV class="panel-body">
+<PRE class="example"><CODE class="lang-yaml">
+apiVersion: devops.kubesphere.io/v1alpha1
+kind: S2iRun
+metadata:
+  name: s2irun-example
+spec:
+
+</CODE></PRE></DIV></DIV></DIV>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>devops.kubesphere.io</CODE></TD><TD><CODE>v1alpha1</CODE></TD><TD><CODE>S2iRun</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#s2irunlist-v1alpha1-devops-kubesphere-io">S2iRunList [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>apiVersion</CODE><BR /><I>string</I></TD><TD>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources</TD></TR>
+<TR><TD><CODE>kind</CODE><BR /><I>string</I></TD><TD>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds</TD></TR>
+<TR><TD><CODE>metadata</CODE><BR /><I><a href="#objectmeta-v1-meta">ObjectMeta</a></I></TD><TD></TD></TR>
+<TR><TD><CODE>spec</CODE><BR /><I><a href="#s2irunspec-v1alpha1-devops-kubesphere-io">S2iRunSpec</a></I></TD><TD></TD></TR>
+<TR><TD><CODE>status</CODE><BR /><I><a href="#s2irunstatus-v1alpha1-devops-kubesphere-io">S2iRunStatus</a></I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H3 id="s2irunspec-v1alpha1-devops-kubesphere-io">S2iRunSpec v1alpha1 devops</H3>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#s2irun-v1alpha1-devops-kubesphere-io">S2iRun [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>backoffLimit</CODE><BR /><I>integer</I></TD><TD></TD></TR>
+<TR><TD><CODE>builderName</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>secondsAfterFinished</CODE><BR /><I>integer</I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H3 id="s2irunstatus-v1alpha1-devops-kubesphere-io">S2iRunStatus v1alpha1 devops</H3>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#s2irun-v1alpha1-devops-kubesphere-io">S2iRun [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>completionTime</CODE><BR /><I><a href="#time-v1-meta">Time</a></I></TD><TD></TD></TR>
+<TR><TD><CODE>runState</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>startTime</CODE><BR /><I><a href="#time-v1-meta">Time</a></I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H3 id="s2irunlist-v1alpha1-devops-kubesphere-io">S2iRunList v1alpha1 devops</H3>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>apiVersion</CODE><BR /><I>string</I></TD><TD>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources</TD></TR>
+<TR><TD><CODE>items</CODE><BR /><I><a href="#s2irun-v1alpha1-devops-kubesphere-io">S2iRun</a> array</I></TD><TD></TD></TR>
+<TR><TD><CODE>kind</CODE><BR /><I>string</I></TD><TD>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds</TD></TR>
+<TR><TD><CODE>metadata</CODE><BR /><I><a href="#listmeta-v1-meta">ListMeta</a></I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H1 id="-strong-definitions-strong-"><STRONG>Definitions</STRONG></H1>
+<H2 id="apigroup-v1-meta">APIGroup v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>APIGroup</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>APIGroup contains the name, the supported versions, and the preferred version of a group.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#apigrouplist-v1-meta">APIGroupList [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>apiVersion</CODE><BR /><I>string</I></TD><TD>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources</TD></TR>
+<TR><TD><CODE>kind</CODE><BR /><I>string</I></TD><TD>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds</TD></TR>
+<TR><TD><CODE>name</CODE><BR /><I>string</I></TD><TD>name is the name of the group.</TD></TR>
+<TR><TD><CODE>preferredVersion</CODE><BR /><I><a href="#groupversionfordiscovery-v1-meta">GroupVersionForDiscovery</a></I></TD><TD>preferredVersion is the version preferred by the API server, which probably is the storage version.</TD></TR>
+<TR><TD><CODE>serverAddressByClientCIDRs</CODE><BR /><I><a href="#serveraddressbyclientcidr-v1-meta">ServerAddressByClientCIDR</a> array</I></TD><TD>a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.</TD></TR>
+<TR><TD><CODE>versions</CODE><BR /><I><a href="#groupversionfordiscovery-v1-meta">GroupVersionForDiscovery</a> array</I></TD><TD>versions are the versions supported in this group.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="apiresource-v1-meta">APIResource v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>APIResource</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>APIResource specifies the name of a resource and whether it is namespaced.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#apiresourcelist-v1-meta">APIResourceList [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>categories</CODE><BR /><I>string array</I></TD><TD>categories is a list of the grouped resources this resource belongs to (e.g. &#39;all&#39;)</TD></TR>
+<TR><TD><CODE>group</CODE><BR /><I>string</I></TD><TD>group is the preferred group of the resource.  Empty implies the group of the containing resource list. For subresources, this may have a different value, for example: Scale&#34;.</TD></TR>
+<TR><TD><CODE>kind</CODE><BR /><I>string</I></TD><TD>kind is the kind for the resource (e.g. &#39;Foo&#39; is the kind for a resource &#39;foo&#39;)</TD></TR>
+<TR><TD><CODE>name</CODE><BR /><I>string</I></TD><TD>name is the plural name of the resource.</TD></TR>
+<TR><TD><CODE>namespaced</CODE><BR /><I>boolean</I></TD><TD>namespaced indicates if a resource is namespaced or not.</TD></TR>
+<TR><TD><CODE>shortNames</CODE><BR /><I>string array</I></TD><TD>shortNames is a list of suggested short names of the resource.</TD></TR>
+<TR><TD><CODE>singularName</CODE><BR /><I>string</I></TD><TD>singularName is the singular name of the resource.  This allows clients to handle plural and singular opaquely. The singularName is more correct for reporting status on a single item and both singular and plural are allowed from the kubectl CLI interface.</TD></TR>
+<TR><TD><CODE>verbs</CODE><BR /><I>string array</I></TD><TD>verbs is a list of supported kube verbs (this includes get, list, watch, create, update, patch, delete, deletecollection, and proxy)</TD></TR>
+<TR><TD><CODE>version</CODE><BR /><I>string</I></TD><TD>version is the preferred version of the resource.  Empty implies the version of the containing resource list For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource&#39;s group)&#34;.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="authconfig-v1alpha1-devops-kubesphere-io">AuthConfig v1alpha1 devops.kubesphere.io</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>devops.kubesphere.io</CODE></TD><TD><CODE>v1alpha1</CODE></TD><TD><CODE>AuthConfig</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>AuthConfig is our abstraction of the Registry authorization information for whatever docker client we happen to be based on</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>email</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>password</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>server_address</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>username</CODE><BR /><I>string</I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="cgrouplimits-v1alpha1-devops-kubesphere-io">CGroupLimits v1alpha1 devops.kubesphere.io</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>devops.kubesphere.io</CODE></TD><TD><CODE>v1alpha1</CODE></TD><TD><CODE>CGroupLimits</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>CGroupLimits holds limits used to constrain container resources.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>CPUPeriod</CODE><BR /><I>integer</I></TD><TD></TD></TR>
+<TR><TD><CODE>CPUQuota</CODE><BR /><I>integer</I></TD><TD></TD></TR>
+<TR><TD><CODE>CPUShares</CODE><BR /><I>integer</I></TD><TD></TD></TR>
+<TR><TD><CODE>MemoryLimitBytes</CODE><BR /><I>integer</I></TD><TD></TD></TR>
+<TR><TD><CODE>MemorySwap</CODE><BR /><I>integer</I></TD><TD></TD></TR>
+<TR><TD><CODE>Parent</CODE><BR /><I>string</I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="config-v1alpha1-devops-kubesphere-io">Config v1alpha1 devops.kubesphere.io</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>devops.kubesphere.io</CODE></TD><TD><CODE>v1alpha1</CODE></TD><TD><CODE>Config</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>Config contains essential fields for performing build.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#s2ibuilderspec-v1alpha1-devops-kubesphere-io">S2iBuilderSpec [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>addHost</CODE><BR /><I>string array</I></TD><TD>AddHost Add a line to /etc/hosts for test purpose or private use in LAN. Its format is host:IP,muliple hosts can be added  by using multiple --add-host</TD></TR>
+<TR><TD><CODE>asDockerfile</CODE><BR /><I>string</I></TD><TD>AsDockerfile indicates the path where the Dockerfile should be written instead of building a new image.</TD></TR>
+<TR><TD><CODE>assembleUser</CODE><BR /><I>string</I></TD><TD>AssembleUser specifies the user to run the assemble script in container</TD></TR>
+<TR><TD><CODE>blockOnBuild</CODE><BR /><I>boolean</I></TD><TD>BlockOnBuild prevents s2i from performing a docker build operation if one is necessary to execute ONBUILD commands, or to layer source code into the container for images that don&#39;t have a tar binary available, if the image contains ONBUILD commands that would be executed.</TD></TR>
+<TR><TD><CODE>buildVolumes</CODE><BR /><I>string array</I></TD><TD>BuildVolumes specifies a list of volumes to mount to container running the build.</TD></TR>
+<TR><TD><CODE>builderBaseImageVersion</CODE><BR /><I>string</I></TD><TD>BuilderBaseImageVersion provides optional version information about the builder base image.</TD></TR>
+<TR><TD><CODE>builderImage</CODE><BR /><I>string</I></TD><TD>BuilderImage describes which image is used for building the result images.</TD></TR>
+<TR><TD><CODE>builderImageVersion</CODE><BR /><I>string</I></TD><TD>BuilderImageVersion provides optional version information about the builder image.</TD></TR>
+<TR><TD><CODE>builderPullPolicy</CODE><BR /><I>string</I></TD><TD>BuilderPullPolicy specifies when to pull the builder image</TD></TR>
+<TR><TD><CODE>callbackUrl</CODE><BR /><I>string</I></TD><TD>CallbackURL is a URL which is called upon successful build to inform about that fact.</TD></TR>
+<TR><TD><CODE>cgroupLimits</CODE><BR /><I><a href="#cgrouplimits-v1alpha1-devops-kubesphere-io">CGroupLimits</a></I></TD><TD>CGroupLimits describes the cgroups limits that will be applied to any containers run by s2i.</TD></TR>
+<TR><TD><CODE>contextDir</CODE><BR /><I>string</I></TD><TD>Specify a relative directory inside the application repository that should be used as a root directory for the application.</TD></TR>
+<TR><TD><CODE>description</CODE><BR /><I>string</I></TD><TD>Description is a result image description label. The default is no description.</TD></TR>
+<TR><TD><CODE>destination</CODE><BR /><I>string</I></TD><TD>Destination specifies a location where the untar operation will place its artifacts.</TD></TR>
+<TR><TD><CODE>displayName</CODE><BR /><I>string</I></TD><TD>DisplayName is a result image display-name label. This defaults to the output image name.</TD></TR>
+<TR><TD><CODE>dockerConfig</CODE><BR /><I><a href="#dockerconfig-v1alpha1-devops-kubesphere-io">DockerConfig</a></I></TD><TD>DockerConfig describes how to access host docker daemon.</TD></TR>
+<TR><TD><CODE>dockerNetworkMode</CODE><BR /><I>string</I></TD><TD>DockerNetworkMode is used to set the docker network setting to --net=container:&lt;id&gt; when the builder is invoked from a container.</TD></TR>
+<TR><TD><CODE>dropCapabilities</CODE><BR /><I>string array</I></TD><TD>DropCapabilities contains a list of capabilities to drop when executing containers</TD></TR>
+<TR><TD><CODE>environment</CODE><BR /><I><a href="#environmentspec-v1alpha1-devops-kubesphere-io">EnvironmentSpec</a> array</I></TD><TD>Environment is a map of environment variables to be passed to the image.</TD></TR>
+<TR><TD><CODE>excludeRegExp</CODE><BR /><I>string</I></TD><TD>ExcludeRegExp contains a string representation of the regular expression desired for deciding which files to exclude from the tar stream</TD></TR>
+<TR><TD><CODE>export</CODE><BR /><I>boolean</I></TD><TD>Export Push the result image to specify image registry in tag</TD></TR>
+<TR><TD><CODE>forceCopy</CODE><BR /><I>boolean</I></TD><TD>ForceCopy results in only the file SCM plugin being used (i.e. no `git clone`); allows for empty directories to be included in resulting image (since git does not support that). (default: false).</TD></TR>
+<TR><TD><CODE>hasOnBuild</CODE><BR /><I>boolean</I></TD><TD>HasOnBuild will be set to true if the builder image contains ONBUILD instructions</TD></TR>
+<TR><TD><CODE>ignoreSubmodules</CODE><BR /><I>boolean</I></TD><TD>IgnoreSubmodules determines whether we will attempt to pull in submodules (via --recursive or submodule init)</TD></TR>
+<TR><TD><CODE>imageScriptsUrl</CODE><BR /><I>string</I></TD><TD>ImageScriptsURL is the default location to find the assemble/run scripts for a builder image. This url can be a reference within the builder image if the scheme is specified as image://</TD></TR>
+<TR><TD><CODE>imageWorkDir</CODE><BR /><I>string</I></TD><TD>ImageWorkDir is the default working directory for the builder image.</TD></TR>
+<TR><TD><CODE>incremental</CODE><BR /><I>boolean</I></TD><TD>Incremental describes whether to try to perform incremental build.</TD></TR>
+<TR><TD><CODE>incrementalAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>IncrementalAuthentication holds the authentication information for pulling the previous image from private repositories</TD></TR>
+<TR><TD><CODE>incrementalFromTag</CODE><BR /><I>string</I></TD><TD>IncrementalFromTag sets an alternative image tag to look for existing artifacts. Tag is used by default if this is not set.</TD></TR>
+<TR><TD><CODE>injections</CODE><BR /><I><a href="#volumespec-v1alpha1-devops-kubesphere-io">VolumeSpec</a> array</I></TD><TD>Injections specifies a list source/destination folders that are injected to the container that runs assemble. All files we inject will be truncated after the assemble script finishes.</TD></TR>
+<TR><TD><CODE>keepSymlinks</CODE><BR /><I>boolean</I></TD><TD>KeepSymlinks indicates to copy symlinks as symlinks. Default behavior is to follow symlinks and copy files by content.</TD></TR>
+<TR><TD><CODE>labelNamespace</CODE><BR /><I>string</I></TD><TD>LabelNamespace provides the namespace under which the labels will be generated.</TD></TR>
+<TR><TD><CODE>labels</CODE><BR /><I>object</I></TD><TD>Labels specify labels and their values to be applied to the resulting image. Label keys must have non-zero length. The labels defined here override generated labels in case they have the same name.</TD></TR>
+<TR><TD><CODE>layeredBuild</CODE><BR /><I>boolean</I></TD><TD>LayeredBuild describes if this is build which layered scripts and sources on top of BuilderImage.</TD></TR>
+<TR><TD><CODE>preserveWorkingDir</CODE><BR /><I>boolean</I></TD><TD>PreserveWorkingDir describes if working directory should be left after processing.</TD></TR>
+<TR><TD><CODE>previousImagePullPolicy</CODE><BR /><I>string</I></TD><TD>PreviousImagePullPolicy specifies when to pull the previously build image when doing incremental build</TD></TR>
+<TR><TD><CODE>pullAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>PullAuthentication holds the authentication information for pulling the Docker images from private repositories</TD></TR>
+<TR><TD><CODE>pushAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>PullAuthentication holds the authentication information for pulling the Docker images from private repositories</TD></TR>
+<TR><TD><CODE>quiet</CODE><BR /><I>boolean</I></TD><TD>Operate quietly. Progress and assemble script output are not reported, only fatal errors. (default: false).</TD></TR>
+<TR><TD><CODE>removePreviousImage</CODE><BR /><I>boolean</I></TD><TD>RemovePreviousImage describes if previous image should be removed after successful build. This applies only to incremental builds.</TD></TR>
+<TR><TD><CODE>runImage</CODE><BR /><I>boolean</I></TD><TD>RunImage will trigger a &#34;docker run ...&#34; invocation of the produced image so the user can see if it operates as he would expect</TD></TR>
+<TR><TD><CODE>runtimeArtifacts</CODE><BR /><I><a href="#volumespec-v1alpha1-devops-kubesphere-io">VolumeSpec</a> array</I></TD><TD>RuntimeArtifacts specifies a list of source/destination pairs that will be copied from builder to a runtime image. Source can be a file or directory. Destination must be a directory. Regardless whether it is an absolute or relative path, it will be placed into image&#39;s WORKDIR. Destination also can be empty or equals to &#34;.&#34;, in this case it just refers to a root of WORKDIR. In case it&#39;s empty, S2I will try to get this list from io.openshift.s2i.assemble-input-files label on a RuntimeImage.</TD></TR>
+<TR><TD><CODE>runtimeAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>RuntimeAuthentication holds the authentication information for pulling the runtime Docker images from private repositories.</TD></TR>
+<TR><TD><CODE>runtimeImage</CODE><BR /><I>string</I></TD><TD>RuntimeImage specifies the image that will be a base for resulting image and will be used for running an application. By default, BuilderImage is used for building and running, but the latter may be overridden.</TD></TR>
+<TR><TD><CODE>runtimeImagePullPolicy</CODE><BR /><I>string</I></TD><TD>RuntimeImagePullPolicy specifies when to pull a runtime image.</TD></TR>
+<TR><TD><CODE>scriptDownloadProxyConfig</CODE><BR /><I><a href="#proxyconfig-v1alpha1-devops-kubesphere-io">ProxyConfig</a></I></TD><TD>ScriptDownloadProxyConfig optionally specifies the http and https proxy to use when downloading scripts</TD></TR>
+<TR><TD><CODE>scriptsUrl</CODE><BR /><I>string</I></TD><TD>ScriptsURL is a URL describing where to fetch the S2I scripts from during build process. This url can be a reference within the builder image if the scheme is specified as image://</TD></TR>
+<TR><TD><CODE>securityOpt</CODE><BR /><I>string array</I></TD><TD>SecurityOpt are passed as options to the docker containers launched by s2i.</TD></TR>
+<TR><TD><CODE>sourceUrl</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>tag</CODE><BR /><I>string</I></TD><TD>Tag is a result image tag name.</TD></TR>
+<TR><TD><CODE>usage</CODE><BR /><I>boolean</I></TD><TD>Usage allows for properly shortcircuiting s2i logic when `s2i usage` is invoked</TD></TR>
+<TR><TD><CODE>workingDir</CODE><BR /><I>string</I></TD><TD>WorkingDir describes temporary directory used for downloading sources, scripts and tar operations.</TD></TR>
+<TR><TD><CODE>workingSourceDir</CODE><BR /><I>string</I></TD><TD>WorkingSourceDir describes the subdirectory off of WorkingDir set up during the repo download that is later used as the root for ignore processing</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="deleteoptions-v1-meta">DeleteOptions v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>DeleteOptions</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>DeleteOptions may be provided when deleting an API object.</P>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>apiVersion</CODE><BR /><I>string</I></TD><TD>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources</TD></TR>
+<TR><TD><CODE>dryRun</CODE><BR /><I>string array</I></TD><TD>When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed</TD></TR>
+<TR><TD><CODE>gracePeriodSeconds</CODE><BR /><I>integer</I></TD><TD>The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.</TD></TR>
+<TR><TD><CODE>kind</CODE><BR /><I>string</I></TD><TD>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds</TD></TR>
+<TR><TD><CODE>orphanDependents</CODE><BR /><I>boolean</I></TD><TD>Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the &#34;orphan&#34; finalizer will be added to/removed from the object&#39;s finalizers list. Either this field or PropagationPolicy may be set, but not both.</TD></TR>
+<TR><TD><CODE>preconditions</CODE><BR /><I><a href="#preconditions-v1-meta">Preconditions</a></I></TD><TD>Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.</TD></TR>
+<TR><TD><CODE>propagationPolicy</CODE><BR /><I>string</I></TD><TD>Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: &#39;Orphan&#39; - orphan the dependents; &#39;Background&#39; - allow the garbage collector to delete the dependents in the background; &#39;Foreground&#39; - a cascading policy that deletes all dependents in the foreground.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="dockerconfig-v1alpha1-devops-kubesphere-io">DockerConfig v1alpha1 devops.kubesphere.io</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>devops.kubesphere.io</CODE></TD><TD><CODE>v1alpha1</CODE></TD><TD><CODE>DockerConfig</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>DockerConfig contains the configuration for a Docker connection.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>CAFile</CODE><BR /><I>string</I></TD><TD>CAFile is the certificate authority file path for a TLS connection</TD></TR>
+<TR><TD><CODE>CertFile</CODE><BR /><I>string</I></TD><TD>CertFile is the certificate file path for a TLS connection</TD></TR>
+<TR><TD><CODE>Endpoint</CODE><BR /><I>string</I></TD><TD>Endpoint is the docker network endpoint or socket</TD></TR>
+<TR><TD><CODE>KeyFile</CODE><BR /><I>string</I></TD><TD>KeyFile is the key file path for a TLS connection</TD></TR>
+<TR><TD><CODE>TLSVerify</CODE><BR /><I>boolean</I></TD><TD>TLSVerify indicates if TLS peer must be verified</TD></TR>
+<TR><TD><CODE>UseTLS</CODE><BR /><I>boolean</I></TD><TD>UseTLS indicates if TLS must be used</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="environmentspec-v1alpha1-devops-kubesphere-io">EnvironmentSpec v1alpha1 devops.kubesphere.io</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>devops.kubesphere.io</CODE></TD><TD><CODE>v1alpha1</CODE></TD><TD><CODE>EnvironmentSpec</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>EnvironmentSpec specifies a single environment variable.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>Name</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>Value</CODE><BR /><I>string</I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="groupversionfordiscovery-v1-meta">GroupVersionForDiscovery v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>GroupVersionForDiscovery</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>GroupVersion contains the &#34;group/version&#34; and &#34;version&#34; string of a version. It is made a struct to keep extensibility.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#apigroup-v1-meta">APIGroup [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>groupVersion</CODE><BR /><I>string</I></TD><TD>groupVersion specifies the API group and version in the form &#34;group/version&#34;</TD></TR>
+<TR><TD><CODE>version</CODE><BR /><I>string</I></TD><TD>version specifies the version in the form of &#34;version&#34;. This is to save the clients the trouble of splitting the GroupVersion.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="initializer-v1-meta">Initializer v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>Initializer</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>Initializer is information about an initializer that has not yet completed.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#initializers-v1-meta">Initializers [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>name</CODE><BR /><I>string</I></TD><TD>name of the process that is responsible for initializing this object.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="initializers-v1-meta">Initializers v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>Initializers</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>Initializers tracks the progress of initialization.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#objectmeta-v1-meta">ObjectMeta [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>pending</CODE><BR /><I><a href="#initializer-v1-meta">Initializer</a> array</I><BR /><B>patch strategy</B>: <I>merge</I><BR /><B>patch merge key</B>: <I>name</I></TD><TD>Pending is a list of initializers that must execute in order before this object is visible. When the last pending initializer is removed, and no failing result is set, the initializers struct will be set to nil and the object is considered as initialized and visible to all clients.</TD></TR>
+<TR><TD><CODE>result</CODE><BR /><I><a href="#status-v1-meta">Status</a></I></TD><TD>If result is set with the Failure field, the object will be persisted to storage and then deleted, ensuring that other clients can observe the deletion.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="listmeta-v1-meta">ListMeta v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>ListMeta</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#s2ibuilderlist-v1alpha1-devops-kubesphere-io">S2iBuilderList [devops/v1alpha1]</a></LI>
+  <LI><a href="#s2irunlist-v1alpha1-devops-kubesphere-io">S2iRunList [devops/v1alpha1]</a></LI>
+  <LI><a href="#status-v1-meta">Status [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>continue</CODE><BR /><I>string</I></TD><TD>continue may be set if the user set a limit on the number of items returned, and indicates that the server has more data available. The value is opaque and may be used to issue another request to the endpoint that served this list to retrieve the next set of available objects. Continuing a consistent list may not be possible if the server configuration has changed or more than a few minutes have passed. The resourceVersion field returned when using this continue value will be identical to the value in the first response, unless you have received this token from an error message.</TD></TR>
+<TR><TD><CODE>resourceVersion</CODE><BR /><I>string</I></TD><TD>String that identifies the server&#39;s internal version of this object that can be used by clients to determine when objects have changed. Value must be treated as opaque by clients and passed unmodified back to the server. Populated by the system. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency</TD></TR>
+<TR><TD><CODE>selfLink</CODE><BR /><I>string</I></TD><TD>selfLink is a URL representing this object. Populated by the system. Read-only.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="objectmeta-v1-meta">ObjectMeta v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>ObjectMeta</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#s2ibuilder-v1alpha1-devops-kubesphere-io">S2iBuilder [devops/v1alpha1]</a></LI>
+  <LI><a href="#s2irun-v1alpha1-devops-kubesphere-io">S2iRun [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>annotations</CODE><BR /><I>object</I></TD><TD>Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations</TD></TR>
+<TR><TD><CODE>clusterName</CODE><BR /><I>string</I></TD><TD>The name of the cluster which the object belongs to. This is used to distinguish resources with same name and namespace in different clusters. This field is not set anywhere right now and apiserver is going to ignore it if set in create or update request.</TD></TR>
+<TR><TD><CODE>creationTimestamp</CODE><BR /><I><a href="#time-v1-meta">Time</a></I></TD><TD>CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.  Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata</TD></TR>
+<TR><TD><CODE>deletionGracePeriodSeconds</CODE><BR /><I>integer</I></TD><TD>Number of seconds allowed for this object to gracefully terminate before it will be removed from the system. Only set when deletionTimestamp is also set. May only be shortened. Read-only.</TD></TR>
+<TR><TD><CODE>deletionTimestamp</CODE><BR /><I><a href="#time-v1-meta">Time</a></I></TD><TD>DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This field is set by the server when a graceful deletion is requested by the user, and is not directly settable by a client. The resource is expected to be deleted (no longer visible from resource lists, and not reachable by name) after the time in this field, once the finalizers list is empty. As long as the finalizers list contains items, deletion is blocked. Once the deletionTimestamp is set, this value may not be unset or be set further into the future, although it may be shortened or the resource may be deleted prior to this time. For example, a user may request that a pod is deleted in 30 seconds. The Kubelet will react by sending a graceful termination signal to the containers in the pod. After that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL) to the container and after cleanup, remove the pod from the API. In the presence of network partitions, this object may still exist after this timestamp, until an administrator or automated process can determine the resource is fully terminated. If not set, graceful deletion of the object has not been requested.  Populated by the system when a graceful deletion is requested. Read-only. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata</TD></TR>
+<TR><TD><CODE>finalizers</CODE><BR /><I>string array</I><BR /><B>patch strategy</B>: <I>merge</I></TD><TD>Must be empty before the object is deleted from the registry. Each entry is an identifier for the responsible component that will remove the entry from the list. If the deletionTimestamp of the object is non-nil, entries in this list can only be removed.</TD></TR>
+<TR><TD><CODE>generateName</CODE><BR /><I>string</I></TD><TD>GenerateName is an optional prefix, used by the server, to generate a unique name ONLY IF the Name field has not been provided. If this field is used, the name returned to the client will be different than the name passed. This value will also be combined with a unique suffix. The provided value has the same validation rules as the Name field, and may be truncated by the length of the suffix required to make the value unique on the server.  If this field is specified and the generated name exists, the server will NOT return a 409 - instead, it will either return 201 Created or 500 with Reason ServerTimeout indicating a unique name could not be found in the time allotted, and the client should retry (optionally after the time indicated in the Retry-After header).  Applied only if Name is not specified. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency</TD></TR>
+<TR><TD><CODE>generation</CODE><BR /><I>integer</I></TD><TD>A sequence number representing a specific generation of the desired state. Populated by the system. Read-only.</TD></TR>
+<TR><TD><CODE>initializers</CODE><BR /><I><a href="#initializers-v1-meta">Initializers</a></I></TD><TD>An initializer is a controller which enforces some system invariant at object creation time. This field is a list of initializers that have not yet acted on this object. If nil or empty, this object has been completely initialized. Otherwise, the object is considered uninitialized and is hidden (in list/watch and get calls) from clients that haven&#39;t explicitly asked to observe uninitialized objects.  When an object is created, the system will populate this list with the current set of initializers. Only privileged users may set or modify this list. Once it is empty, it may not be modified further by any user.</TD></TR>
+<TR><TD><CODE>labels</CODE><BR /><I>object</I></TD><TD>Map of string keys and values that can be used to organize and categorize (scope and select) objects. May match selectors of replication controllers and services. More info: http://kubernetes.io/docs/user-guide/labels</TD></TR>
+<TR><TD><CODE>name</CODE><BR /><I>string</I></TD><TD>Name must be unique within a namespace. Is required when creating resources, although some resources may allow a client to request the generation of an appropriate name automatically. Name is primarily intended for creation idempotence and configuration definition. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names</TD></TR>
+<TR><TD><CODE>namespace</CODE><BR /><I>string</I></TD><TD>Namespace defines the space within each name must be unique. An empty namespace is equivalent to the &#34;default&#34; namespace, but &#34;default&#34; is the canonical representation. Not all objects are required to be scoped to a namespace - the value of this field for those objects will be empty.  Must be a DNS_LABEL. Cannot be updated. More info: http://kubernetes.io/docs/user-guide/namespaces</TD></TR>
+<TR><TD><CODE>ownerReferences</CODE><BR /><I><a href="#ownerreference-v1-meta">OwnerReference</a> array</I><BR /><B>patch strategy</B>: <I>merge</I><BR /><B>patch merge key</B>: <I>uid</I></TD><TD>List of objects depended by this object. If ALL objects in the list have been deleted, this object will be garbage collected. If this object is managed by a controller, then an entry in this list will point to this controller, with the controller field set to true. There cannot be more than one managing controller.</TD></TR>
+<TR><TD><CODE>resourceVersion</CODE><BR /><I>string</I></TD><TD>An opaque value that represents the internal version of this object that can be used by clients to determine when objects have changed. May be used for optimistic concurrency, change detection, and the watch operation on a resource or set of resources. Clients must treat these values as opaque and passed unmodified back to the server. They may only be valid for a particular resource or set of resources.  Populated by the system. Read-only. Value must be treated as opaque by clients and . More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency</TD></TR>
+<TR><TD><CODE>selfLink</CODE><BR /><I>string</I></TD><TD>SelfLink is a URL representing this object. Populated by the system. Read-only.</TD></TR>
+<TR><TD><CODE>uid</CODE><BR /><I>string</I></TD><TD>UID is the unique in time and space value for this object. It is typically generated by the server on successful creation of a resource and is not allowed to change on PUT operations.  Populated by the system. Read-only. More info: http://kubernetes.io/docs/user-guide/identifiers#uids</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="ownerreference-v1-meta">OwnerReference v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>OwnerReference</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>OwnerReference contains enough information to let you identify an owning object. Currently, an owning object must be in the same namespace, so there is no namespace field.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#objectmeta-v1-meta">ObjectMeta [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>apiVersion</CODE><BR /><I>string</I></TD><TD>API version of the referent.</TD></TR>
+<TR><TD><CODE>blockOwnerDeletion</CODE><BR /><I>boolean</I></TD><TD>If true, AND if the owner has the &#34;foregroundDeletion&#34; finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. Defaults to false. To set this field, a user needs &#34;delete&#34; permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.</TD></TR>
+<TR><TD><CODE>controller</CODE><BR /><I>boolean</I></TD><TD>If true, this reference points to the managing controller.</TD></TR>
+<TR><TD><CODE>kind</CODE><BR /><I>string</I></TD><TD>Kind of the referent. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds</TD></TR>
+<TR><TD><CODE>name</CODE><BR /><I>string</I></TD><TD>Name of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#names</TD></TR>
+<TR><TD><CODE>uid</CODE><BR /><I>string</I></TD><TD>UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="patch-v1-meta">Patch v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>Patch</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>Patch is provided to give a concrete name and type to the Kubernetes PATCH request body.</P>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+</TBODY>
+</TABLE>
+<H2 id="preconditions-v1-meta">Preconditions v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>Preconditions</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#deleteoptions-v1-meta">DeleteOptions [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>uid</CODE><BR /><I>string</I></TD><TD>Specifies the target UID.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="proxyconfig-v1alpha1-devops-kubesphere-io">ProxyConfig v1alpha1 devops.kubesphere.io</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>devops.kubesphere.io</CODE></TD><TD><CODE>v1alpha1</CODE></TD><TD><CODE>ProxyConfig</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>ProxyConfig holds proxy configuration.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>HTTPProxy</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>HTTPSProxy</CODE><BR /><I>string</I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="serveraddressbyclientcidr-v1-meta">ServerAddressByClientCIDR v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>ServerAddressByClientCIDR</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#apigroup-v1-meta">APIGroup [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>clientCIDR</CODE><BR /><I>string</I></TD><TD>The CIDR with which clients can match their IP to figure out the server address that they should use.</TD></TR>
+<TR><TD><CODE>serverAddress</CODE><BR /><I>string</I></TD><TD>Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="status-v1-meta">Status v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>Status</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>Status is a return value for calls that don&#39;t return other objects.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#initializers-v1-meta">Initializers [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>apiVersion</CODE><BR /><I>string</I></TD><TD>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources</TD></TR>
+<TR><TD><CODE>code</CODE><BR /><I>integer</I></TD><TD>Suggested HTTP return code for this status, 0 if not set.</TD></TR>
+<TR><TD><CODE>details</CODE><BR /><I><a href="#statusdetails-v1-meta">StatusDetails</a></I></TD><TD>Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type.</TD></TR>
+<TR><TD><CODE>kind</CODE><BR /><I>string</I></TD><TD>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds</TD></TR>
+<TR><TD><CODE>message</CODE><BR /><I>string</I></TD><TD>A human-readable description of the status of this operation.</TD></TR>
+<TR><TD><CODE>metadata</CODE><BR /><I><a href="#listmeta-v1-meta">ListMeta</a></I></TD><TD>Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds</TD></TR>
+<TR><TD><CODE>reason</CODE><BR /><I>string</I></TD><TD>A machine-readable description of why this operation is in the &#34;Failure&#34; status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it.</TD></TR>
+<TR><TD><CODE>status</CODE><BR /><I>string</I></TD><TD>Status of the operation. One of: &#34;Success&#34; or &#34;Failure&#34;. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="statuscause-v1-meta">StatusCause v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>StatusCause</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>StatusCause provides more information about an api.Status failure, including cases when multiple errors are encountered.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#statusdetails-v1-meta">StatusDetails [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>field</CODE><BR /><I>string</I></TD><TD>The field of the resource that has caused this error, as named by its JSON serialization. May include dot and postfix notation for nested attributes. Arrays are zero-indexed.  Fields may appear more than once in an array of causes due to fields having multiple errors. Optional.  Examples:   &#34;name&#34; - the field &#34;name&#34; on the current resource   &#34;items[0].name&#34; - the field &#34;name&#34; on the first array entry in &#34;items&#34;</TD></TR>
+<TR><TD><CODE>message</CODE><BR /><I>string</I></TD><TD>A human-readable description of the cause of the error.  This field may be presented as-is to a reader.</TD></TR>
+<TR><TD><CODE>reason</CODE><BR /><I>string</I></TD><TD>A machine-readable description of the cause of the error. If this value is empty there is no information available.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="statusdetails-v1-meta">StatusDetails v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>StatusDetails</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>StatusDetails is a set of additional properties that MAY be set by the server to provide additional information about a response. The Reason field of a Status object defines what attributes will be set. Clients must ignore fields that do not match the defined type of each attribute, and should assume that any attribute may be empty, invalid, or under defined.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#status-v1-meta">Status [meta/v1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>causes</CODE><BR /><I><a href="#statuscause-v1-meta">StatusCause</a> array</I></TD><TD>The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes.</TD></TR>
+<TR><TD><CODE>group</CODE><BR /><I>string</I></TD><TD>The group attribute of the resource associated with the status StatusReason.</TD></TR>
+<TR><TD><CODE>kind</CODE><BR /><I>string</I></TD><TD>The kind attribute of the resource associated with the status StatusReason. On some operations may differ from the requested resource Kind. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds</TD></TR>
+<TR><TD><CODE>name</CODE><BR /><I>string</I></TD><TD>The name attribute of the resource associated with the status StatusReason (when there is a single name which can be described).</TD></TR>
+<TR><TD><CODE>retryAfterSeconds</CODE><BR /><I>integer</I></TD><TD>If specified, the time in seconds before the operation should be retried. Some errors may indicate the client must take an alternate action - for those errors this field may indicate how long to wait before taking the alternate action.</TD></TR>
+<TR><TD><CODE>uid</CODE><BR /><I>string</I></TD><TD>UID of the resource. (when there is a single resource which can be described). More info: http://kubernetes.io/docs/user-guide/identifiers#uids</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="time-v1-meta">Time v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>Time</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#objectmeta-v1-meta">ObjectMeta [meta/v1]</a></LI>
+  <LI><a href="#s2irunstatus-v1alpha1-devops-kubesphere-io">S2iRunStatus [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+</TBODY>
+</TABLE>
+<H2 id="volumespec-v1alpha1-devops-kubesphere-io">VolumeSpec v1alpha1 devops.kubesphere.io</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>devops.kubesphere.io</CODE></TD><TD><CODE>v1alpha1</CODE></TD><TD><CODE>VolumeSpec</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>VolumeSpec represents a single volume mount point.</P>
+<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
+ <UL>
+  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+ </UL>
+</DIV>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>Destination</CODE><BR /><I>string</I></TD><TD>Destination is the path to mount the volume to - absolute or relative.</TD></TR>
+<TR><TD><CODE>Keep</CODE><BR /><I>boolean</I></TD><TD>Keep indicates if the mounted data should be kept in the final image.</TD></TR>
+<TR><TD><CODE>Source</CODE><BR /><I>string</I></TD><TD>Source is a reference to the volume source.</TD></TR>
+</TBODY>
+</TABLE>
+<H2 id="watchevent-v1-meta">WatchEvent v1 meta</H2>
+<TABLE class="col-md-8">
+<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>meta</CODE></TD><TD><CODE>v1</CODE></TD><TD><CODE>WatchEvent</CODE></TD></TR>
+</TBODY>
+</TABLE>
+<P>Event represents a single event to a watched resource.</P>
+<TABLE>
+<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
+<TBODY>
+<TR><TD><CODE>object</CODE></TD><TD>Object is:  * If Type is Added or Modified: the new state of the object.  * If Type is Deleted: the state of the object immediately before deletion.  * If Type is Error: *Status is recommended; other types may make sense    depending on context.</TD></TR>
+<TR><TD><CODE>type</CODE><BR /><I>string</I></TD><TD></TD></TR>
+</TBODY>
+</TABLE>
+<H1 id="-strong-old-versions-strong-"><STRONG>Old Versions</STRONG></H1>
+</DIV>
+</DIV>
+<SCRIPT src="/js/jquery-3.2.1.min.js"></SCRIPT>
+<SCRIPT src="jquery.scrollTo.min.js"></SCRIPT>
+<SCRIPT src="/js/bootstrap-3.3.7.min.js"></SCRIPT>
+<SCRIPT src="navData.js"></SCRIPT>
+<SCRIPT src="scroll.js"></SCRIPT>
+</BODY>
+</HTML>

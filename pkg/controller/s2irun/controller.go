@@ -52,7 +52,6 @@ func (c *S2iRunControllerImpl) Init(arguments sharedinformers.ControllerInitArgu
 func (c *S2iRunControllerImpl) Reconcile(u *v1alpha1.S2iRun) error {
 	// Implement controller logic here
 	glog.V(2).Infof("Running reconcile S2iRun for %s\n", u.Name)
-	glog.Infof("Key:%+v", u)
 	instance, err := c.Get(u.Namespace, u.Name)
 	if err != nil {
 		if errors.IsNotFound(err) {
@@ -60,6 +59,9 @@ func (c *S2iRunControllerImpl) Reconcile(u *v1alpha1.S2iRun) error {
 		}
 		glog.Errorf("Get instance <%s> of s2irun failed,error:%s", u.Name, err.Error())
 		return err
+	}
+	if instance.Labels == nil {
+		instance.Labels = make(map[string]string)
 	}
 	instance.Labels["builder"] = instance.Spec.BuilderName
 	if instance.Status.StartTime == nil {

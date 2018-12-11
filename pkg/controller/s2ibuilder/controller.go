@@ -17,12 +17,14 @@ limitations under the License.
 package s2ibuilder
 
 import (
+	"reflect"
+
 	"github.com/golang/glog"
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/builders"
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1"
+	client "github.com/magicsong/s2iapiserver/pkg/client/clientset_generated/clientset/typed/devops/v1alpha1"
 	listers "github.com/magicsong/s2iapiserver/pkg/client/listers_generated/devops/v1alpha1"
 	"github.com/magicsong/s2iapiserver/pkg/controller/sharedinformers"
-	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 )
@@ -30,31 +32,36 @@ import (
 // +controller:group=devops,version=v1alpha1,kind=S2iBuilder,resource=s2ibuilders
 type S2iBuilderControllerImpl struct {
 	builders.DefaultControllerFns
-
+	si *sharedinformers.SharedInformers
 	// lister indexes properties about S2iBuilder
 	builderLister listers.S2iBuilderLister
 	runLister     listers.S2iRunLister
+	client        *client.DevopsV1alpha1Client
 }
 
 // Init initializes the controller and is called by the generated code
 // Register watches for additional resource types here.
 func (c *S2iBuilderControllerImpl) Init(arguments sharedinformers.ControllerInitArguments) {
 	// Use the lister for indexing s2ibuilders labels
+	c.si = arguments.GetSharedInformers()
 	c.builderLister = arguments.GetSharedInformers().Factory.Devops().V1alpha1().S2iBuilders().Lister()
 	c.runLister = arguments.GetSharedInformers().Factory.Devops().V1alpha1().S2iRuns().Lister()
+	c.client = client.NewForConfigOrDie(arguments.GetRestConfig())
+	c.si.Watch("BuilderRun", c.si.Factory.Devops().V1alpha1().S2iRuns().Informer(), func(i interface{}) (string, error) {
+		d, _ := i.(*v1alpha1.S2iRun)
+		glog.V(1).Infof("[s2ibuilder] Reconcile key for s2irun")
+		return d.Namespace + "/" + d.Name, nil
+	}, func(s string) error {
+		return nil
+	})
 }
 
 // Reconcile handles enqueued messages
 func (c *S2iBuilderControllerImpl) Reconcile(u *v1alpha1.S2iBuilder) error {
 	// Implement controller logic here
-	glog.V(2).Infof("Running reconcile S2iBuilder for %s\n", u.Name)
-	instance, err := c.Get(u.Namespace, u.Name)
-	if err != nil {
-		if errors.IsNotFound(err) {
-			return nil
-		}
-		return err
-	}
+	glog.V(1).Infof("Running reconcile S2iBuilder for %s\n", u.Name)
+	instance := u.DeepCopy()
+	instance.Status = v1alpha1.S2iBuilderStatus{}
 	runs, err := c.runLister.S2iRuns(u.Namespace).List(labels.Everything())
 	if err != nil {
 		glog.Errorf("cannot get s2irunners of s2ibuilder-<%s>,error is %s", u.Name, err.Error())
@@ -69,6 +76,14 @@ func (c *S2iBuilderControllerImpl) Reconcile(u *v1alpha1.S2iBuilder) error {
 				instance.Status.LastRunState = item.Status.RunState
 				instance.Status.LastRunName = &(item.Name)
 			}
+		}
+	}
+	//glog.V(1).Infof("Status origin %d,Status change %d", u.Status.RunCount, instance.Status.RunCount)
+	if !reflect.DeepEqual(u.Status, instance.Status) {
+		_, err = c.client.S2iBuilders(u.Namespace).UpdateStatus(instance)
+		if err != nil {
+			glog.Errorf("cannot update s2ibuilder-<%s>,error is %s", u.Name, err.Error())
+			return err
 		}
 	}
 	return nil

@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"reflect"
 
+	metav1beta1 "k8s.io/apimachinery/pkg/apis/meta/v1beta1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -64,7 +65,7 @@ func (DefaultStorageStrategy) Build(builder StorageBuilder, store *StorageWrappe
 	store.CreateStrategy = builder
 	store.UpdateStrategy = builder
 	store.DeleteStrategy = builder
-
+	store.TableConvertor = builder
 	options.AttrFunc = builder.GetAttrs
 	options.TriggerFunc = builder.TriggerFunc
 }
@@ -163,4 +164,12 @@ func (DefaultStatusStorageStrategy) PrepareForUpdate(ctx context.Context, obj, o
 		n.SetSpec(o.GetSpec())
 		n.GetObjectMeta().Labels = o.GetObjectMeta().Labels
 	}
+}
+
+func (DefaultStorageStrategy) ShortNames() []string {
+	return nil
+}
+
+func (DefaultStorageStrategy) ConvertToTable(ctx context.Context, object runtime.Object, tableOptions runtime.Object) (*metav1beta1.Table, error) {
+	return nil, nil
 }

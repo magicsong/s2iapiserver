@@ -39,9 +39,6 @@
    <LI class="nav-level-2"><A href="#cgrouplimits-v1alpha1-devops-kubesphere-io" class="nav-item">CGroupLimits v1alpha1 devops.kubesphere.io</A></LI>
  </UL>
   <UL>
-   <LI class="nav-level-2"><A href="#config-v1alpha1-devops-kubesphere-io" class="nav-item">Config v1alpha1 devops.kubesphere.io</A></LI>
- </UL>
-  <UL>
    <LI class="nav-level-2"><A href="#deleteoptions-v1-meta" class="nav-item">DeleteOptions v1 meta</A></LI>
  </UL>
   <UL>
@@ -154,7 +151,59 @@ spec:
 <TABLE>
 <THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
 <TBODY>
-<TR><TD><CODE>config</CODE><BR /><I><a href="#config-v1alpha1-devops-kubesphere-io">Config</a></I></TD><TD></TD></TR>
+<TR><TD><CODE>addHost</CODE><BR /><I>string array</I></TD><TD>AddHost Add a line to /etc/hosts for test purpose or private use in LAN. Its format is host:IP,muliple hosts can be added  by using multiple --add-host</TD></TR>
+<TR><TD><CODE>asDockerfile</CODE><BR /><I>string</I></TD><TD>AsDockerfile indicates the path where the Dockerfile should be written instead of building a new image.</TD></TR>
+<TR><TD><CODE>assembleUser</CODE><BR /><I>string</I></TD><TD>AssembleUser specifies the user to run the assemble script in container</TD></TR>
+<TR><TD><CODE>blockOnBuild</CODE><BR /><I>boolean</I></TD><TD>BlockOnBuild prevents s2i from performing a docker build operation if one is necessary to execute ONBUILD commands, or to layer source code into the container for images that don&#39;t have a tar binary available, if the image contains ONBUILD commands that would be executed.</TD></TR>
+<TR><TD><CODE>buildVolumes</CODE><BR /><I>string array</I></TD><TD>BuildVolumes specifies a list of volumes to mount to container running the build.</TD></TR>
+<TR><TD><CODE>builderBaseImageVersion</CODE><BR /><I>string</I></TD><TD>BuilderBaseImageVersion provides optional version information about the builder base image.</TD></TR>
+<TR><TD><CODE>builderImage</CODE><BR /><I>string</I></TD><TD>BuilderImage describes which image is used for building the result images.</TD></TR>
+<TR><TD><CODE>builderImageVersion</CODE><BR /><I>string</I></TD><TD>BuilderImageVersion provides optional version information about the builder image.</TD></TR>
+<TR><TD><CODE>builderPullPolicy</CODE><BR /><I>string</I></TD><TD>BuilderPullPolicy specifies when to pull the builder image</TD></TR>
+<TR><TD><CODE>callbackUrl</CODE><BR /><I>string</I></TD><TD>CallbackURL is a URL which is called upon successful build to inform about that fact.</TD></TR>
+<TR><TD><CODE>cgroupLimits</CODE><BR /><I><a href="#cgrouplimits-v1alpha1-devops-kubesphere-io">CGroupLimits</a></I></TD><TD>CGroupLimits describes the cgroups limits that will be applied to any containers run by s2i.</TD></TR>
+<TR><TD><CODE>contextDir</CODE><BR /><I>string</I></TD><TD>Specify a relative directory inside the application repository that should be used as a root directory for the application.</TD></TR>
+<TR><TD><CODE>description</CODE><BR /><I>string</I></TD><TD>Description is a result image description label. The default is no description.</TD></TR>
+<TR><TD><CODE>destination</CODE><BR /><I>string</I></TD><TD>Destination specifies a location where the untar operation will place its artifacts.</TD></TR>
+<TR><TD><CODE>displayName</CODE><BR /><I>string</I></TD><TD>DisplayName is a result image display-name label. This defaults to the output image name.</TD></TR>
+<TR><TD><CODE>dockerConfig</CODE><BR /><I><a href="#dockerconfig-v1alpha1-devops-kubesphere-io">DockerConfig</a></I></TD><TD>DockerConfig describes how to access host docker daemon.</TD></TR>
+<TR><TD><CODE>dockerNetworkMode</CODE><BR /><I>string</I></TD><TD>DockerNetworkMode is used to set the docker network setting to --net=container:&lt;id&gt; when the builder is invoked from a container.</TD></TR>
+<TR><TD><CODE>dropCapabilities</CODE><BR /><I>string array</I></TD><TD>DropCapabilities contains a list of capabilities to drop when executing containers</TD></TR>
+<TR><TD><CODE>environment</CODE><BR /><I><a href="#environmentspec-v1alpha1-devops-kubesphere-io">EnvironmentSpec</a> array</I></TD><TD>Environment is a map of environment variables to be passed to the image.</TD></TR>
+<TR><TD><CODE>excludeRegExp</CODE><BR /><I>string</I></TD><TD>ExcludeRegExp contains a string representation of the regular expression desired for deciding which files to exclude from the tar stream</TD></TR>
+<TR><TD><CODE>export</CODE><BR /><I>boolean</I></TD><TD>Export Push the result image to specify image registry in tag</TD></TR>
+<TR><TD><CODE>forceCopy</CODE><BR /><I>boolean</I></TD><TD>ForceCopy results in only the file SCM plugin being used (i.e. no `git clone`); allows for empty directories to be included in resulting image (since git does not support that). (default: false).</TD></TR>
+<TR><TD><CODE>hasOnBuild</CODE><BR /><I>boolean</I></TD><TD>HasOnBuild will be set to true if the builder image contains ONBUILD instructions</TD></TR>
+<TR><TD><CODE>ignoreSubmodules</CODE><BR /><I>boolean</I></TD><TD>IgnoreSubmodules determines whether we will attempt to pull in submodules (via --recursive or submodule init)</TD></TR>
+<TR><TD><CODE>imageScriptsUrl</CODE><BR /><I>string</I></TD><TD>ImageScriptsURL is the default location to find the assemble/run scripts for a builder image. This url can be a reference within the builder image if the scheme is specified as image://</TD></TR>
+<TR><TD><CODE>imageWorkDir</CODE><BR /><I>string</I></TD><TD>ImageWorkDir is the default working directory for the builder image.</TD></TR>
+<TR><TD><CODE>incremental</CODE><BR /><I>boolean</I></TD><TD>Incremental describes whether to try to perform incremental build.</TD></TR>
+<TR><TD><CODE>incrementalAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>IncrementalAuthentication holds the authentication information for pulling the previous image from private repositories</TD></TR>
+<TR><TD><CODE>incrementalFromTag</CODE><BR /><I>string</I></TD><TD>IncrementalFromTag sets an alternative image tag to look for existing artifacts. Tag is used by default if this is not set.</TD></TR>
+<TR><TD><CODE>injections</CODE><BR /><I><a href="#volumespec-v1alpha1-devops-kubesphere-io">VolumeSpec</a> array</I></TD><TD>Injections specifies a list source/destination folders that are injected to the container that runs assemble. All files we inject will be truncated after the assemble script finishes.</TD></TR>
+<TR><TD><CODE>keepSymlinks</CODE><BR /><I>boolean</I></TD><TD>KeepSymlinks indicates to copy symlinks as symlinks. Default behavior is to follow symlinks and copy files by content.</TD></TR>
+<TR><TD><CODE>labelNamespace</CODE><BR /><I>string</I></TD><TD>LabelNamespace provides the namespace under which the labels will be generated.</TD></TR>
+<TR><TD><CODE>labels</CODE><BR /><I>object</I></TD><TD>Labels specify labels and their values to be applied to the resulting image. Label keys must have non-zero length. The labels defined here override generated labels in case they have the same name.</TD></TR>
+<TR><TD><CODE>layeredBuild</CODE><BR /><I>boolean</I></TD><TD>LayeredBuild describes if this is build which layered scripts and sources on top of BuilderImage.</TD></TR>
+<TR><TD><CODE>preserveWorkingDir</CODE><BR /><I>boolean</I></TD><TD>PreserveWorkingDir describes if working directory should be left after processing.</TD></TR>
+<TR><TD><CODE>previousImagePullPolicy</CODE><BR /><I>string</I></TD><TD>PreviousImagePullPolicy specifies when to pull the previously build image when doing incremental build</TD></TR>
+<TR><TD><CODE>pullAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>PullAuthentication holds the authentication information for pulling the Docker images from private repositories</TD></TR>
+<TR><TD><CODE>pushAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>PullAuthentication holds the authentication information for pulling the Docker images from private repositories</TD></TR>
+<TR><TD><CODE>quiet</CODE><BR /><I>boolean</I></TD><TD>Operate quietly. Progress and assemble script output are not reported, only fatal errors. (default: false).</TD></TR>
+<TR><TD><CODE>removePreviousImage</CODE><BR /><I>boolean</I></TD><TD>RemovePreviousImage describes if previous image should be removed after successful build. This applies only to incremental builds.</TD></TR>
+<TR><TD><CODE>runImage</CODE><BR /><I>boolean</I></TD><TD>RunImage will trigger a &#34;docker run ...&#34; invocation of the produced image so the user can see if it operates as he would expect</TD></TR>
+<TR><TD><CODE>runtimeArtifacts</CODE><BR /><I><a href="#volumespec-v1alpha1-devops-kubesphere-io">VolumeSpec</a> array</I></TD><TD>RuntimeArtifacts specifies a list of source/destination pairs that will be copied from builder to a runtime image. Source can be a file or directory. Destination must be a directory. Regardless whether it is an absolute or relative path, it will be placed into image&#39;s WORKDIR. Destination also can be empty or equals to &#34;.&#34;, in this case it just refers to a root of WORKDIR. In case it&#39;s empty, S2I will try to get this list from io.openshift.s2i.assemble-input-files label on a RuntimeImage.</TD></TR>
+<TR><TD><CODE>runtimeAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>RuntimeAuthentication holds the authentication information for pulling the runtime Docker images from private repositories.</TD></TR>
+<TR><TD><CODE>runtimeImage</CODE><BR /><I>string</I></TD><TD>RuntimeImage specifies the image that will be a base for resulting image and will be used for running an application. By default, BuilderImage is used for building and running, but the latter may be overridden.</TD></TR>
+<TR><TD><CODE>runtimeImagePullPolicy</CODE><BR /><I>string</I></TD><TD>RuntimeImagePullPolicy specifies when to pull a runtime image.</TD></TR>
+<TR><TD><CODE>scriptDownloadProxyConfig</CODE><BR /><I><a href="#proxyconfig-v1alpha1-devops-kubesphere-io">ProxyConfig</a></I></TD><TD>ScriptDownloadProxyConfig optionally specifies the http and https proxy to use when downloading scripts</TD></TR>
+<TR><TD><CODE>scriptsUrl</CODE><BR /><I>string</I></TD><TD>ScriptsURL is a URL describing where to fetch the S2I scripts from during build process. This url can be a reference within the builder image if the scheme is specified as image://</TD></TR>
+<TR><TD><CODE>securityOpt</CODE><BR /><I>string array</I></TD><TD>SecurityOpt are passed as options to the docker containers launched by s2i.</TD></TR>
+<TR><TD><CODE>sourceUrl</CODE><BR /><I>string</I></TD><TD></TD></TR>
+<TR><TD><CODE>tag</CODE><BR /><I>string</I></TD><TD>Tag is a result image tag name.</TD></TR>
+<TR><TD><CODE>usage</CODE><BR /><I>boolean</I></TD><TD>Usage allows for properly shortcircuiting s2i logic when `s2i usage` is invoked</TD></TR>
+<TR><TD><CODE>workingDir</CODE><BR /><I>string</I></TD><TD>WorkingDir describes temporary directory used for downloading sources, scripts and tar operations.</TD></TR>
+<TR><TD><CODE>workingSourceDir</CODE><BR /><I>string</I></TD><TD>WorkingSourceDir describes the subdirectory off of WorkingDir set up during the repo download that is later used as the root for ignore processing</TD></TR>
 </TBODY>
 </TABLE>
 <H3 id="s2ibuilderstatus-v1alpha1-devops-kubesphere-io">S2iBuilderStatus v1alpha1 devops</H3>
@@ -318,7 +367,7 @@ spec:
 <P>AuthConfig is our abstraction of the Registry authorization information for whatever docker client we happen to be based on</P>
 <DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
  <UL>
-  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+  <LI><a href="#s2ibuilderspec-v1alpha1-devops-kubesphere-io">S2iBuilderSpec [devops/v1alpha1]</a></LI>
  </UL>
 </DIV>
 <TABLE>
@@ -340,7 +389,7 @@ spec:
 <P>CGroupLimits holds limits used to constrain container resources.</P>
 <DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
  <UL>
-  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+  <LI><a href="#s2ibuilderspec-v1alpha1-devops-kubesphere-io">S2iBuilderSpec [devops/v1alpha1]</a></LI>
  </UL>
 </DIV>
 <TABLE>
@@ -352,77 +401,6 @@ spec:
 <TR><TD><CODE>MemoryLimitBytes</CODE><BR /><I>integer</I></TD><TD></TD></TR>
 <TR><TD><CODE>MemorySwap</CODE><BR /><I>integer</I></TD><TD></TD></TR>
 <TR><TD><CODE>Parent</CODE><BR /><I>string</I></TD><TD></TD></TR>
-</TBODY>
-</TABLE>
-<H2 id="config-v1alpha1-devops-kubesphere-io">Config v1alpha1 devops.kubesphere.io</H2>
-<TABLE class="col-md-8">
-<THEAD><TR><TH>Group</TH><TH>Version</TH><TH>Kind</TH></TR></THEAD>
-<TBODY>
-<TR><TD><CODE>devops.kubesphere.io</CODE></TD><TD><CODE>v1alpha1</CODE></TD><TD><CODE>Config</CODE></TD></TR>
-</TBODY>
-</TABLE>
-<P>Config contains essential fields for performing build.</P>
-<DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
- <UL>
-  <LI><a href="#s2ibuilderspec-v1alpha1-devops-kubesphere-io">S2iBuilderSpec [devops/v1alpha1]</a></LI>
- </UL>
-</DIV>
-<TABLE>
-<THEAD><TR><TH>Field</TH><TH>Description</TH></TR></THEAD>
-<TBODY>
-<TR><TD><CODE>addHost</CODE><BR /><I>string array</I></TD><TD>AddHost Add a line to /etc/hosts for test purpose or private use in LAN. Its format is host:IP,muliple hosts can be added  by using multiple --add-host</TD></TR>
-<TR><TD><CODE>asDockerfile</CODE><BR /><I>string</I></TD><TD>AsDockerfile indicates the path where the Dockerfile should be written instead of building a new image.</TD></TR>
-<TR><TD><CODE>assembleUser</CODE><BR /><I>string</I></TD><TD>AssembleUser specifies the user to run the assemble script in container</TD></TR>
-<TR><TD><CODE>blockOnBuild</CODE><BR /><I>boolean</I></TD><TD>BlockOnBuild prevents s2i from performing a docker build operation if one is necessary to execute ONBUILD commands, or to layer source code into the container for images that don&#39;t have a tar binary available, if the image contains ONBUILD commands that would be executed.</TD></TR>
-<TR><TD><CODE>buildVolumes</CODE><BR /><I>string array</I></TD><TD>BuildVolumes specifies a list of volumes to mount to container running the build.</TD></TR>
-<TR><TD><CODE>builderBaseImageVersion</CODE><BR /><I>string</I></TD><TD>BuilderBaseImageVersion provides optional version information about the builder base image.</TD></TR>
-<TR><TD><CODE>builderImage</CODE><BR /><I>string</I></TD><TD>BuilderImage describes which image is used for building the result images.</TD></TR>
-<TR><TD><CODE>builderImageVersion</CODE><BR /><I>string</I></TD><TD>BuilderImageVersion provides optional version information about the builder image.</TD></TR>
-<TR><TD><CODE>builderPullPolicy</CODE><BR /><I>string</I></TD><TD>BuilderPullPolicy specifies when to pull the builder image</TD></TR>
-<TR><TD><CODE>callbackUrl</CODE><BR /><I>string</I></TD><TD>CallbackURL is a URL which is called upon successful build to inform about that fact.</TD></TR>
-<TR><TD><CODE>cgroupLimits</CODE><BR /><I><a href="#cgrouplimits-v1alpha1-devops-kubesphere-io">CGroupLimits</a></I></TD><TD>CGroupLimits describes the cgroups limits that will be applied to any containers run by s2i.</TD></TR>
-<TR><TD><CODE>contextDir</CODE><BR /><I>string</I></TD><TD>Specify a relative directory inside the application repository that should be used as a root directory for the application.</TD></TR>
-<TR><TD><CODE>description</CODE><BR /><I>string</I></TD><TD>Description is a result image description label. The default is no description.</TD></TR>
-<TR><TD><CODE>destination</CODE><BR /><I>string</I></TD><TD>Destination specifies a location where the untar operation will place its artifacts.</TD></TR>
-<TR><TD><CODE>displayName</CODE><BR /><I>string</I></TD><TD>DisplayName is a result image display-name label. This defaults to the output image name.</TD></TR>
-<TR><TD><CODE>dockerConfig</CODE><BR /><I><a href="#dockerconfig-v1alpha1-devops-kubesphere-io">DockerConfig</a></I></TD><TD>DockerConfig describes how to access host docker daemon.</TD></TR>
-<TR><TD><CODE>dockerNetworkMode</CODE><BR /><I>string</I></TD><TD>DockerNetworkMode is used to set the docker network setting to --net=container:&lt;id&gt; when the builder is invoked from a container.</TD></TR>
-<TR><TD><CODE>dropCapabilities</CODE><BR /><I>string array</I></TD><TD>DropCapabilities contains a list of capabilities to drop when executing containers</TD></TR>
-<TR><TD><CODE>environment</CODE><BR /><I><a href="#environmentspec-v1alpha1-devops-kubesphere-io">EnvironmentSpec</a> array</I></TD><TD>Environment is a map of environment variables to be passed to the image.</TD></TR>
-<TR><TD><CODE>excludeRegExp</CODE><BR /><I>string</I></TD><TD>ExcludeRegExp contains a string representation of the regular expression desired for deciding which files to exclude from the tar stream</TD></TR>
-<TR><TD><CODE>export</CODE><BR /><I>boolean</I></TD><TD>Export Push the result image to specify image registry in tag</TD></TR>
-<TR><TD><CODE>forceCopy</CODE><BR /><I>boolean</I></TD><TD>ForceCopy results in only the file SCM plugin being used (i.e. no `git clone`); allows for empty directories to be included in resulting image (since git does not support that). (default: false).</TD></TR>
-<TR><TD><CODE>hasOnBuild</CODE><BR /><I>boolean</I></TD><TD>HasOnBuild will be set to true if the builder image contains ONBUILD instructions</TD></TR>
-<TR><TD><CODE>ignoreSubmodules</CODE><BR /><I>boolean</I></TD><TD>IgnoreSubmodules determines whether we will attempt to pull in submodules (via --recursive or submodule init)</TD></TR>
-<TR><TD><CODE>imageScriptsUrl</CODE><BR /><I>string</I></TD><TD>ImageScriptsURL is the default location to find the assemble/run scripts for a builder image. This url can be a reference within the builder image if the scheme is specified as image://</TD></TR>
-<TR><TD><CODE>imageWorkDir</CODE><BR /><I>string</I></TD><TD>ImageWorkDir is the default working directory for the builder image.</TD></TR>
-<TR><TD><CODE>incremental</CODE><BR /><I>boolean</I></TD><TD>Incremental describes whether to try to perform incremental build.</TD></TR>
-<TR><TD><CODE>incrementalAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>IncrementalAuthentication holds the authentication information for pulling the previous image from private repositories</TD></TR>
-<TR><TD><CODE>incrementalFromTag</CODE><BR /><I>string</I></TD><TD>IncrementalFromTag sets an alternative image tag to look for existing artifacts. Tag is used by default if this is not set.</TD></TR>
-<TR><TD><CODE>injections</CODE><BR /><I><a href="#volumespec-v1alpha1-devops-kubesphere-io">VolumeSpec</a> array</I></TD><TD>Injections specifies a list source/destination folders that are injected to the container that runs assemble. All files we inject will be truncated after the assemble script finishes.</TD></TR>
-<TR><TD><CODE>keepSymlinks</CODE><BR /><I>boolean</I></TD><TD>KeepSymlinks indicates to copy symlinks as symlinks. Default behavior is to follow symlinks and copy files by content.</TD></TR>
-<TR><TD><CODE>labelNamespace</CODE><BR /><I>string</I></TD><TD>LabelNamespace provides the namespace under which the labels will be generated.</TD></TR>
-<TR><TD><CODE>labels</CODE><BR /><I>object</I></TD><TD>Labels specify labels and their values to be applied to the resulting image. Label keys must have non-zero length. The labels defined here override generated labels in case they have the same name.</TD></TR>
-<TR><TD><CODE>layeredBuild</CODE><BR /><I>boolean</I></TD><TD>LayeredBuild describes if this is build which layered scripts and sources on top of BuilderImage.</TD></TR>
-<TR><TD><CODE>preserveWorkingDir</CODE><BR /><I>boolean</I></TD><TD>PreserveWorkingDir describes if working directory should be left after processing.</TD></TR>
-<TR><TD><CODE>previousImagePullPolicy</CODE><BR /><I>string</I></TD><TD>PreviousImagePullPolicy specifies when to pull the previously build image when doing incremental build</TD></TR>
-<TR><TD><CODE>pullAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>PullAuthentication holds the authentication information for pulling the Docker images from private repositories</TD></TR>
-<TR><TD><CODE>pushAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>PullAuthentication holds the authentication information for pulling the Docker images from private repositories</TD></TR>
-<TR><TD><CODE>quiet</CODE><BR /><I>boolean</I></TD><TD>Operate quietly. Progress and assemble script output are not reported, only fatal errors. (default: false).</TD></TR>
-<TR><TD><CODE>removePreviousImage</CODE><BR /><I>boolean</I></TD><TD>RemovePreviousImage describes if previous image should be removed after successful build. This applies only to incremental builds.</TD></TR>
-<TR><TD><CODE>runImage</CODE><BR /><I>boolean</I></TD><TD>RunImage will trigger a &#34;docker run ...&#34; invocation of the produced image so the user can see if it operates as he would expect</TD></TR>
-<TR><TD><CODE>runtimeArtifacts</CODE><BR /><I><a href="#volumespec-v1alpha1-devops-kubesphere-io">VolumeSpec</a> array</I></TD><TD>RuntimeArtifacts specifies a list of source/destination pairs that will be copied from builder to a runtime image. Source can be a file or directory. Destination must be a directory. Regardless whether it is an absolute or relative path, it will be placed into image&#39;s WORKDIR. Destination also can be empty or equals to &#34;.&#34;, in this case it just refers to a root of WORKDIR. In case it&#39;s empty, S2I will try to get this list from io.openshift.s2i.assemble-input-files label on a RuntimeImage.</TD></TR>
-<TR><TD><CODE>runtimeAuthentication</CODE><BR /><I><a href="#authconfig-v1alpha1-devops-kubesphere-io">AuthConfig</a></I></TD><TD>RuntimeAuthentication holds the authentication information for pulling the runtime Docker images from private repositories.</TD></TR>
-<TR><TD><CODE>runtimeImage</CODE><BR /><I>string</I></TD><TD>RuntimeImage specifies the image that will be a base for resulting image and will be used for running an application. By default, BuilderImage is used for building and running, but the latter may be overridden.</TD></TR>
-<TR><TD><CODE>runtimeImagePullPolicy</CODE><BR /><I>string</I></TD><TD>RuntimeImagePullPolicy specifies when to pull a runtime image.</TD></TR>
-<TR><TD><CODE>scriptDownloadProxyConfig</CODE><BR /><I><a href="#proxyconfig-v1alpha1-devops-kubesphere-io">ProxyConfig</a></I></TD><TD>ScriptDownloadProxyConfig optionally specifies the http and https proxy to use when downloading scripts</TD></TR>
-<TR><TD><CODE>scriptsUrl</CODE><BR /><I>string</I></TD><TD>ScriptsURL is a URL describing where to fetch the S2I scripts from during build process. This url can be a reference within the builder image if the scheme is specified as image://</TD></TR>
-<TR><TD><CODE>securityOpt</CODE><BR /><I>string array</I></TD><TD>SecurityOpt are passed as options to the docker containers launched by s2i.</TD></TR>
-<TR><TD><CODE>sourceUrl</CODE><BR /><I>string</I></TD><TD></TD></TR>
-<TR><TD><CODE>tag</CODE><BR /><I>string</I></TD><TD>Tag is a result image tag name.</TD></TR>
-<TR><TD><CODE>usage</CODE><BR /><I>boolean</I></TD><TD>Usage allows for properly shortcircuiting s2i logic when `s2i usage` is invoked</TD></TR>
-<TR><TD><CODE>workingDir</CODE><BR /><I>string</I></TD><TD>WorkingDir describes temporary directory used for downloading sources, scripts and tar operations.</TD></TR>
-<TR><TD><CODE>workingSourceDir</CODE><BR /><I>string</I></TD><TD>WorkingSourceDir describes the subdirectory off of WorkingDir set up during the repo download that is later used as the root for ignore processing</TD></TR>
 </TBODY>
 </TABLE>
 <H2 id="deleteoptions-v1-meta">DeleteOptions v1 meta</H2>
@@ -455,7 +433,7 @@ spec:
 <P>DockerConfig contains the configuration for a Docker connection.</P>
 <DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
  <UL>
-  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+  <LI><a href="#s2ibuilderspec-v1alpha1-devops-kubesphere-io">S2iBuilderSpec [devops/v1alpha1]</a></LI>
  </UL>
 </DIV>
 <TABLE>
@@ -479,7 +457,7 @@ spec:
 <P>EnvironmentSpec specifies a single environment variable.</P>
 <DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
  <UL>
-  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+  <LI><a href="#s2ibuilderspec-v1alpha1-devops-kubesphere-io">S2iBuilderSpec [devops/v1alpha1]</a></LI>
  </UL>
 </DIV>
 <TABLE>
@@ -672,7 +650,7 @@ spec:
 <P>ProxyConfig holds proxy configuration.</P>
 <DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
  <UL>
-  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+  <LI><a href="#s2ibuilderspec-v1alpha1-devops-kubesphere-io">S2iBuilderSpec [devops/v1alpha1]</a></LI>
  </UL>
 </DIV>
 <TABLE>
@@ -802,7 +780,7 @@ spec:
 <P>VolumeSpec represents a single volume mount point.</P>
 <DIV class="alert alert-info col-md-8"><I class="fa fa-info-circle"></I> Appears In:
  <UL>
-  <LI><a href="#config-v1alpha1-devops-kubesphere-io">Config [devops/v1alpha1]</a></LI>
+  <LI><a href="#s2ibuilderspec-v1alpha1-devops-kubesphere-io">S2iBuilderSpec [devops/v1alpha1]</a></LI>
  </UL>
 </DIV>
 <TABLE>

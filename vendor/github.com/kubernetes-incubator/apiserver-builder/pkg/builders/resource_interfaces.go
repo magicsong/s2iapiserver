@@ -18,6 +18,7 @@ package builders
 
 import (
 	"context"
+
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
@@ -55,7 +56,8 @@ type StorageBuilder interface {
 
 	names.NameGenerator
 	runtime.ObjectTyper
-
+	rest.TableConvertor
+	rest.ShortNamesProvider
 	ObjectNameFunc(obj runtime.Object) (string, error)
 	NamespaceScoped() bool
 	AllowCreateOnUpdate() bool

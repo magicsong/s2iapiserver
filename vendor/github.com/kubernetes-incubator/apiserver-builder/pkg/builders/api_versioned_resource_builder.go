@@ -110,6 +110,7 @@ func (b *versionedResourceBuilder) NewList() runtime.Object {
 
 type StorageWrapper struct {
 	registry.Store
+	rest.ShortNamesProvider
 }
 
 func (s StorageWrapper) Create(ctx context.Context, obj runtime.Object, createValidation rest.ValidateObjectFunc, options *metav1.CreateOptions) (runtime.Object, error) {
@@ -121,7 +122,7 @@ func (b *versionedResourceBuilder) Build(
 	optionsGetter generic.RESTOptionsGetter) rest.StandardStorage {
 
 	// Set a default strategy
-	store := &StorageWrapper{registry.Store{
+	store := &StorageWrapper{Store: registry.Store{
 		NewFunc:                  b.Unversioned.New,     // Use the unversioned type
 		NewListFunc:              b.Unversioned.NewList, // Use the unversioned type
 		DefaultQualifiedResource: b.getGroupResource(group),

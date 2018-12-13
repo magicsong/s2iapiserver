@@ -21,14 +21,11 @@ package devops
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/kubernetes-incubator/apiserver-builder/pkg/builders"
 	devopsconstants "github.com/magicsong/s2iapiserver/pkg/apis/devops/constants"
-	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/apis/meta/internalversion"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	metav1beta1 "k8s.io/apimachinery/pkg/apis/meta/v1beta1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apiserver/pkg/registry/rest"
@@ -90,17 +87,6 @@ func Resource(resource string) schema.GroupResource {
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-type S2iBuilder struct {
-	metav1.TypeMeta
-	metav1.ObjectMeta
-	Spec   S2iBuilderSpec
-	Status S2iBuilderStatus
-}
-
-// +genclient
-// +genclient
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-
 type S2iRun struct {
 	metav1.TypeMeta
 	metav1.ObjectMeta
@@ -108,10 +94,15 @@ type S2iRun struct {
 	Status S2iRunStatus
 }
 
-type S2iBuilderStatus struct {
-	RunCount     int
-	LastRunState devopsconstants.RunningState
-	LastRunName  *string
+// +genclient
+// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+type S2iBuilder struct {
+	metav1.TypeMeta
+	metav1.ObjectMeta
+	Spec   S2iBuilderSpec
+	Status S2iBuilderStatus
 }
 
 type S2iRunStatus struct {
@@ -120,10 +111,10 @@ type S2iRunStatus struct {
 	RunState       devopsconstants.RunningState
 }
 
-type S2iRunSpec struct {
-	BuilderName          string
-	BackoffLimit         int32
-	SecondsAfterFinished int32
+type S2iBuilderStatus struct {
+	RunCount     int
+	LastRunState devopsconstants.RunningState
+	LastRunName  *string
 }
 
 type S2iBuilderSpec struct {
@@ -182,11 +173,10 @@ type S2iBuilderSpec struct {
 	SourceURL                 string
 }
 
-type AuthConfig struct {
-	Username      string
-	Password      string
-	Email         string
-	ServerAddress string
+type S2iRunSpec struct {
+	BuilderName          string
+	BackoffLimit         int32
+	SecondsAfterFinished int32
 }
 
 type ProxyConfig struct {
@@ -212,6 +202,13 @@ type VolumeSpec struct {
 type EnvironmentSpec struct {
 	Name  string
 	Value string
+}
+
+type AuthConfig struct {
+	Username      string
+	Password      string
+	Email         string
+	ServerAddress string
 }
 
 type DockerConfig struct {
@@ -341,56 +338,6 @@ func (s *storageS2iBuilder) DeleteS2iBuilder(ctx context.Context, id string) (bo
 	st := s.GetStandardStorage()
 	_, sync, err := st.Delete(ctx, id, &metav1.DeleteOptions{})
 	return sync, err
-}
-func (S2iBuilderStrategy) ShortNames() []string {
-	return []string{"s2i"}
-}
-func (S2iBuilderStrategy) ConvertToTable(ctx context.Context, object runtime.Object, tableOptions runtime.Object) (*metav1beta1.Table, error) {
-	var table metav1beta1.Table
-	var swaggerMetadataDescriptions = metav1.ObjectMeta{}.SwaggerDoc()
-	table.ColumnDefinitions = []metav1beta1.TableColumnDefinition{
-		{Name: "Name", Type: "string", Format: "name", Description: metav1.ObjectMeta{}.SwaggerDoc()["name"]},
-		{Name: "Created At", Type: "date", Description: swaggerMetadataDescriptions["creationTimestamp"]},
-		{Name: "RunCount", Type: "interger", Description: "The aggregate readiness state of this pod for accepting traffic."},
-		{Name: "RunState", Type: "string", Description: "The aggregate status of the containers in this pod."},
-	}
-	fn := func(obj runtime.Object) error {
-		m, err := meta.Accessor(obj)
-		if err != nil {
-			return fmt.Errorf("the resource %s does not support being converted to a Table", "s2ibuilder")
-		}
-		s := obj.(*S2iBuilder)
-		table.Rows = append(table.Rows, metav1beta1.TableRow{
-			Cells: []interface{}{
-				m.GetName(),
-				m.GetCreationTimestamp().Time.UTC().Format(time.RFC3339),
-				s.Status.RunCount,
-				s.Status.LastRunState},
-			Object: runtime.RawExtension{Object: obj},
-		})
-		return nil
-	}
-	switch {
-	case meta.IsListType(object):
-		if err := meta.EachListItem(object, fn); err != nil {
-			return nil, err
-		}
-	default:
-		if err := fn(object); err != nil {
-			return nil, err
-		}
-	}
-	if m, err := meta.ListAccessor(object); err == nil {
-		table.ResourceVersion = m.GetResourceVersion()
-		table.SelfLink = m.GetSelfLink()
-		table.Continue = m.GetContinue()
-	} else {
-		if m, err := meta.CommonAccessor(object); err == nil {
-			table.ResourceVersion = m.GetResourceVersion()
-			table.SelfLink = m.GetSelfLink()
-		}
-	}
-	return &table, nil
 }
 
 //

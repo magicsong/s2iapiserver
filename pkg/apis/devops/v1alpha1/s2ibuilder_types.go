@@ -262,6 +262,10 @@ func (S2iBuilderStrategy) Validate(ctx context.Context, obj runtime.Object) fiel
 	// perform validation here and add to errors using field.Invalid
 	return errors
 }
+func (S2iBuilderStrategy) ShortNames() []string {
+	log.Printf("ShortNames Here")
+	return []string{"s2i"}
+}
 
 // DefaultingFunction sets default S2iBuilder field values
 func (S2iBuilderSchemeFns) DefaultingFunction(o interface{}) {
@@ -283,7 +287,7 @@ func (S2iBuilderStrategy) ConvertToTable(ctx context.Context, object runtime.Obj
 		if err != nil {
 			return fmt.Errorf("the resource %s does not support being converted to a Table", "s2ibuilder")
 		}
-		s := obj.(*S2iBuilder)
+		s := obj.(*devops.S2iBuilder)
 		table.Rows = append(table.Rows, metav1beta1.TableRow{
 			Cells: []interface{}{
 				m.GetName(),

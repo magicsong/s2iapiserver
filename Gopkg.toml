@@ -35,7 +35,8 @@ required = [
 
 # Comment to update deps with dep tool
 [[constraint]]
-  branch = "master"
+  branch = "dev"
+  source = "github.com/magicsong/apiserver-builder"
   name = "github.com/kubernetes-incubator/apiserver-builder"
 
 [[constraint]]

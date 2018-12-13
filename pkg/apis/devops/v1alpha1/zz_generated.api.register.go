@@ -24,7 +24,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/apiserver/pkg/registry/rest"
 )
 
 var (
@@ -33,7 +32,7 @@ var (
 		S2iBuilderSchemeFns{},
 		func() runtime.Object { return &S2iBuilder{} },     // Register versioned resource
 		func() runtime.Object { return &S2iBuilderList{} }, // Register versioned resource list
-		&S2iBuilderStrategy{DefaultStorageStrategy: builders.StorageStrategySingleton},
+		&S2iBuilderStrategy{builders.StorageStrategySingleton},
 	)
 	devopsS2iRunStorage = builders.NewApiResource( // Resource status endpoint
 		devops.InternalS2iRun,
@@ -88,8 +87,6 @@ type S2iBuilderSchemeFns struct {
 
 // +k8s:deepcopy-gen=false
 type S2iBuilderStrategy struct {
-	rest.ShortNamesProvider
-	rest.TableConvertor
 	builders.DefaultStorageStrategy
 }
 

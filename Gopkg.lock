@@ -390,7 +390,7 @@
   version = "v1.0.1"
 
 [[projects]]
-  branch = "master"
+  branch = "dev"
   name = "github.com/kubernetes-incubator/apiserver-builder"
   packages = [
     "pkg/apiserver",
@@ -400,23 +400,8 @@
     "pkg/test",
     "pkg/validators"
   ]
-  revision = "f4a68adc0b77d65c5652701137847d20a5879d00"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/magicsong/s2irun"
-  packages = [
-    "pkg/api",
-    "pkg/api/constants",
-    "pkg/errors",
-    "pkg/scm/git",
-    "pkg/utils/cmd",
-    "pkg/utils/cygpath",
-    "pkg/utils/fs",
-    "pkg/utils/glog",
-    "pkg/utils/user"
-  ]
-  revision = "9d2226575114ee9cf278ccd22e97572034116a39"
+  revision = "6c6f6b1b388e07425c92f738b43935b29f632a0c"
+  source = "github.com/magicsong/apiserver-builder"
 
 [[projects]]
   name = "github.com/mailru/easyjson"
@@ -1087,6 +1072,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a8ebda64571ffbe3f6cd2974ee40468e0586cbbc5e8fba03d3a6bdd533fa4b2b"
+  inputs-digest = "d0ddd2216e446c5a5f118ba8b5db5781e405fd8c27d6a7a307bd7a6032447ec0"
   solver-name = "gps-cdcl"
   solver-version = 1

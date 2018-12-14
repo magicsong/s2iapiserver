@@ -106,15 +106,28 @@ type S2iBuilder struct {
 }
 
 type S2iRunStatus struct {
-	StartTime      *metav1.Time
-	CompletionTime *metav1.Time
-	RunState       devopsconstants.RunningState
+	StartTime *metav1.Time
+	RunState  devopsconstants.RunningState
+	Trigger   *Trigger
+	Result    *S2IRunResult
 }
 
 type S2iBuilderStatus struct {
 	RunCount     int
 	LastRunState devopsconstants.RunningState
 	LastRunName  *string
+}
+
+type S2IRunResult struct {
+	ImageName      string
+	CompletionTime *metav1.Time
+	Artifact       string
+}
+
+type Trigger struct {
+	Source  devopsconstants.TriggerSource
+	Event   string
+	Payload *Payload
 }
 
 type S2iBuilderSpec struct {
@@ -124,6 +137,7 @@ type S2iBuilderSpec struct {
 	BuilderImageVersion       string
 	BuilderBaseImageVersion   string
 	RuntimeImage              string
+	OutputImageName           string
 	RuntimeImagePullPolicy    devopsconstants.PullPolicy
 	RuntimeAuthentication     AuthConfig
 	RuntimeArtifacts          []VolumeSpec
@@ -173,10 +187,7 @@ type S2iBuilderSpec struct {
 	SourceURL                 string
 }
 
-type S2iRunSpec struct {
-	BuilderName          string
-	BackoffLimit         int32
-	SecondsAfterFinished int32
+type Payload struct {
 }
 
 type ProxyConfig struct {
@@ -218,6 +229,14 @@ type DockerConfig struct {
 	CAFile    string
 	UseTLS    bool
 	TLSVerify bool
+}
+
+type S2iRunSpec struct {
+	BuilderName          string
+	BackoffLimit         int32
+	SecondsAfterFinished int32
+	Environment          []EnvironmentSpec
+	OverideTag           string
 }
 
 //

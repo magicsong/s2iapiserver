@@ -19,9 +19,9 @@ package v1alpha1
 import (
 	"context"
 	"fmt"
-	"log"
 	"time"
 
+	"github.com/golang/glog"
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops"
 	"github.com/magicsong/s2iapiserver/pkg/apis/devops/constants"
 	"k8s.io/apimachinery/pkg/api/meta"
@@ -69,6 +69,8 @@ type S2iBuilderSpec struct {
 	// used for building and running, but the latter may be overridden.
 	RuntimeImage string `json:"runtimeImage,omitempty"`
 
+	//OutputImageName is a result image name without tag, default is latest. tag will append to ImageName in the end
+	OutputImageName string `json:"outputImageName,omitempty"`
 	// RuntimeImagePullPolicy specifies when to pull a runtime image.
 	RuntimeImagePullPolicy constants.PullPolicy `json:"runtimeImagePullPolicy,omitempty"`
 
@@ -257,20 +259,24 @@ type S2iBuilderStatus struct {
 // Validate checks that an instance of S2iBuilder is well formed
 func (S2iBuilderStrategy) Validate(ctx context.Context, obj runtime.Object) field.ErrorList {
 	o := obj.(*devops.S2iBuilder)
-	log.Printf("Validating fields for S2iBuilder %s\n", o.Name)
+	glog.V(4).Infof("Validating fields for S2iBuilder %s\n", o.Name)
 	errors := field.ErrorList{}
 	// perform validation here and add to errors using field.Invalid
 	return errors
 }
 func (S2iBuilderStrategy) ShortNames() []string {
-	log.Printf("ShortNames Here")
-	return []string{"s2i"}
+	return []string{"s2ib"}
 }
 
 // DefaultingFunction sets default S2iBuilder field values
 func (S2iBuilderSchemeFns) DefaultingFunction(o interface{}) {
 	obj := o.(*S2iBuilder)
-	obj.Status.LastRunState = constants.NotRunning
+	if obj.Status.LastRunState == "" {
+		obj.Status.LastRunState = constants.Unknown
+	}
+	if obj.Spec.Tag == "" {
+		obj.Spec.Tag = constants.DefaultImageTag
+	}
 }
 
 func (S2iBuilderStrategy) ConvertToTable(ctx context.Context, object runtime.Object, tableOptions runtime.Object) (*metav1beta1.Table, error) {

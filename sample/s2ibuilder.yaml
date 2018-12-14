@@ -3,4 +3,6 @@ kind: S2iBuilder
 metadata:
   name: s2ibuilder-example
 spec:
-  description: HelloWorld
+  description: HelloWorldddd
+  outputImageName: hello/HelloWorld3
+  tag: v0.1.1

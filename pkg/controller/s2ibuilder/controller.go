@@ -47,9 +47,8 @@ func (c *S2iBuilderControllerImpl) Init(arguments sharedinformers.ControllerInit
 	c.builderLister = arguments.GetSharedInformers().Factory.Devops().V1alpha1().S2iBuilders().Lister()
 	c.runLister = arguments.GetSharedInformers().Factory.Devops().V1alpha1().S2iRuns().Lister()
 	c.client = client.NewForConfigOrDie(arguments.GetRestConfig())
-	c.si.Watch("BuilderRun", c.si.Factory.Devops().V1alpha1().S2iRuns().Informer(), func(i interface{}) (string, error) {
+	c.si.Watch("RunOfBuilder", c.si.Factory.Devops().V1alpha1().S2iRuns().Informer(), func(i interface{}) (string, error) {
 		d, _ := i.(*v1alpha1.S2iRun)
-		glog.V(1).Infof("[s2ibuilder] Reconcile key for s2irun")
 		return d.Namespace + "/" + d.Name, nil
 	}, func(s string) error {
 		return nil
@@ -59,7 +58,7 @@ func (c *S2iBuilderControllerImpl) Init(arguments sharedinformers.ControllerInit
 // Reconcile handles enqueued messages
 func (c *S2iBuilderControllerImpl) Reconcile(u *v1alpha1.S2iBuilder) error {
 	// Implement controller logic here
-	glog.V(1).Infof("Running reconcile S2iBuilder for %s\n", u.Name)
+	glog.V(2).Infof("Running reconcile S2iBuilder for %s\n", u.Name)
 	instance := u.DeepCopy()
 	instance.Status = v1alpha1.S2iBuilderStatus{}
 	runs, err := c.runLister.S2iRuns(u.Namespace).List(labels.Everything())

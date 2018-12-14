@@ -36,7 +36,9 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.ContainerConfig":          schema_pkg_apis_devops_v1alpha1_ContainerConfig(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.DockerConfig":             schema_pkg_apis_devops_v1alpha1_DockerConfig(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.EnvironmentSpec":          schema_pkg_apis_devops_v1alpha1_EnvironmentSpec(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.Payload":                  schema_pkg_apis_devops_v1alpha1_Payload(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.ProxyConfig":              schema_pkg_apis_devops_v1alpha1_ProxyConfig(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2IRunResult":             schema_pkg_apis_devops_v1alpha1_S2IRunResult(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilder":               schema_pkg_apis_devops_v1alpha1_S2iBuilder(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderList":           schema_pkg_apis_devops_v1alpha1_S2iBuilderList(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderSchemeFns":      schema_pkg_apis_devops_v1alpha1_S2iBuilderSchemeFns(ref),
@@ -51,6 +53,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iRunStatus":             schema_pkg_apis_devops_v1alpha1_S2iRunStatus(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iRunStatusStrategy":     schema_pkg_apis_devops_v1alpha1_S2iRunStatusStrategy(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iRunStrategy":           schema_pkg_apis_devops_v1alpha1_S2iRunStrategy(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.Trigger":                  schema_pkg_apis_devops_v1alpha1_Trigger(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.VolumeSpec":               schema_pkg_apis_devops_v1alpha1_VolumeSpec(ref),
 		"k8s.io/api/admissionregistration/v1alpha1.Initializer":                               schema_k8sio_api_admissionregistration_v1alpha1_Initializer(ref),
 		"k8s.io/api/admissionregistration/v1alpha1.InitializerConfiguration":                  schema_k8sio_api_admissionregistration_v1alpha1_InitializerConfiguration(ref),
@@ -866,6 +869,17 @@ func schema_pkg_apis_devops_v1alpha1_EnvironmentSpec(ref common.ReferenceCallbac
 	}
 }
 
+func schema_pkg_apis_devops_v1alpha1_Payload(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Properties: map[string]spec.Schema{},
+			},
+		},
+		Dependencies: []string{},
+	}
+}
+
 func schema_pkg_apis_devops_v1alpha1_ProxyConfig(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -889,6 +903,36 @@ func schema_pkg_apis_devops_v1alpha1_ProxyConfig(ref common.ReferenceCallback) c
 			},
 		},
 		Dependencies: []string{},
+	}
+}
+
+func schema_pkg_apis_devops_v1alpha1_S2IRunResult(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Properties: map[string]spec.Schema{
+					"imageName": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"completionTime": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
+						},
+					},
+					"artifact": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.Time"},
 	}
 }
 
@@ -1044,6 +1088,13 @@ func schema_pkg_apis_devops_v1alpha1_S2iBuilderSpec(ref common.ReferenceCallback
 					"runtimeImage": {
 						SchemaProps: spec.SchemaProps{
 							Description: "RuntimeImage specifies the image that will be a base for resulting image and will be used for running an application. By default, BuilderImage is used for building and running, but the latter may be overridden.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"outputImageName": {
+						SchemaProps: spec.SchemaProps{
+							Description: "OutputImageName is a result image name without tag, default is latest. tag will append to ImageName in the end",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -1631,10 +1682,29 @@ func schema_pkg_apis_devops_v1alpha1_S2iRunSpec(ref common.ReferenceCallback) co
 							Format: "int32",
 						},
 					},
+					"environment": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.EnvironmentSpec"),
+									},
+								},
+							},
+						},
+					},
+					"overideTag": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
 				},
 			},
 		},
-		Dependencies: []string{},
+		Dependencies: []string{
+			"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.EnvironmentSpec"},
 	}
 }
 
@@ -1649,22 +1719,27 @@ func schema_pkg_apis_devops_v1alpha1_S2iRunStatus(ref common.ReferenceCallback) 
 							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
 						},
 					},
-					"completionTime": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
-						},
-					},
 					"runState": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
 						},
 					},
+					"trigger": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.Trigger"),
+						},
+					},
+					"result": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2IRunResult"),
+						},
+					},
 				},
 			},
 		},
 		Dependencies: []string{
-			"k8s.io/apimachinery/pkg/apis/meta/v1.Time"},
+			"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2IRunResult", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.Trigger", "k8s.io/apimachinery/pkg/apis/meta/v1.Time"},
 	}
 }
 
@@ -1703,6 +1778,36 @@ func schema_pkg_apis_devops_v1alpha1_S2iRunStrategy(ref common.ReferenceCallback
 		},
 		Dependencies: []string{
 			"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStorageStrategy"},
+	}
+}
+
+func schema_pkg_apis_devops_v1alpha1_Trigger(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Properties: map[string]spec.Schema{
+					"source": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"event": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"payload": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.Payload"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.Payload"},
 	}
 }
 

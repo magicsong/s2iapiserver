@@ -12,6 +12,8 @@ const (
 	Successful RunningState = "Successful"
 	Failed     RunningState = "Failed"
 	Unknown    RunningState = "Unknown"
+
+	DefaultImageTag = "latest"
 )
 
 const (
@@ -47,6 +49,16 @@ const (
 	DockerNetworkModeContainerPrefix string = "container:"
 	// DockerNetworkModeNetworkNamespacePrefix is the string prefix used when sharing a namespace from a CRI-O container.
 	DockerNetworkModeNetworkNamespacePrefix string = "netns:"
+)
+
+type TriggerSource string
+
+const (
+	Default TriggerSource = "Manual"
+	Github  TriggerSource = "Github"
+	Gitlab  TriggerSource = "Gitlab"
+	SVN     TriggerSource = "SVN"
+	Others  TriggerSource = "Others"
 )
 
 // NewDockerNetworkModeContainer creates a DockerNetworkMode value which instructs docker to place the container in the network namespace of an existing container.

@@ -5,3 +5,4 @@ metadata:
 spec:
   builderName: s2ibuilder-example
   backoffLimit: 3
+  overideTag: v0.0.2

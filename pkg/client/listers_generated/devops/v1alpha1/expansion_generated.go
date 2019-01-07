@@ -17,6 +17,14 @@ limitations under the License.
 
 package v1alpha1
 
+// RerunListerExpansion allows custom methods to be added to
+// RerunLister.
+type RerunListerExpansion interface{}
+
+// RerunNamespaceListerExpansion allows custom methods to be added to
+// RerunNamespaceLister.
+type RerunNamespaceListerExpansion interface{}
+
 // S2iBuilderListerExpansion allows custom methods to be added to
 // S2iBuilderLister.
 type S2iBuilderListerExpansion interface{}

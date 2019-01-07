@@ -27,6 +27,10 @@ type FakeDevopsV1alpha1 struct {
 	*testing.Fake
 }
 
+func (c *FakeDevopsV1alpha1) Reruns(namespace string) v1alpha1.RerunInterface {
+	return &FakeReruns{c, namespace}
+}
+
 func (c *FakeDevopsV1alpha1) S2iBuilders(namespace string) v1alpha1.S2iBuilderInterface {
 	return &FakeS2iBuilders{c, namespace}
 }

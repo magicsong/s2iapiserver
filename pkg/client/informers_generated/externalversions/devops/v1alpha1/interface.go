@@ -23,6 +23,8 @@ import (
 
 // Interface provides access to all the informers in this group version.
 type Interface interface {
+	// Reruns returns a RerunInformer.
+	Reruns() RerunInformer
 	// S2iBuilders returns a S2iBuilderInformer.
 	S2iBuilders() S2iBuilderInformer
 	// S2iRuns returns a S2iRunInformer.
@@ -38,6 +40,11 @@ type version struct {
 // New returns a new Interface.
 func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakListOptions internalinterfaces.TweakListOptionsFunc) Interface {
 	return &version{factory: f, namespace: namespace, tweakListOptions: tweakListOptions}
+}
+
+// Reruns returns a RerunInformer.
+func (v *version) Reruns() RerunInformer {
+	return &rerunInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }
 
 // S2iBuilders returns a S2iBuilderInformer.

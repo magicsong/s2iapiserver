@@ -17,6 +17,8 @@ limitations under the License.
 
 package v1alpha1
 
+type RerunExpansion interface{}
+
 type S2iBuilderExpansion interface{}
 
 type S2iRunExpansion interface{}

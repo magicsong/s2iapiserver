@@ -38,6 +38,7 @@ import (
 // S2iRun
 // +k8s:openapi-gen=true
 // +resource:path=s2iruns,strategy=S2iRunStrategy
+// +subresource:request=Rerun,path=rerun,rest=RerunS2iRunREST
 type S2iRun struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -66,6 +67,7 @@ type S2IRunResult struct {
 	ImageName      string       `json:"imageName,omitempty"`
 	CompletionTime *metav1.Time `json:"completionTime,omitempty" protobuf:"bytes,3,opt,name=completionTime"`
 	Artifact       string       `json:"artifact,omitempty"`
+	Message        string       `json:"message,omitempty"`
 }
 
 // S2iRunStatus defines the observed state of S2iRun

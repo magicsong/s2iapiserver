@@ -26,6 +26,7 @@ import (
 
 type DevopsV1alpha1Interface interface {
 	RESTClient() rest.Interface
+	RerunsGetter
 	S2iBuildersGetter
 	S2iRunsGetter
 }
@@ -33,6 +34,10 @@ type DevopsV1alpha1Interface interface {
 // DevopsV1alpha1Client is used to interact with features provided by the devops.kubesphere.io group.
 type DevopsV1alpha1Client struct {
 	restClient rest.Interface
+}
+
+func (c *DevopsV1alpha1Client) Reruns(namespace string) RerunInterface {
+	return newReruns(c, namespace)
 }
 
 func (c *DevopsV1alpha1Client) S2iBuilders(namespace string) S2iBuilderInterface {

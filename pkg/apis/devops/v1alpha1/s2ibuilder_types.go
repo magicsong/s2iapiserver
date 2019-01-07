@@ -44,9 +44,7 @@ type S2iBuilder struct {
 	Spec   S2iBuilderSpec   `json:"spec,omitempty"`
 	Status S2iBuilderStatus `json:"status,omitempty"`
 }
-
-// S2iBuilderSpec defines the desired state of S2iBuilder
-type S2iBuilderSpec struct {
+type S2iConfig struct {
 	// DisplayName is a result image display-name label. This defaults to the
 	// output image name.
 	DisplayName string `json:"displayName,omitempty"`
@@ -246,7 +244,13 @@ type S2iBuilderSpec struct {
 	//Export Push the result image to specify image registry in tag
 	Export bool `json:"export,omitempty"`
 
+	//SourceURL is  url of the codes such as https://github.com/a/b.git
 	SourceURL string `json:"sourceUrl,omitempty"`
+}
+
+// S2iBuilderSpec defines the desired state of S2iBuilder
+type S2iBuilderSpec struct {
+	Config *S2iConfig `json:"config"`
 }
 
 // S2iBuilderStatus defines the observed state of S2iBuilder
@@ -271,11 +275,14 @@ func (S2iBuilderStrategy) ShortNames() []string {
 // DefaultingFunction sets default S2iBuilder field values
 func (S2iBuilderSchemeFns) DefaultingFunction(o interface{}) {
 	obj := o.(*S2iBuilder)
+	if obj.Spec.Config == nil {
+		obj.Spec.Config = new(S2iConfig)
+	}
 	if obj.Status.LastRunState == "" {
 		obj.Status.LastRunState = constants.Unknown
 	}
-	if obj.Spec.Tag == "" {
-		obj.Spec.Tag = constants.DefaultImageTag
+	if obj.Spec.Config.Tag == "" {
+		obj.Spec.Config.Tag = constants.DefaultImageTag
 	}
 }
 

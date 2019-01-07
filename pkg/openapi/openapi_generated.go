@@ -38,6 +38,9 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.EnvironmentSpec":          schema_pkg_apis_devops_v1alpha1_EnvironmentSpec(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.Payload":                  schema_pkg_apis_devops_v1alpha1_Payload(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.ProxyConfig":              schema_pkg_apis_devops_v1alpha1_ProxyConfig(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.Rerun":                    schema_pkg_apis_devops_v1alpha1_Rerun(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.RerunList":                schema_pkg_apis_devops_v1alpha1_RerunList(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.RerunS2iRunREST":          schema_pkg_apis_devops_v1alpha1_RerunS2iRunREST(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2IRunResult":             schema_pkg_apis_devops_v1alpha1_S2IRunResult(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilder":               schema_pkg_apis_devops_v1alpha1_S2iBuilder(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderList":           schema_pkg_apis_devops_v1alpha1_S2iBuilderList(ref),
@@ -46,6 +49,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderStatus":         schema_pkg_apis_devops_v1alpha1_S2iBuilderStatus(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderStatusStrategy": schema_pkg_apis_devops_v1alpha1_S2iBuilderStatusStrategy(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iBuilderStrategy":       schema_pkg_apis_devops_v1alpha1_S2iBuilderStrategy(ref),
+		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iConfig":                schema_pkg_apis_devops_v1alpha1_S2iConfig(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iRun":                   schema_pkg_apis_devops_v1alpha1_S2iRun(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iRunList":               schema_pkg_apis_devops_v1alpha1_S2iRunList(ref),
 		"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iRunSchemeFns":          schema_pkg_apis_devops_v1alpha1_S2iRunSchemeFns(ref),
@@ -906,6 +910,102 @@ func schema_pkg_apis_devops_v1alpha1_ProxyConfig(ref common.ReferenceCallback) c
 	}
 }
 
+func schema_pkg_apis_devops_v1alpha1_Rerun(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+	}
+}
+
+func schema_pkg_apis_devops_v1alpha1_RerunList(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
+						},
+					},
+					"items": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.Rerun"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"items"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.Rerun", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
+	}
+}
+
+func schema_pkg_apis_devops_v1alpha1_RerunS2iRunREST(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Properties: map[string]spec.Schema{
+					"Registry": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops.S2iRunRegistry"),
+						},
+					},
+				},
+				Required: []string{"Registry"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/magicsong/s2iapiserver/pkg/apis/devops.S2iRunRegistry"},
+	}
+}
+
 func schema_pkg_apis_devops_v1alpha1_S2IRunResult(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -923,6 +1023,12 @@ func schema_pkg_apis_devops_v1alpha1_S2IRunResult(ref common.ReferenceCallback) 
 						},
 					},
 					"artifact": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"message": {
 						SchemaProps: spec.SchemaProps{
 							Type:   []string{"string"},
 							Format: "",
@@ -1049,6 +1155,94 @@ func schema_pkg_apis_devops_v1alpha1_S2iBuilderSpec(ref common.ReferenceCallback
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
 				Description: "S2iBuilderSpec defines the desired state of S2iBuilder",
+				Properties: map[string]spec.Schema{
+					"config": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iConfig"),
+						},
+					},
+				},
+				Required: []string{"config"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.S2iConfig"},
+	}
+}
+
+func schema_pkg_apis_devops_v1alpha1_S2iBuilderStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "S2iBuilderStatus defines the observed state of S2iBuilder",
+				Properties: map[string]spec.Schema{
+					"runCount": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"integer"},
+							Format: "int32",
+						},
+					},
+					"lastRunState": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"lastRunName": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{},
+	}
+}
+
+func schema_pkg_apis_devops_v1alpha1_S2iBuilderStatusStrategy(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Properties: map[string]spec.Schema{
+					"DefaultStatusStorageStrategy": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStatusStorageStrategy"),
+						},
+					},
+				},
+				Required: []string{"DefaultStatusStorageStrategy"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStatusStorageStrategy"},
+	}
+}
+
+func schema_pkg_apis_devops_v1alpha1_S2iBuilderStrategy(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Properties: map[string]spec.Schema{
+					"DefaultStorageStrategy": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStorageStrategy"),
+						},
+					},
+				},
+				Required: []string{"DefaultStorageStrategy"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStorageStrategy"},
+	}
+}
+
+func schema_pkg_apis_devops_v1alpha1_S2iConfig(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
 				Properties: map[string]spec.Schema{
 					"displayName": {
 						SchemaProps: spec.SchemaProps{
@@ -1469,8 +1663,9 @@ func schema_pkg_apis_devops_v1alpha1_S2iBuilderSpec(ref common.ReferenceCallback
 					},
 					"sourceUrl": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "SourceURL is  url of the codes such as https://github.com/a/b.git",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 				},
@@ -1478,75 +1673,6 @@ func schema_pkg_apis_devops_v1alpha1_S2iBuilderSpec(ref common.ReferenceCallback
 		},
 		Dependencies: []string{
 			"github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.AuthConfig", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.CGroupLimits", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.DockerConfig", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.EnvironmentSpec", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.ProxyConfig", "github.com/magicsong/s2iapiserver/pkg/apis/devops/v1alpha1.VolumeSpec"},
-	}
-}
-
-func schema_pkg_apis_devops_v1alpha1_S2iBuilderStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Description: "S2iBuilderStatus defines the observed state of S2iBuilder",
-				Properties: map[string]spec.Schema{
-					"runCount": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"integer"},
-							Format: "int32",
-						},
-					},
-					"lastRunState": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-					"lastRunName": {
-						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
-						},
-					},
-				},
-			},
-		},
-		Dependencies: []string{},
-	}
-}
-
-func schema_pkg_apis_devops_v1alpha1_S2iBuilderStatusStrategy(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Properties: map[string]spec.Schema{
-					"DefaultStatusStorageStrategy": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStatusStorageStrategy"),
-						},
-					},
-				},
-				Required: []string{"DefaultStatusStorageStrategy"},
-			},
-		},
-		Dependencies: []string{
-			"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStatusStorageStrategy"},
-	}
-}
-
-func schema_pkg_apis_devops_v1alpha1_S2iBuilderStrategy(ref common.ReferenceCallback) common.OpenAPIDefinition {
-	return common.OpenAPIDefinition{
-		Schema: spec.Schema{
-			SchemaProps: spec.SchemaProps{
-				Properties: map[string]spec.Schema{
-					"DefaultStorageStrategy": {
-						SchemaProps: spec.SchemaProps{
-							Ref: ref("github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStorageStrategy"),
-						},
-					},
-				},
-				Required: []string{"DefaultStorageStrategy"},
-			},
-		},
-		Dependencies: []string{
-			"github.com/kubernetes-incubator/apiserver-builder/pkg/builders.DefaultStorageStrategy"},
 	}
 }
 

@@ -9,6 +9,7 @@ type PullPolicy string
 
 const (
 	NotRunning RunningState = "Not Running Yet"
+	Running    RunningState = "Running"
 	Successful RunningState = "Successful"
 	Failed     RunningState = "Failed"
 	Unknown    RunningState = "Unknown"

@@ -20,7 +20,11 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"time"
 
+	"k8s.io/apimachinery/pkg/api/meta"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	metav1beta1 "k8s.io/apimachinery/pkg/apis/meta/v1beta1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -64,10 +68,8 @@ func (DefaultStorageStrategy) Build(builder StorageBuilder, store *StorageWrappe
 	store.CreateStrategy = builder
 	store.UpdateStrategy = builder
 	store.DeleteStrategy = builder
+	store.TableConvertor = builder
 	store.ShortNamesProvider = builder
-	if table, ok := builder.(rest.TableConvertor); ok {
-		store.TableConvertor = table
-	}
 
 	options.AttrFunc = builder.GetAttrs
 	options.TriggerFunc = builder.TriggerFunc
@@ -151,46 +153,46 @@ func (DefaultStorageStrategy) ShortNames() []string {
 	return nil
 }
 
-// func (DefaultStorageStrategy) ConvertToTable(ctx context.Context, object runtime.Object, tableOptions runtime.Object) (*metav1beta1.Table, error) {
-// 	var table metav1beta1.Table
-// 	var swaggerMetadataDescriptions = metav1.ObjectMeta{}.SwaggerDoc()
-// 	fn := func(obj runtime.Object) error {
-// 		m, err := meta.Accessor(obj)
-// 		if err != nil {
-// 			return fmt.Errorf("Not support TableConvertor interface")
-// 		}
-// 		table.Rows = append(table.Rows, metav1beta1.TableRow{
-// 			Cells:  []interface{}{m.GetName(), m.GetCreationTimestamp().Time.UTC().Format(time.RFC3339)},
-// 			Object: runtime.RawExtension{Object: obj},
-// 		})
-// 		return nil
-// 	}
-// 	switch {
-// 	case meta.IsListType(object):
-// 		if err := meta.EachListItem(object, fn); err != nil {
-// 			return nil, err
-// 		}
-// 	default:
-// 		if err := fn(object); err != nil {
-// 			return nil, err
-// 		}
-// 	}
-// 	if m, err := meta.ListAccessor(object); err == nil {
-// 		table.ResourceVersion = m.GetResourceVersion()
-// 		table.SelfLink = m.GetSelfLink()
-// 		table.Continue = m.GetContinue()
-// 	} else {
-// 		if m, err := meta.CommonAccessor(object); err == nil {
-// 			table.ResourceVersion = m.GetResourceVersion()
-// 			table.SelfLink = m.GetSelfLink()
-// 		}
-// 	}
-// 	table.ColumnDefinitions = []metav1beta1.TableColumnDefinition{
-// 		{Name: "Name", Type: "string", Format: "name", Description: swaggerMetadataDescriptions["name"]},
-// 		{Name: "Created At", Type: "date", Description: swaggerMetadataDescriptions["creationTimestamp"]},
-// 	}
-// 	return &table, nil
-// }
+func (DefaultStorageStrategy) ConvertToTable(ctx context.Context, object runtime.Object, tableOptions runtime.Object) (*metav1beta1.Table, error) {
+	var table metav1beta1.Table
+	var swaggerMetadataDescriptions = metav1.ObjectMeta{}.SwaggerDoc()
+	fn := func(obj runtime.Object) error {
+		m, err := meta.Accessor(obj)
+		if err != nil {
+			return fmt.Errorf("Not support TableConvertor interface")
+		}
+		table.Rows = append(table.Rows, metav1beta1.TableRow{
+			Cells:  []interface{}{m.GetName(), m.GetCreationTimestamp().Time.UTC().Format(time.RFC3339)},
+			Object: runtime.RawExtension{Object: obj},
+		})
+		return nil
+	}
+	switch {
+	case meta.IsListType(object):
+		if err := meta.EachListItem(object, fn); err != nil {
+			return nil, err
+		}
+	default:
+		if err := fn(object); err != nil {
+			return nil, err
+		}
+	}
+	if m, err := meta.ListAccessor(object); err == nil {
+		table.ResourceVersion = m.GetResourceVersion()
+		table.SelfLink = m.GetSelfLink()
+		table.Continue = m.GetContinue()
+	} else {
+		if m, err := meta.CommonAccessor(object); err == nil {
+			table.ResourceVersion = m.GetResourceVersion()
+			table.SelfLink = m.GetSelfLink()
+		}
+	}
+	table.ColumnDefinitions = []metav1beta1.TableColumnDefinition{
+		{Name: "Name", Type: "string", Format: "name", Description: swaggerMetadataDescriptions["name"]},
+		{Name: "Created At", Type: "date", Description: swaggerMetadataDescriptions["creationTimestamp"]},
+	}
+	return &table, nil
+}
 
 //
 // Status Strategies

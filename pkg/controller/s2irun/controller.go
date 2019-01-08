@@ -105,6 +105,7 @@ func (c *S2iRunControllerImpl) Reconcile(u *v1alpha1.S2iRun) error {
 func (c *S2iRunControllerImpl) Get(namespace, name string) (*v1alpha1.S2iRun, error) {
 	return c.runLister.S2iRuns(namespace).Get(name)
 }
+
 func (c *S2iRunControllerImpl) Prepare(instance *v1alpha1.S2iRun) error {
 	if instance.Labels == nil {
 		instance.Labels = make(map[string]string)
@@ -112,6 +113,7 @@ func (c *S2iRunControllerImpl) Prepare(instance *v1alpha1.S2iRun) error {
 	instance.Labels["builder"] = instance.Spec.BuilderName
 	return nil
 }
+
 func (c *S2iRunControllerImpl) UpdateStatus(instance *v1alpha1.S2iRun) error {
 	if instance.Status.StartTime == nil {
 		now := metav1.Now()

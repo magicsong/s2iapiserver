@@ -145,6 +145,3 @@ required = [
   unused-packages = true
   non-go = true
 
-[[constraint]]
-  branch = "master"
-  name = "github.com/magicsong/s2irun"

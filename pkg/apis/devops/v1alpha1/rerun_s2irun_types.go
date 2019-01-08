@@ -44,14 +44,14 @@ type RerunS2iRunREST struct {
 	Registry devops.S2iRunRegistry
 }
 
-func (r *RerunS2iRunREST) Create(ctx context.Context, obj runtime.Object, createValidation rest.ValidateObjectFunc, includeUninitialized bool) (runtime.Object, error) {
+func (r *RerunS2iRunREST) Create(ctx context.Context, obj runtime.Object, createValidation rest.ValidateObjectFunc, options *metav1.CreateOptions) (runtime.Object, error) {
 	sub := obj.(*Rerun)
 	rec, err := r.Registry.GetS2iRun(ctx, sub.Name, &metav1.GetOptions{})
 	if err != nil {
 		return nil, err
 	}
 	// Modify rec in someway before writing it back to storage
-
+	rec.Status.Result = new(devops.S2IRunResult)
 	r.Registry.UpdateS2iRun(ctx, rec)
 	return rec, nil
 }
@@ -62,7 +62,7 @@ func (r *RerunS2iRunREST) Get(ctx context.Context, name string, options *metav1.
 }
 
 // Update alters the status subset of an object.
-func (r *RerunS2iRunREST) Update(ctx context.Context, name string, objInfo rest.UpdatedObjectInfo, createValidation rest.ValidateObjectFunc, updateValidation rest.ValidateObjectUpdateFunc) (runtime.Object, bool, error) {
+func (r *RerunS2iRunREST) Update(ctx context.Context, name string, objInfo rest.UpdatedObjectInfo, createValidation rest.ValidateObjectFunc, updateValidation rest.ValidateObjectUpdateFunc, forceAllowCreate bool, options *metav1.UpdateOptions) (runtime.Object, bool, error) {
 	return nil, false, nil
 }
 

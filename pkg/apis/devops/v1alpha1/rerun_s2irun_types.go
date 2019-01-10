@@ -19,12 +19,10 @@ package v1alpha1
 import (
 	"context"
 
+	"github.com/magicsong/s2iapiserver/pkg/apis/devops"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apiserver/pkg/registry/rest"
-
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-
-	"github.com/magicsong/s2iapiserver/pkg/apis/devops"
 )
 
 // +genclient
@@ -58,7 +56,7 @@ func (r *RerunS2iRunREST) Create(ctx context.Context, obj runtime.Object, create
 
 // Get retrieves the object from the storage. It is required to support Patch.
 func (r *RerunS2iRunREST) Get(ctx context.Context, name string, options *metav1.GetOptions) (runtime.Object, error) {
-	return nil, nil
+	return &Rerun{}, nil
 }
 
 // Update alters the status subset of an object.

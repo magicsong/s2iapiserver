@@ -492,12 +492,6 @@
   version = "v2.0.1"
 
 [[projects]]
-  name = "github.com/pkg/errors"
-  packages = ["."]
-  revision = "ba968bfe8b2f7e042a574c888954fccecfa385b4"
-  version = "v0.8.1"
-
-[[projects]]
   name = "github.com/prometheus/client_golang"
   packages = ["prometheus"]
   revision = "e7e903064f5e9eb5da98208bae10b475d4db0f8c"
@@ -533,7 +527,8 @@
 [[projects]]
   name = "github.com/spf13/pflag"
   packages = ["."]
-  revision = "9ff6c6923cfffbcd502984b8e0c80539a94968b7"
+  revision = "298182f68c66c05229eb03ac171abe6e309ee79a"
+  version = "v1.0.3"
 
 [[projects]]
   name = "github.com/ugorji/go"
@@ -759,7 +754,6 @@
     "pkg/apis/meta/internalversion",
     "pkg/apis/meta/v1",
     "pkg/apis/meta/v1/unstructured",
-    "pkg/apis/meta/v1/unstructured/unstructuredscheme",
     "pkg/apis/meta/v1/validation",
     "pkg/apis/meta/v1beta1",
     "pkg/conversion",
@@ -905,23 +899,6 @@
   version = "kubernetes-1.12.3"
 
 [[projects]]
-  branch = "master"
-  name = "k8s.io/cli-runtime"
-  packages = [
-    "pkg/genericclioptions",
-    "pkg/genericclioptions/printers",
-    "pkg/genericclioptions/resource",
-    "pkg/kustomize/k8sdeps",
-    "pkg/kustomize/k8sdeps/configmapandsecret",
-    "pkg/kustomize/k8sdeps/kunstruct",
-    "pkg/kustomize/k8sdeps/transformer",
-    "pkg/kustomize/k8sdeps/transformer/hash",
-    "pkg/kustomize/k8sdeps/transformer/patch",
-    "pkg/kustomize/k8sdeps/validator"
-  ]
-  revision = "31214e12222d5ddfec04d05163ba91b55336ef07"
-
-[[projects]]
   branch = "release-9.0"
   name = "k8s.io/client-go"
   packages = [
@@ -1043,7 +1020,6 @@
     "plugin/pkg/client/auth/openstack",
     "rest",
     "rest/watch",
-    "restmapper",
     "testing",
     "third_party/forked/golang/template",
     "tools/auth",
@@ -1096,42 +1072,9 @@
   ]
   revision = "0cf8f7e6ed1d2e3d47d02e3b6e559369af24d803"
 
-[[projects]]
-  name = "sigs.k8s.io/kustomize"
-  packages = [
-    "pkg/commands/build",
-    "pkg/constants",
-    "pkg/expansion",
-    "pkg/factory",
-    "pkg/fs",
-    "pkg/gvk",
-    "pkg/ifc",
-    "pkg/ifc/transformer",
-    "pkg/internal/error",
-    "pkg/loader",
-    "pkg/patch",
-    "pkg/patch/transformer",
-    "pkg/resid",
-    "pkg/resmap",
-    "pkg/resource",
-    "pkg/target",
-    "pkg/transformers",
-    "pkg/transformers/config",
-    "pkg/transformers/config/defaultconfig",
-    "pkg/types"
-  ]
-  revision = "8f701a00417a812558a7b785e8354957afa469ae"
-  version = "v1.0.11"
-
-[[projects]]
-  name = "sigs.k8s.io/yaml"
-  packages = ["."]
-  revision = "fd68e9863619f6ec2fdd8625fe1f02e7c877e480"
-  version = "v1.1.0"
-
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5f00543ffcbdadeb33318066c697bdca75853784abc88cc7cf48c5472a270c24"
+  inputs-digest = "fa3d54885ca3d0d7163d0c3b0f5513b52513d5a7c10f9c32b15eec5d76c8c0fa"
   solver-name = "gps-cdcl"
   solver-version = 1

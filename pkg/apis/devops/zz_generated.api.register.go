@@ -92,57 +92,6 @@ func Resource(resource string) schema.GroupResource {
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-type S2iRun struct {
-	metav1.TypeMeta
-	metav1.ObjectMeta
-	Spec   S2iRunSpec
-	Status S2iRunStatus
-}
-
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-
-type Rerun struct {
-	metav1.TypeMeta
-	metav1.ObjectMeta
-}
-
-type S2iRunStatus struct {
-	StartTime *metav1.Time
-	RunState  devopsconstants.RunningState
-	Trigger   *Trigger
-	Result    *S2IRunResult
-}
-
-type S2iRunSpec struct {
-	BuilderName          string
-	BackoffLimit         int32
-	SecondsAfterFinished int32
-	Environment          []EnvironmentSpec
-	OverideTag           string
-}
-
-type S2IRunResult struct {
-	ImageName      string
-	CompletionTime *metav1.Time
-	Artifact       string
-	Message        string
-}
-
-type EnvironmentSpec struct {
-	Name  string
-	Value string
-}
-
-type Trigger struct {
-	Source  devopsconstants.TriggerSource
-	Event   string
-	Payload *Payload
-}
-
-// +genclient
-// +genclient
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
-
 type S2iBuilder struct {
 	metav1.TypeMeta
 	metav1.ObjectMeta
@@ -150,7 +99,11 @@ type S2iBuilder struct {
 	Status S2iBuilderStatus
 }
 
-type Payload struct {
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+type Rerun struct {
+	metav1.TypeMeta
+	metav1.ObjectMeta
 }
 
 type S2iBuilderStatus struct {
@@ -161,6 +114,17 @@ type S2iBuilderStatus struct {
 
 type S2iBuilderSpec struct {
 	Config *S2iConfig
+}
+
+// +genclient
+// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+type S2iRun struct {
+	metav1.TypeMeta
+	metav1.ObjectMeta
+	Spec   S2iRunSpec
+	Status S2iRunStatus
 }
 
 type S2iConfig struct {
@@ -220,16 +184,29 @@ type S2iConfig struct {
 	SourceURL                 string
 }
 
-type AuthConfig struct {
-	Username      string
-	Password      string
-	Email         string
-	ServerAddress string
+type S2iRunStatus struct {
+	StartTime *metav1.Time
+	RunState  devopsconstants.RunningState
+	Trigger   *Trigger
+	Result    *S2IRunResult
 }
 
 type ProxyConfig struct {
 	HTTPProxy  string
 	HTTPSProxy string
+}
+
+type S2IRunResult struct {
+	ImageName      string
+	CompletionTime *metav1.Time
+	Artifact       string
+	Message        string
+}
+
+type Trigger struct {
+	Source  devopsconstants.TriggerSource
+	Event   string
+	Payload *Payload
 }
 
 type CGroupLimits struct {
@@ -241,10 +218,25 @@ type CGroupLimits struct {
 	Parent           string
 }
 
+type Payload struct {
+}
+
 type VolumeSpec struct {
 	Source      string
 	Destination string
 	Keep        bool
+}
+
+type EnvironmentSpec struct {
+	Name  string
+	Value string
+}
+
+type AuthConfig struct {
+	Username      string
+	Password      string
+	Email         string
+	ServerAddress string
 }
 
 type DockerConfig struct {
@@ -254,6 +246,14 @@ type DockerConfig struct {
 	CAFile    string
 	UseTLS    bool
 	TLSVerify bool
+}
+
+type S2iRunSpec struct {
+	BuilderName          string
+	BackoffLimit         int32
+	SecondsAfterFinished int32
+	Environment          []EnvironmentSpec
+	OverideTag           string
 }
 
 //

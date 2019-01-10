@@ -18,3 +18,7 @@ build-doc:
 debug-controller:
 	CGO_ENABLED=0 go build -o bin/controller-manager cmd/controller-manager/main.go
 	apiserver-boot run local --run=apiserver --run=controller-manager --etcd "http://192.168.98.8:2379" --generate=false --build=false --controller-args="-logtostderr=true" --controller-args="-v=2"  --apiserver-args="--loglevel=2"
+
+
+cli:
+	CGO_ENABLED=0 go build -o bin/kubectl-ks cmd/kubectl/main.go

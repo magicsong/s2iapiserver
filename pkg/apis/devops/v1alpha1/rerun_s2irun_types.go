@@ -42,6 +42,11 @@ type RerunS2iRunREST struct {
 	Registry devops.S2iRunRegistry
 }
 
+const (
+	RerunAnnotationKey = "v1alpha1.devops.kubesphere.io/rerun"
+	RerunValue         = "yes"
+)
+
 func (r *RerunS2iRunREST) Create(ctx context.Context, obj runtime.Object, createValidation rest.ValidateObjectFunc, options *metav1.CreateOptions) (runtime.Object, error) {
 	sub := obj.(*Rerun)
 	rec, err := r.Registry.GetS2iRun(ctx, sub.Name, &metav1.GetOptions{})
@@ -49,7 +54,12 @@ func (r *RerunS2iRunREST) Create(ctx context.Context, obj runtime.Object, create
 		return nil, err
 	}
 	// Modify rec in someway before writing it back to storage
-	rec.Status.Result = new(devops.S2IRunResult)
+	if rec.Annotations == nil {
+		rec.Annotations = make(map[string]string)
+		rec.Annotations[RerunAnnotationKey] = RerunValue
+	} else {
+		rec.Annotations[RerunAnnotationKey] = RerunValue
+	}
 	r.Registry.UpdateS2iRun(ctx, rec)
 	return rec, nil
 }

@@ -87,6 +87,12 @@ func (c *S2iRunControllerImpl) Reconcile(u *v1alpha1.S2iRun) error {
 		glog.Errorf("Failed to preprocess s2run instance <%s>, error:%s", u.Name, err.Error())
 		return err
 	}
+	if instance.Annotations != nil && instance.Annotations[v1alpha1.RerunAnnotationKey] == v1alpha1.RerunValue {
+		glog.V(0).Infoln("Detect rerun subresource called")
+		delete(instance.Annotations, v1alpha1.RerunAnnotationKey)
+		c.client.S2iRuns(u.Namespace).Update(instance)
+		return nil
+	}
 	err = c.UpdateStatus(instance)
 	if err != nil {
 		glog.Errorf("Failed to update s2run instance <%s>, error:%s", u.Name, err.Error())
